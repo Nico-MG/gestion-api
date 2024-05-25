@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cliente {
+  rut_cliente String  @id @db.VarChar(20)
+  nombre      String? @db.VarChar(20)
+  apellido    String? @db.VarChar(20)
+  venta       venta[]
+}
+
+model detalle_devolucion {
+  id_devolucion String     @db.VarChar(20)
+  id_producto   String     @db.VarChar(20)
+  cantidad      Int?
+  devolucion    devolucion @relation(fields: [id_devolucion], references: [id_devolucion], onDelete: Cascade)
+  producto      producto   @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+
+  @@id([id_devolucion, id_producto])
+}
+
+model detalle_pedido {
+  id_pedido     String   @db.VarChar(20)
+  id_producto   String   @db.VarChar(20)
+  cantidad      Int?
+  precio_unidad Int?
+  precio_total  Int?
+  pedido        pedido   @relation(fields: [id_pedido], references: [id_pedido], onDelete: Cascade)
+  producto      producto @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+
+  @@id([id_pedido, id_producto])
+}
+
+model detalle_venta {
+  id_venta     String   @db.VarChar(20)
+  id_producto  String   @db.VarChar(20)
+  cantidad     Int?
+  precio_total Int?
+  producto     producto @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+  venta        venta    @relation(fields: [id_venta], references: [id_venta], onDelete: Cascade)
+
+  @@id([id_venta, id_producto])
+}
+
+model devolucion {
+  id_devolucion      String               @id @db.VarChar(20)
+  id_venta           String?              @db.VarChar(20)
+  fecha              DateTime?            @db.Timestamp(6)
+  descripcion        String?
+  detalle_devolucion detalle_devolucion[]
+  venta              venta?               @relation(fields: [id_venta], references: [id_venta], onDelete: Cascade)
+}
+
+model notificacion {
+  id_notificacion Int       @id @default(autoincrement())
+  fecha           DateTime? @db.Timestamp(6)
+  id_producto     String?   @db.VarChar(20)
+  titulo          String?   @db.VarChar(20)
+  descripcion     String?
+  producto        producto? @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+}
+
+model pedido {
+  id_pedido      String           @id @db.VarChar(20)
+  rut_proveedor  String?          @db.VarChar(20)
+  rut_usuario    String?          @db.VarChar(20)
+  fecha          DateTime?        @db.Timestamp(6)
+  compra_total   Int?
+  detalle_pedido detalle_pedido[]
+  proveedor      proveedor?       @relation(fields: [rut_proveedor], references: [rut_proveedor], onDelete: Cascade)
+  usuario        usuario?         @relation(fields: [rut_usuario], references: [rut_usuario], onDelete: Cascade)
+}
+
+model producto {
+  id_producto        String               @id @db.VarChar(20)
+  nombre             String?              @db.VarChar(20)
+  categoria          String?              @db.VarChar(20)
+  cantidad           Int?
+  min_cantidad       Int?
+  precio_venta       Int?
+  detalle_devolucion detalle_devolucion[]
+  detalle_pedido     detalle_pedido[]
+  detalle_venta      detalle_venta[]
+  notificacion       notificacion[]
+}
+
+model proveedor {
+  rut_proveedor String   @id @db.VarChar(20)
+  nombre        String?  @db.VarChar(20)
+  direccion     String?  @db.VarChar(20)
+  numero        String?  @db.VarChar(20)
+  tipo          String?  @db.VarChar(20)
+  pedido        pedido[]
+}
+
+model usuario {
+  rut_usuario String   @id @db.VarChar(20)
+  correo      String?  @db.VarChar(50)
+  contrasena  String?  @db.VarChar(60)
+  nombre      String?  @db.VarChar(20)
+  apellido    String?  @db.VarChar(20)
+  pedido      pedido[]
+  venta       venta[]
+}
+
+model venta {
+  id_venta      String          @id @db.VarChar(20)
+  rut_cliente   String?         @db.VarChar(20)
+  rut_usuario   String?         @db.VarChar(20)
+  fecha         DateTime?       @db.Timestamp(6)
+  venta_total   Int?
+  detalle_venta detalle_venta[]
+  devolucion    devolucion[]
+  cliente       cliente?        @relation(fields: [rut_cliente], references: [rut_cliente], onDelete: Cascade)
+  usuario       usuario?        @relation(fields: [rut_usuario], references: [rut_usuario], onDelete: Cascade)
+}
