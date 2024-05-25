@@ -56,7 +56,7 @@ const getOrder = async (id) => {
 			where: {
 				id_pedido: id,
 			},
-			inlcude: {
+			include: {
 				detalle_pedido: true,
 			}
 		})
