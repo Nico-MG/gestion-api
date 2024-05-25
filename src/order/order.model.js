@@ -26,8 +26,18 @@ const editOrder = async (id, rutp, rutu, fecha, compra, dOrder) => {
 			fecha,
 			compra_total: compra,
 			detalle_pedido: {
-				create: dOrder,
-			},
+			update: dOrder.map(detalle => ({
+				where: {id_pedido_id_producto: {
+					id_pedido: id,
+					id_producto: detalle.id_producto
+				}},
+				data: {
+					cantidad: detalle.cantidad,
+					precio_unidad: detalle.precio_unidad,
+					precio_total: detalle.precio_total
+				}
+			}))
+			}	
 		},
 	});
 };
