@@ -1,6 +1,5 @@
 import "dotenv/config";
 import cors from "cors";
-import ws from "ws";
 import express from "express";
 
 import { productRoute } from "./core/routes/product.route.js";
@@ -19,14 +18,18 @@ server.use("/product", productRoute);
 server.use("/provider", providerRoute);
 server.use("/order", orderRoute);
 
-server.listen(port, () => {
-	console.log(`Server ready to listen on port: ${port}`);
-}).on('error', (err) => {
-	if (err.code === 'EADDRINUSE') {
-	  console.error(`Port ${port} is already in use. Please use a different port.`);
-	} else {
-	  console.error(`Server error: ${err}`);
-	}
-  });
-
+server
+	.listen(port, () => {
+		console.log(`Server ready to listen on port: ${port}`);
+	})
+	.on("error", (err) => {
+		if (err.code === "EADDRINUSE") {
+			console.error(
+				`Port ${port} is already in use. Please use a different port.`,
+			);
+		} else {
+			console.error(`Server error: ${err}`);
+		}
+	});
+	
 export default server;

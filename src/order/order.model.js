@@ -26,18 +26,20 @@ const editOrder = async (id, rutp, rutu, fecha, compra, dOrder) => {
 			fecha,
 			compra_total: compra,
 			detalle_pedido: {
-			update: dOrder.map(detalle => ({
-				where: {id_pedido_id_producto: {
-					id_pedido: id,
-					id_producto: detalle.id_producto
-				}},
-				data: {
-					cantidad: detalle.cantidad,
-					precio_unidad: detalle.precio_unidad,
-					precio_total: detalle.precio_total
-				}
-			}))
-			}	
+				update: dOrder.map((detalle) => ({
+					where: {
+						id_pedido_id_producto: {
+							id_pedido: id,
+							id_producto: detalle.id_producto,
+						},
+					},
+					data: {
+						cantidad: detalle.cantidad,
+						precio_unidad: detalle.precio_unidad,
+						precio_total: detalle.precio_total,
+					},
+				})),
+			},
 		},
 	});
 };
@@ -51,22 +53,21 @@ const deleteOrder = async (id) => {
 };
 
 const getOrder = async (id) => {
-	return await db.pedido
-		.findUnique({
-			where: {
-				id_pedido: id,
-			},
-			include: {
-				detalle_pedido: true,
-			}
-		})
+	return await db.pedido.findUnique({
+		where: {
+			id_pedido: id,
+		},
+		include: {
+			detalle_pedido: true,
+		},
+	});
 };
 
 const getAllOrder = async () => {
 	return await db.pedido.findMany({
 		include: {
 			detalle_pedido: true,
-		}
+		},
 	});
 };
 
