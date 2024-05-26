@@ -14,7 +14,7 @@ const getAllOrderService = async () => {
 	return await getAllOrder();
 };
 
-const editOrderService = async (id, rutp, rutu, fecha, compra, dOrder) => {
+const editOrderService = async (id, newid, rutp, rutu, fecha, compra, dOrder) => {
 	const dOrderData = dOrder.map((e) => {
 		return {
 			id_producto: e.idp,
@@ -23,7 +23,7 @@ const editOrderService = async (id, rutp, rutu, fecha, compra, dOrder) => {
 			precio_total: e.total,
 		};
 	});
-	return await editOrder(id, rutp, rutu, fecha, compra, dOrderData);
+	return await editOrder(id, newid, rutp, rutu, fecha, compra, dOrderData);
 };
 
 const deleteOrderService = async (id) => {

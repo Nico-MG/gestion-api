@@ -54,15 +54,16 @@ const deleteOrderController = async (req, res) => {
 
 const editOrderController = async (req, res) => {
 	const { id } = req.params;
-	const { rutp, rutu, fecha, compra, dOrder } = req.body;
+	const { id_pedido, rut_proveedor, rut_usuario, fecha, compra_total, detalle_pedido } = req.body;
 	try {
 		const result = await editOrderService(
 			id,
-			rutp,
-			rutu,
+			id_pedido,
+			rut_proveedor,
+			rut_usuario,
 			fecha,
-			compra,
-			dOrder,
+			compra_total,
+			detalle_pedido,
 		);
 		return res.json(result);
 	} catch (error) {

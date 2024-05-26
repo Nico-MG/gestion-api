@@ -1,7 +1,9 @@
-import WebSocket from 'ws';
-import server from '../../server.js';
+import {WebSocketServer} from 'ws';
+import server from './server.js';
+import http from 'node:http'
 
-const wss = new WebSocket({server: server })
+const app = http.createServer(server)
+const wss = new WebSocketServer({server: app})
 
 let clients = [];
 
