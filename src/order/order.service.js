@@ -3,7 +3,7 @@ import {
 	getOrder,
 	deleteOrder,
 	createOrder,
-	editOrder,
+	updateOrder,
 } from "./order.model.js";
 
 const getOrderService = async (id) => {
@@ -23,7 +23,7 @@ const updateOrderService = async (id, newId, rutp, rutu, fecha, compra, dOrder) 
 			precio_total: e.precio_total,
 		};
 	});
-	return await editOrder(id, newId, rutp, rutu, fecha, compra, dOrderData);
+	return await updateOrder(id, newId, rutp, rutu, fecha, compra, dOrderData);
 };
 
 const deleteOrderService = async (id) => {
