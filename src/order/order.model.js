@@ -15,7 +15,7 @@ const createOrder = async (id, rutp, rutu, fecha, compra, dOrder) => {
 	});
 };
 
-const editOrder = async (id, newid, rutp, rutu, fecha, compra, dOrder) => {
+const updateOrder = async (id, newId, rutp, rutu, fecha, compra, dOrder) => {
   await Promise.all(
     dOrder.map(async (detalle) => {
       await db.detalle_pedido.update({
@@ -39,7 +39,7 @@ const editOrder = async (id, newid, rutp, rutu, fecha, compra, dOrder) => {
       id_pedido: id,
     },
     data: {
-			id_pedido: newid,
+			id_pedido: newId,
       rut_proveedor: rutp,
       rut_usuario: rutu,
       fecha,
@@ -68,7 +68,7 @@ const getOrder = async (id) => {
 	});
 };
 
-const getAllOrder = async () => {
+const getAllOrders = async () => {
 	return await db.pedido.findMany({
 		include: {
 			detalle_pedido: true,
@@ -76,4 +76,4 @@ const getAllOrder = async () => {
 	});
 };
 
-export { createOrder, editOrder, deleteOrder, getAllOrder, getOrder };
+export { createOrder, updateOrder, deleteOrder, getAllOrders, getOrder };

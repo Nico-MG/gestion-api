@@ -1,12 +1,12 @@
 import db from "../core/db/prisma.js";
-//lol esta m
-const createRefund = async (idd, idv, fecha, desc, dRefund) => {
-	return await db.pedido.create({
+
+const createRefund = async (id, idv, fecha, desc, dRefund) => {
+	return await db.devolucion.create({
 		data: {
-			id_devolucion: idd,
+			id_devolucion: id,
 			id_venta: idv,
+			fecha,
 			descripcion: desc,
-			fecha: fecha,
 			detalle_devolucion: {
 				create: dRefund,
 			},
@@ -14,60 +14,62 @@ const createRefund = async (idd, idv, fecha, desc, dRefund) => {
 	});
 };
 
-const editRefund = async (idd, idv, fecha, desc, dOrder) => {
-	return await db.pedido.update({
-		where: {
-			id_pedido: idd,
-		},
-		data: {
-			rut_proveedor: rutp,
-			rut_usuario: rutu,
+const updateRefund = async (id, newId, idv, fecha, desc, dRefund) => {
+  await Promise.all(
+    dRefund.map(async (detalle) => {
+      await db.detalle_devolucion.update({
+        where: {
+          id_devolucion_id_producto: {
+            id_devolucion: id,
+            id_producto: detalle.id_producto,
+          },
+        },
+        data: {
+          cantidad: detalle.cantidad,
+        },
+      });
+    })
+  );
+
+  return await db.devolucion.update({
+    where: {
+      id_devolucion: id,
+    },
+    data: {
+			id_devolucion: newId,
+			id_venta: idv,
 			fecha,
-			compra_total: compra,
-			detalle_pedido: {
-				update: dOrder.map((detalle) => ({
-					where: {
-						id_pedido_id_producto: {
-							id_pedido: id,
-							id_producto: detalle.id_producto,
-						},
-					},
-					data: {
-						cantidad: detalle.cantidad,
-						precio_unidad: detalle.precio_unidad,
-						precio_total: detalle.precio_total,
-					},
-				})),
-			},
+			descripcion: desc,
+    },
+  });
+};
+
+
+const deleteRefund = async (id) => {
+	return await db.devolucion.delete({
+		where: {
+			id_devolucion: id,
 		},
 	});
 };
 
-const deleteOrder = async (id) => {
-	return await db.pedido.delete({
+const getRefund = async (id) => {
+	return await db.devolucion.findUnique({
 		where: {
-			id_pedido: id,
-		},
-	});
-};
-
-const getOrder = async (id) => {
-	return await db.pedido.findUnique({
-		where: {
-			id_pedido: id,
+			id_devolucion: id,
 		},
 		include: {
-			detalle_pedido: true,
+			detalle_devolucion: true,
 		},
 	});
 };
 
-const getAllOrder = async () => {
-	return await db.pedido.findMany({
+const getAllRefunds = async () => {
+	return await db.devolucion.findMany({
 		include: {
-			detalle_pedido: true,
+			detalle_devolucion: true,
 		},
 	});
 };
 
-export { createOrder, editOrder, deleteOrder, getAllOrder, getOrder };
+export { createRefund, updateRefund, deleteRefund, getAllRefunds, getRefund };

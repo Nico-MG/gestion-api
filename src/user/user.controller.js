@@ -1,8 +1,8 @@
 import {
-	getAllUserService,
+	getAllUsersService,
 	createUserService,
 	getUserService,
-	editUserService,
+	updateUserService,
 	deleteUserService,
 } from "./user.service.js";
 
@@ -16,9 +16,9 @@ const getUserController = async (req, res) => {
 	}
 };
 
-const getAllUserController = async (req, res) => {
+const getAllUsersController = async (req, res) => {
 	try {
-		const result = await getAllUserService();
+		const result = await getAllUsersService();
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
@@ -26,10 +26,10 @@ const getAllUserController = async (req, res) => {
 };
 
 const createUserController = async (req, res) => {
-	const { rut, correo, contrasena, nombre, apellido } = req.body;
+	const { rut_usuario, correo, contrasena, nombre, apellido } = req.body;
 	try {
 		const result = await createUserService(
-			rut,
+			rut_usuario,
 			correo,
 			contrasena,
 			nombre,
@@ -51,12 +51,13 @@ const deleteUserController = async (req, res) => {
 	}
 };
 
-const editUserController = async (req, res) => {
+const updateUserController = async (req, res) => {
 	const { id } = req.params;
-	const { correo, contrasena, nombre, apellido } = req.body;
+	const { rut_usuario, correo, contrasena, nombre, apellido } = req.body;
 	try {
-		const result = await editUserService(
+		const result = await updateUserService(
 			id,
+			rut_usuario,
 			correo,
 			contrasena,
 			nombre,
@@ -70,8 +71,8 @@ const editUserController = async (req, res) => {
 
 export {
 	getUserController,
-	getAllUserController,
+	getAllUsersController,
 	createUserController,
-	editUserController,
+	updateUserController,
 	deleteUserController,
 };

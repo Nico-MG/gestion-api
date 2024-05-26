@@ -1,8 +1,8 @@
 import {
-	getAllProviderService,
+	getAllProvidersService,
 	createProviderService,
 	getProviderService,
-	editProviderService,
+	updateProviderService,
 	deleteProviderService,
 } from "./provider.service.js";
 
@@ -16,9 +16,9 @@ const getProviderController = async (req, res) => {
 	}
 };
 
-const getAllProviderController = async (req, res) => {
+const getAllProvidersController = async (req, res) => {
 	try {
-		const result = await getAllProviderService();
+		const result = await getAllProvidersService();
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
@@ -26,10 +26,10 @@ const getAllProviderController = async (req, res) => {
 };
 
 const createProviderController = async (req, res) => {
-	const { rut, nombre, direccion, numero, tipo } = req.body;
+	const { rut_proveedor, nombre, direccion, numero, tipo } = req.body;
 	try {
 		const result = await createProviderService(
-			rut,
+			rut_proveedor,
 			nombre,
 			direccion,
 			numero,
@@ -51,12 +51,13 @@ const deleteProviderController = async (req, res) => {
 	}
 };
 
-const editProviderController = async (req, res) => {
+const updateProviderController = async (req, res) => {
 	const { id } = req.params;
-	const { nombre, direccion, numero, tipo } = req.body;
+	const { rut_proveedor, nombre, direccion, numero, tipo } = req.body;
 	try {
-		const result = await editProviderService(
+		const result = await updateProviderService(
 			id,
+			rut_proveedor,
 			nombre,
 			direccion,
 			numero,
@@ -70,8 +71,8 @@ const editProviderController = async (req, res) => {
 
 export {
 	getProviderController,
-	getAllProviderController,
+	getAllProvidersController,
 	createProviderController,
-	editProviderController,
+	updateProviderController,
 	deleteProviderController,
 };

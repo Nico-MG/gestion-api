@@ -1,21 +1,21 @@
 import {
-	getAllUser,
+	getAllUsers,
 	getUser,
 	deleteUser,
 	createUser,
-	editUser,
+	updateUser,
 } from "./user.model.js";
 
 const getUserService = async (rut) => {
 	return await getUser(rut);
 };
 
-const getAllUserService = async () => {
-	return await getAllUser();
+const getAllUsersService = async () => {
+	return await getAllUsers();
 };
 
-const editUserService = async (rut, correo, contrasena, nombre, apellido) => {
-	return await editUser(rut, correo, contrasena, nombre, apellido);
+const updateUserService = async (rut, newRut, correo, contrasena, nombre, apellido) => {
+	return await updateUser(rut, newRut, correo, contrasena, nombre, apellido);
 };
 
 const deleteUserService = async (rut) => {
@@ -27,9 +27,9 @@ const createUserService = async (rut, correo, contrasena, nombre, apellido) => {
 };
 
 export {
-	getAllUserService,
+	getAllUsersService,
 	getUserService,
 	createUserService,
-	editUserService,
+	updateUserService,
 	deleteUserService,
 };

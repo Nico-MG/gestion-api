@@ -1,8 +1,8 @@
 import {
-	getAllOrderService,
+	getAllOrdersService,
 	getOrderService,
 	createOrderService,
-	editOrderService,
+	updateOrderService,
 	deleteOrderService,
 } from "./order.service.js";
 
@@ -16,9 +16,9 @@ const getOrderController = async (req, res) => {
 	}
 };
 
-const getAllOrderController = async (req, res) => {
+const getAllOrdersController = async (req, res) => {
 	try {
-		const result = await getAllOrderService();
+		const result = await getAllOrdersService();
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
@@ -26,15 +26,15 @@ const getAllOrderController = async (req, res) => {
 };
 
 const createOrderController = async (req, res) => {
-	const { id, rutp, rutu, fecha, compra, dOrder } = req.body;
+	const { id_pedido, rut_proveedor, rut_usuario, fecha, compra_total, detalle_pedido } = req.body;
 	try {
 		const result = await createOrderService(
-			id,
-			rutp,
-			rutu,
+			id_pedido,
+			rut_proveedor,
+			rut_usuario,
 			fecha,
-			compra,
-			dOrder,
+			compra_total,
+			detalle_pedido,
 		);
 		return res.json(result);
 	} catch (error) {
@@ -52,11 +52,11 @@ const deleteOrderController = async (req, res) => {
 	}
 };
 
-const editOrderController = async (req, res) => {
+const updateOrderController = async (req, res) => {
 	const { id } = req.params;
 	const { id_pedido, rut_proveedor, rut_usuario, fecha, compra_total, detalle_pedido } = req.body;
 	try {
-		const result = await editOrderService(
+		const result = await updateOrderService(
 			id,
 			id_pedido,
 			rut_proveedor,
@@ -73,8 +73,8 @@ const editOrderController = async (req, res) => {
 
 export {
 	getOrderController,
-	getAllOrderController,
+	getAllOrdersController,
 	createOrderController,
-	editOrderController,
+	updateOrderController,
 	deleteOrderController,
 };

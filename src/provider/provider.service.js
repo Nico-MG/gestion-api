@@ -1,21 +1,21 @@
 import {
-	getAllProvider,
+	getAllProviders,
 	getProvider,
 	deleteProvider,
 	createProvider,
-	editProvider,
+	updateProvider,
 } from "./provider.model.js";
 
 const getProviderService = async (rut) => {
 	return await getProvider(rut);
 };
 
-const getAllProviderService = async () => {
-	return await getAllProvider();
+const getAllProvidersService = async () => {
+	return await getAllProviders();
 };
 
-const editProviderService = async (rut, nombre, direccion, numero, tipo) => {
-	return await editProvider(rut, nombre, direccion, numero, tipo);
+const updateProviderService = async (rut, newRut, nombre, direccion, numero, tipo) => {
+	return await updateProvider(rut, newRut, nombre, direccion, numero, tipo);
 };
 
 const deleteProviderService = async (rut) => {
@@ -27,9 +27,9 @@ const createProviderService = async (rut, nombre, direccion, numero, tipo) => {
 };
 
 export {
-	getAllProviderService,
+	getAllProvidersService,
 	getProviderService,
 	createProviderService,
-	editProviderService,
+	updateProviderService,
 	deleteProviderService,
 };

@@ -1,9 +1,9 @@
 import {
-	getAllProduct,
+	getAllProducts,
 	getProduct,
 	deleteProduct,
 	createProduct,
-	editProduct,
+	updateProduct,
 } from "./product.model.js";
 
 const createProductService = async (
@@ -28,16 +28,18 @@ const deleteProductService = async (id) => {
 	return await deleteProduct(id);
 };
 
-const editProductService = async (
+const updateProductService = async (
 	id,
+	newId,
 	nombre,
 	categoria,
 	cantidad,
 	minCantidad,
 	precio,
 ) => {
-	return await editProduct(
+	return await updateProduct(
 		id,
+		newId,
 		nombre,
 		categoria,
 		cantidad,
@@ -50,14 +52,14 @@ const getProductService = async (id) => {
 	return await getProduct(id);
 };
 
-const getAllProductService = async () => {
-	return await getAllProduct();
+const getAllProductsService = async () => {
+	return await getAllProducts();
 };
 
 export {
-	getAllProductService,
+	getAllProductsService,
 	getProductService,
 	createProductService,
-	editProductService,
+	updateProductService,
 	deleteProductService,
 };

@@ -12,12 +12,13 @@ const createProvider = async (rut, nombre, direccion, numero, tipo) => {
 	});
 };
 
-const editProvider = async (rut, nombre, direccion, numero, tipo) => {
+const updateProvider = async (rut, newRut, nombre, direccion, numero, tipo) => {
 	return await db.proveedor.update({
 		where: {
 			rut_proveedor: rut,
 		},
 		data: {
+			rut_proveedor: newRut,
 			nombre,
 			direccion,
 			numero,
@@ -42,14 +43,14 @@ const getProvider = async (rut) => {
 	});
 };
 
-const getAllProvider = async () => {
+const getAllProviders = async () => {
 	return await db.proveedor.findMany();
 };
 
 export {
 	createProvider,
-	editProvider,
+	updateProvider,
 	deleteProvider,
-	getAllProvider,
+	getAllProviders,
 	getProvider,
 };

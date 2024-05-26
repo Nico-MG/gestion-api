@@ -1,8 +1,8 @@
 import {
-	getAllProductService,
+	getAllProductsService,
 	getProductService,
 	createProductService,
-	editProductService,
+	updateProductService,
 	deleteProductService,
 } from "./product.service.js";
 
@@ -16,9 +16,9 @@ const getProductController = async (req, res) => {
 	}
 };
 
-const getAllProductController = async (req, res) => {
+const getAllProductsController = async (req, res) => {
 	try {
-		const result = await getAllProductService();
+		const result = await getAllProductsService();
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
@@ -26,15 +26,15 @@ const getAllProductController = async (req, res) => {
 };
 
 const createProductController = async (req, res) => {
-	const { id, nombre, categoria, cantidad, minCantidad, precio } = req.body;
+	const { id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta } = req.body;
 	try {
 		const result = await createProductService(
-			id,
+			id_producto,
 			nombre,
 			categoria,
 			cantidad,
-			minCantidad,
-			precio,
+			min_cantidad,
+			precio_venta,
 		);
 		return res.json(result);
 	} catch (error) {
@@ -52,17 +52,18 @@ const deleteProductController = async (req, res) => {
 	}
 };
 
-const editProductController = async (req, res) => {
+const updateProductController = async (req, res) => {
 	const { id } = req.params;
-	const { nombre, categoria, cantidad, minCantidad, precio } = req.body;
+	const { id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta } = req.body;
 	try {
-		const result = await editProductService(
+		const result = await updateProductService(
 			id,
+			id_producto,
 			nombre,
 			categoria,
 			cantidad,
-			minCantidad,
-			precio,
+			min_cantidad,
+			precio_venta,
 		);
 		return res.json(result);
 	} catch (error) {
@@ -72,8 +73,8 @@ const editProductController = async (req, res) => {
 
 export {
 	getProductController,
-	getAllProductController,
+	getAllProductsController,
 	createProductController,
-	editProductController,
+	updateProductController,
 	deleteProductController,
 };

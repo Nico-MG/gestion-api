@@ -28,8 +28,9 @@ const deleteProduct = async (id) => {
 	});
 };
 
-const editProduct = async (
+const updateProduct = async (
 	id,
+	newId,
 	nombre,
 	categoria,
 	cantidad,
@@ -41,6 +42,7 @@ const editProduct = async (
 			id_producto: id,
 		},
 		data: {
+			id_producto: newId,
 			nombre,
 			categoria,
 			cantidad,
@@ -58,8 +60,8 @@ const getProduct = async (id) => {
 	});
 };
 
-const getAllProduct = async () => {
+const getAllProducts = async () => {
 	return await db.producto.findMany();
 };
 
-export { getAllProduct, getProduct, deleteProduct, createProduct, editProduct };
+export { getAllProducts, getProduct, deleteProduct, createProduct, updateProduct };

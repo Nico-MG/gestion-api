@@ -12,12 +12,13 @@ const createUser = async (rut, correo, contrasena, nombre, apellido) => {
 	});
 };
 
-const editUser = async (rut, correo, contrasena, nombre, apellido) => {
+const updateUser = async (rut, newRut, correo, contrasena, nombre, apellido) => {
 	return await db.usuario.update({
 		where: {
 			rut_usuario: rut,
 		},
 		data: {
+			rut_usuario: newRut,
 			correo,
 			contrasena,
 			nombre,
@@ -42,8 +43,8 @@ const getUser = async (rut) => {
 	});
 };
 
-const getAllUser = async () => {
+const getAllUsers = async () => {
 	return await db.usuario.findMany();
 };
 
-export { createUser, editUser, deleteUser, getAllUser, getUser };
+export { createUser, updateUser, deleteUser, getAllUsers, getUser };
