@@ -1,18 +1,18 @@
 import {
-	getAllOrderController,
+	getAllOrdersController,
 	getOrderController,
 	deleteOrderController,
 	createOrderController,
-	editOrderController,
+	updateOrderController,
 } from "../../order/order.controller.js";
 import { Router } from "express";
 
 const orderRoute = Router();
 
-orderRoute.get("/", getAllOrderController);
+orderRoute.get("/", getAllOrdersController);
 orderRoute.get("/:id", getOrderController);
 orderRoute.post("/", createOrderController);
-orderRoute.put("/:id", editOrderController);
+orderRoute.put("/:id", updateOrderController);
 orderRoute.delete("/:id", deleteOrderController);
 
 export { orderRoute };

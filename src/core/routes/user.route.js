@@ -1,18 +1,18 @@
 import {
-	getAllUserController,
+	getAllUsersController,
 	getUserController,
 	createUserController,
-	editUserController,
+	updateUserController,
 	deleteUserController,
 } from "../../user/user.controller.js";
 import { Router } from "express";
 
 const userRoute = Router();
 
-userRoute.get("/", getAllUserController);
+userRoute.get("/", getAllUsersController);
 userRoute.get("/:id", getUserController);
 userRoute.post("/", createUserController);
-userRoute.put("/:id", editUserController);
+userRoute.put("/:id", updateUserController);
 userRoute.delete("/:id", deleteUserController);
 
 export { userRoute };

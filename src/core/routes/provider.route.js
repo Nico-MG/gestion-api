@@ -1,18 +1,18 @@
 import {
-	getAllProviderController,
+	getAllProvidersController,
 	getProviderController,
 	deleteProviderController,
 	createProviderController,
-	editProviderController,
+	updateProviderController,
 } from "../../provider/provider.controller.js";
 import { Router } from "express";
 
 const providerRoute = Router();
 
-providerRoute.get("/", getAllProviderController);
+providerRoute.get("/", getAllProvidersController);
 providerRoute.get("/:id", getProviderController);
 providerRoute.post("/", createProviderController);
-providerRoute.put("/:id", editProviderController);
+providerRoute.put("/:id", updateProviderController);
 providerRoute.delete("/:id", deleteProviderController);
 
 export { providerRoute };
