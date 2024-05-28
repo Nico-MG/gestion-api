@@ -67,8 +67,22 @@ const getOrder = async (id) => {
 	});
 };
 
-const getAllOrders = async () => {
+const getAllOrders = async (desde, hasta, limit, offset, dato, orden) => {
+
+ 
 	return await db.pedido.findMany({
+		where: {
+			fecha: {
+				gt: desde,
+				lt: hasta
+			},
+
+		},
+		orderBy: {
+			[dato]: orden
+		},
+		take: limit,
+		skip: offset,
 		include: {
 			detalle_pedido: true,
 		},

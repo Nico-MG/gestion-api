@@ -18,7 +18,16 @@ const getOrderController = async (req, res) => {
 
 const getAllOrdersController = async (req, res) => {
 	try {
-		const result = await getAllOrdersService();
+		const {desde, hasta, limit, offset, dato, orden} = req.query
+		
+		const orderLimit = limit || 10
+		const orderOffset = offset || 0
+		const orderDato = dato || 'id'
+		const orderOrden = orden || 'asc'
+		const orderDesde = desde || new Date('2000-01-01')
+		const orderHasta = hasta || new Date()
+		
+		const result = await getAllOrdersService(orderDesde, orderHasta, orderLimit, orderOffset, orderDato, orderOrden);
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
