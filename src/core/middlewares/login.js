@@ -12,7 +12,13 @@ const validateLog = (credentials, result) => {
 	}
 
 	const token = jwt.sign({ user }, password, { expiresIn: "1h" });
-	return { token };
+        const serialized = cookie.serialize('my-token',token,{
+	httpOnly: true,
+	sameSite: 'strict',
+	maxAge: 1000 * 60 * 60,
+	path: '/'})
+
+       return { serialized };
 };
 
 export default validateLog;
