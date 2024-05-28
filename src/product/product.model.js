@@ -64,4 +64,10 @@ const getAllProducts = async () => {
 	return await db.producto.findMany();
 };
 
-export { getAllProducts, getProduct, deleteProduct, createProduct, updateProduct };
+export {
+	getAllProducts,
+	getProduct,
+	deleteProduct,
+	createProduct,
+	updateProduct,
+};

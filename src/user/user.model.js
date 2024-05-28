@@ -12,7 +12,14 @@ const createUser = async (rut, correo, contrasena, nombre, apellido) => {
 	});
 };
 
-const updateUser = async (rut, newRut, correo, contrasena, nombre, apellido) => {
+const updateUser = async (
+	rut,
+	newRut,
+	correo,
+	contrasena,
+	nombre,
+	apellido,
+) => {
 	return await db.usuario.update({
 		where: {
 			rut_usuario: rut,

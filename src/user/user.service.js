@@ -14,7 +14,14 @@ const getAllUsersService = async () => {
 	return await getAllUsers();
 };
 
-const updateUserService = async (rut, newRut, correo, contrasena, nombre, apellido) => {
+const updateUserService = async (
+	rut,
+	newRut,
+	correo,
+	contrasena,
+	nombre,
+	apellido,
+) => {
 	return await updateUser(rut, newRut, correo, contrasena, nombre, apellido);
 };
 

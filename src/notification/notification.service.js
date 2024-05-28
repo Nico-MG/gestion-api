@@ -14,7 +14,14 @@ const getAllNotificationsService = async () => {
 	return await getAllNotifications();
 };
 
-const updateNotificationService = async (id, newId, fecha, idp, titulo, desc) => {
+const updateNotificationService = async (
+	id,
+	newId,
+	fecha,
+	idp,
+	titulo,
+	desc,
+) => {
 	return await updateNotification(id, newId, fecha, idp, titulo, desc);
 };
 

@@ -29,10 +29,10 @@ const createRefundController = async (req, res) => {
 	const { id_devolucion, id_venta, fecha, descripcion } = req.body;
 	try {
 		const result = await createRefundService(
-      id_devolucion,
-      id_venta,
-      fecha,
-      descripcion,
+			id_devolucion,
+			id_venta,
+			fecha,
+			descripcion,
 		);
 		return res.json(result);
 	} catch (error) {
@@ -55,11 +55,11 @@ const updateRefundController = async (req, res) => {
 	const { id_devolucion, id_venta, fecha, descripcion } = req.body;
 	try {
 		const result = await updateRefundService(
-      id,
-      id_devolucion,
-      id_venta,
-      fecha,
-      descripcion,
+			id,
+			id_devolucion,
+			id_venta,
+			fecha,
+			descripcion,
 		);
 		return res.json(result);
 	} catch (error) {

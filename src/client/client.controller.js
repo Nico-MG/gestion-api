@@ -28,11 +28,7 @@ const getAllClientsController = async (req, res) => {
 const createClientController = async (req, res) => {
 	const { rut_cliente, nombre, apellido } = req.body;
 	try {
-		const result = await createClientService(
-      rut_cliente,
-      nombre,
-      apellido,
-		);
+		const result = await createClientService(rut_cliente, nombre, apellido);
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
@@ -53,11 +49,7 @@ const updateClientController = async (req, res) => {
 	const { id } = req.params;
 	const { rut_cliente, nombre, apellido } = req.body;
 	try {
-		const result = await updateClientService(
-      rut_cliente,
-      nombre,
-      apellido,
-		);
+		const result = await updateClientService(rut_cliente, nombre, apellido);
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });

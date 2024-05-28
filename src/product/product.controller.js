@@ -26,7 +26,14 @@ const getAllProductsController = async (req, res) => {
 };
 
 const createProductController = async (req, res) => {
-	const { id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta } = req.body;
+	const {
+		id_producto,
+		nombre,
+		categoria,
+		cantidad,
+		min_cantidad,
+		precio_venta,
+	} = req.body;
 	try {
 		const result = await createProductService(
 			id_producto,
@@ -54,7 +61,14 @@ const deleteProductController = async (req, res) => {
 
 const updateProductController = async (req, res) => {
 	const { id } = req.params;
-	const { id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta } = req.body;
+	const {
+		id_producto,
+		nombre,
+		categoria,
+		cantidad,
+		min_cantidad,
+		precio_venta,
+	} = req.body;
 	try {
 		const result = await updateProductService(
 			id,

@@ -26,7 +26,14 @@ const getAllOrdersController = async (req, res) => {
 };
 
 const createOrderController = async (req, res) => {
-	const { id_pedido, rut_proveedor, rut_usuario, fecha, compra_total, detalle_pedido } = req.body;
+	const {
+		id_pedido,
+		rut_proveedor,
+		rut_usuario,
+		fecha,
+		compra_total,
+		detalle_pedido,
+	} = req.body;
 	try {
 		const result = await createOrderService(
 			id_pedido,
@@ -54,7 +61,14 @@ const deleteOrderController = async (req, res) => {
 
 const updateOrderController = async (req, res) => {
 	const { id } = req.params;
-	const { id_pedido, rut_proveedor, rut_usuario, fecha, compra_total, detalle_pedido } = req.body;
+	const {
+		id_pedido,
+		rut_proveedor,
+		rut_usuario,
+		fecha,
+		compra_total,
+		detalle_pedido,
+	} = req.body;
 	try {
 		const result = await updateOrderService(
 			id,

@@ -31,5 +31,5 @@ server
 			console.error(`Server error: ${err}`);
 		}
 	});
-	
+
 export default server;

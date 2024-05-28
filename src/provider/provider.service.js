@@ -14,7 +14,14 @@ const getAllProvidersService = async () => {
 	return await getAllProviders();
 };
 
-const updateProviderService = async (rut, newRut, nombre, direccion, numero, tipo) => {
+const updateProviderService = async (
+	rut,
+	newRut,
+	nombre,
+	direccion,
+	numero,
+	tipo,
+) => {
 	return await updateProvider(rut, newRut, nombre, direccion, numero, tipo);
 };
 

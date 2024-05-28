@@ -30,10 +30,10 @@ const createNotificationController = async (req, res) => {
 	try {
 		const result = await createNotificationService(
 			id_notificacion,
-      fecha,
-      id_producto,
-      titulo,
-      descripcion,
+			fecha,
+			id_producto,
+			titulo,
+			descripcion,
 		);
 		return res.json(result);
 	} catch (error) {
@@ -58,10 +58,10 @@ const updateNotificationController = async (req, res) => {
 		const result = await updateNotificationService(
 			id,
 			id_notificacion,
-      fecha,
-      id_producto,
-      titulo,
-      descripcion,
+			fecha,
+			id_producto,
+			titulo,
+			descripcion,
 		);
 		return res.json(result);
 	} catch (error) {

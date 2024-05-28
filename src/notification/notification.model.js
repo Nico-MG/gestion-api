@@ -4,10 +4,10 @@ const createNotification = async (id, fecha, idp, titulo, desc) => {
 	return await db.notificacion.create({
 		data: {
 			id_notificacion: id,
-      fecha,
-      id_producto: idp,
-      titulo: titulo,
-      descripcion: desc,
+			fecha,
+			id_producto: idp,
+			titulo: titulo,
+			descripcion: desc,
 		},
 	});
 };
@@ -19,10 +19,10 @@ const updateNotification = async (id, newId, fecha, idp, titulo, desc) => {
 		},
 		data: {
 			id_notificacion: newId,
-      fecha,
-      id_producto: idp,
-      titulo: titulo,
-      descripcion: desc,
+			fecha,
+			id_producto: idp,
+			titulo: titulo,
+			descripcion: desc,
 		},
 	});
 };
@@ -47,4 +47,10 @@ const getAllNotifications = async () => {
 	return await db.notificacion.findMany();
 };
 
-export { createNotification, updateNotification, deleteNotification, getAllNotifications, getNotification };
+export {
+	createNotification,
+	updateNotification,
+	deleteNotification,
+	getAllNotifications,
+	getNotification,
+};

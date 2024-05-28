@@ -16,38 +16,37 @@ const createOrder = async (id, rutp, rutu, fecha, compra, dOrder) => {
 };
 
 const updateOrder = async (id, newId, rutp, rutu, fecha, compra, dOrder) => {
-  await Promise.all(
-    dOrder.map(async (detalle) => {
-      await db.detalle_pedido.update({
-        where: {
-          id_pedido_id_producto: {
-            id_pedido: id,
-            id_producto: detalle.id_producto,
-          },
-        },
-        data: {
-          cantidad: detalle.cantidad,
-          precio_unidad: detalle.precio_unidad,
-          precio_total: detalle.precio_total,
-        },
-      });
-    })
-  );
+	await Promise.all(
+		dOrder.map(async (detalle) => {
+			await db.detalle_pedido.update({
+				where: {
+					id_pedido_id_producto: {
+						id_pedido: id,
+						id_producto: detalle.id_producto,
+					},
+				},
+				data: {
+					cantidad: detalle.cantidad,
+					precio_unidad: detalle.precio_unidad,
+					precio_total: detalle.precio_total,
+				},
+			});
+		}),
+	);
 
-  return await db.pedido.update({
-    where: {
-      id_pedido: id,
-    },
-    data: {
+	return await db.pedido.update({
+		where: {
+			id_pedido: id,
+		},
+		data: {
 			id_pedido: newId,
-      rut_proveedor: rutp,
-      rut_usuario: rutu,
-      fecha,
-      compra_total: compra,
-    },
-  });
+			rut_proveedor: rutp,
+			rut_usuario: rutu,
+			fecha,
+			compra_total: compra,
+		},
+	});
 };
-
 
 const deleteOrder = async (id) => {
 	return await db.pedido.delete({

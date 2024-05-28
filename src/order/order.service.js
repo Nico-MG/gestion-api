@@ -14,7 +14,15 @@ const getAllOrdersService = async () => {
 	return await getAllOrders();
 };
 
-const updateOrderService = async (id, newId, rutp, rutu, fecha, compra, dOrder) => {
+const updateOrderService = async (
+	id,
+	newId,
+	rutp,
+	rutu,
+	fecha,
+	compra,
+	dOrder,
+) => {
 	const dOrderData = dOrder.map((e) => {
 		return {
 			id_producto: e.id_producto,

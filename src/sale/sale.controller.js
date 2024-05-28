@@ -29,11 +29,11 @@ const createSaleController = async (req, res) => {
 	const { id_venta, rut_cliente, rut_usuario, fecha, venta_total } = req.body;
 	try {
 		const result = await createSaleService(
-      id_venta,
-      rut_cliente,
-      rut_usuario,
-      fecha,
-      venta_total,
+			id_venta,
+			rut_cliente,
+			rut_usuario,
+			fecha,
+			venta_total,
 		);
 		return res.json(result);
 	} catch (error) {
@@ -57,11 +57,11 @@ const updateSaleController = async (req, res) => {
 	try {
 		const result = await updateSaleService(
 			id,
-      id_venta,
-      rut_cliente,
-      rut_usuario,
-      fecha,
-      venta_total,
+			id_venta,
+			rut_cliente,
+			rut_usuario,
+			fecha,
+			venta_total,
 		);
 		return res.json(result);
 	} catch (error) {
