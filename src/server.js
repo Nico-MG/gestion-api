@@ -21,6 +21,10 @@ server.use("/product", productRoute);
 server.use("/provider", providerRoute);
 server.use("/order", orderRoute);
 
+server.use("/test", verifyToken, (req,res) => { //ruta de prueba protegida
+    res.sendStatus(200);
+});
+
 server
 	.listen(port, () => {
 		console.log(`Server ready to listen on port: ${port}`);
