@@ -22,7 +22,7 @@ const getAllOrdersController = async (req, res) => {
 		
 		const orderLimit = limit || 10
 		const orderOffset = offset || 0
-		const orderDato = dato || 'id'
+		const orderDato = dato || 'id_pedido'
 		const orderOrden = orden || 'asc'
 		const orderDesde = desde || new Date('2000-01-01')
 		const orderHasta = hasta || new Date()
