@@ -10,7 +10,7 @@ const getProductController = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const result = await getProductService(id);
-		return res.json(result);
+	    return res.status(200).json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
 	}
@@ -19,7 +19,7 @@ const getProductController = async (req, res) => {
 const getAllProductsController = async (req, res) => {
 	try {
 		const result = await getAllProductsService();
-		return res.json(result);
+	    return res.status(200).json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
 	}
@@ -43,7 +43,7 @@ const createProductController = async (req, res) => {
 			min_cantidad,
 			precio_venta,
 		);
-		return res.json(result);
+	    return res.status(200).json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
 	}
@@ -53,7 +53,7 @@ const deleteProductController = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const result = await deleteProductService(id);
-		return res.json(result);
+	    return res.status(200).json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
 	}
@@ -79,7 +79,7 @@ const updateProductController = async (req, res) => {
 			min_cantidad,
 			precio_venta,
 		);
-		return res.json(result);
+	    return res.status(200).json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
 	}
