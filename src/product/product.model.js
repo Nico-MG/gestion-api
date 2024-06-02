@@ -9,11 +9,12 @@ const createProduct = async (
 	precio,
 ) => {
 
+    
     try{
 	const result =  await db.producto.create({
 		data: {
 			id_producto: id,
-			nombre,
+		    nombre,
 			categoria,
 			cantidad,
 			min_cantidad: minCantidad,
@@ -21,8 +22,9 @@ const createProduct = async (
 		},
 	});
 	return result;
-    } catch {
-	return {message:"Error"};
+    } catch(error) {
+	error.status = 400;
+	throw error;
     }
     };
 
@@ -58,8 +60,9 @@ const updateProduct = async (
 		},
     });
 	return result;
-    } catch {
-	return {message: "Error"};
+    } catch(error) {
+	error.status = 400;
+	throw error;
     }
     };
 
