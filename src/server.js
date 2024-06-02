@@ -8,6 +8,7 @@ import { providerRoute } from "./core/routes/provider.route.js";
 import { orderRoute } from "./core/routes/order.route.js";
 import { loginRoute } from "./core/routes/login.route.js";
 import verifyToken from "./core/middlewares/verifyToken.js";
+import validatorData from "./core/middlewares/validatorData.js";
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -17,7 +18,7 @@ server.use(express.json());
 
 server.use("/login", loginRoute);
 server.use("/user", userRoute);
-server.use("/product", productRoute);
+server.use("/product", validatorData,productRoute);
 server.use("/provider", providerRoute);
 server.use("/order", orderRoute);
 
