@@ -2,14 +2,13 @@ import tableStructure from "../actions/tableStructures.js";
 const regular_expression = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
 const validatorData = (req,res,next) => {
-    const direc = req.originalUrl.replace('/','');
+    const direc = req.originalUrl.split('/')[1];
+        
+   for (var key in req.body){
+      	var value = req.body[key];
+      	var structure_type = tableStructure[direc][key];
 
-    
-     for (var key in req.body){
-     	var value = req.body[key];
-     	var structure_type = tableStructure[direc][key];
-
-	 if(!structure_type){
+    	 if(!structure_type){
 	     res.status(400).send(`${key} attribute invalid`);
 	 }
 
