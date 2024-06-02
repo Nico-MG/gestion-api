@@ -37,7 +37,8 @@ const updateProductService = async (
 	minCantidad,
 	precio,
 ) => {
-	return await updateProduct(
+    
+    return await updateProduct(
 		id,
 		newId,
 		nombre,
@@ -45,7 +46,7 @@ const updateProductService = async (
 		cantidad,
 		minCantidad,
 		precio,
-	);
+    );
 };
 
 const getProductService = async (id) => {

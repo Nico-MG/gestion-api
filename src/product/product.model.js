@@ -8,7 +8,9 @@ const createProduct = async (
 	minCantidad,
 	precio,
 ) => {
-	return await db.producto.create({
+
+    try{
+	const result =  await db.producto.create({
 		data: {
 			id_producto: id,
 			nombre,
@@ -18,7 +20,11 @@ const createProduct = async (
 			precio_venta: precio,
 		},
 	});
-};
+	return result;
+    } catch {
+	return {message:"Error"};
+    }
+    };
 
 const deleteProduct = async (id) => {
 	return await db.producto.delete({
@@ -37,7 +43,8 @@ const updateProduct = async (
 	minCantidad,
 	precio,
 ) => {
-	return await db.producto.update({
+    try{
+    const result =  await db.producto.update({
 		where: {
 			id_producto: id,
 		},
@@ -49,8 +56,12 @@ const updateProduct = async (
 			min_cantidad: minCantidad,
 			precio_venta: precio,
 		},
-	});
-};
+    });
+	return result;
+    } catch {
+	return {message: "Error"};
+    }
+    };
 
 const getProduct = async (id) => {
 	return await db.producto.findUnique({
