@@ -11,7 +11,7 @@ function verifyToken(req, res, next) {
 	}
 
 	try {
-		const key = token.split("=")[1]; //
+		const key = token.split("=")[1];
 		const payload = jwt.verify(key, SECRET_KEY);
 		next();
 	} catch {

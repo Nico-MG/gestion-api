@@ -7,63 +7,38 @@ import {
 } from "./product.service.js";
 
 const getProductController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await getProductService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
+	const result = await getProductService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
 };
 
-const getAllProductsController = async (req, res) => {
-	try {
-		const result = await getAllProductsService();
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
+const getAllProductsController = async (_, res) => {
+	const result = await getAllProductsService();
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
 };
 
 const createProductController = async (req, res) => {
 	const result = await createProductService(req);
-	res.status(result.status).json({ error: result.message });
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
 };
 
 const deleteProductController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await deleteProductService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
+	const result = await deleteProductService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
 };
 
 const updateProductController = async (req, res) => {
-	const { id } = req.params;
-	const {
-		id_producto,
-		nombre,
-		categoria,
-		cantidad,
-		min_cantidad,
-		precio_venta,
-	} = req.body;
-	try {
-		const result = await updateProductService(
-			id,
-			id_producto,
-			nombre,
-			categoria,
-			cantidad,
-			min_cantidad,
-			precio_venta,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
+	const result = await updateProductService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
 };
 
 export {
