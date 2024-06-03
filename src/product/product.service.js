@@ -7,17 +7,19 @@ import {
 } from "./product.model.js";
 
 const createProductService = async (req) => {
-	const product = getProduct(req.params("id"))
+	const product = await getProduct(req.body.id_producto);
 	if (product) {
 		return {
-			status: 400, message: "producto existe"
-		}
+			status: 400,
+			message: "producto existe",
+		};
 	}
-	const newProduct = createProduct(req.body)
+	const newProduct = await createProduct(req.body);
 
 	return {
-		status: 200, message: "producto creado, id: " + newProduct.id_producto
-	}
+		status: 200,
+		message: "producto creado, id: " + newProduct.id_producto,
+	};
 };
 
 const deleteProductService = async (id) => {
@@ -33,8 +35,7 @@ const updateProductService = async (
 	minCantidad,
 	precio,
 ) => {
-    
-    return await updateProduct(
+	return await updateProduct(
 		id,
 		newId,
 		nombre,
@@ -42,7 +43,7 @@ const updateProductService = async (
 		cantidad,
 		minCantidad,
 		precio,
-    );
+	);
 };
 
 const getProductService = async (id) => {

@@ -12,13 +12,25 @@ const getAllProducts = async () => {
 	return await db.producto.findMany();
 };
 
-const createProduct = async ({id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta}) => {
-	return await db.producto.update({
+const createProduct = async ({
+	id_producto,
+	nombre,
+	categoria,
+	cantidad,
+	min_cantidad,
+	precio_venta,
+}) => {
+	return await db.producto.create({
 		data: {
-			id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta
-		}
-	})
-}
+			id_producto,
+			nombre,
+			categoria,
+			cantidad,
+			min_cantidad,
+			precio_venta,
+		},
+	});
+};
 
 const deleteProduct = async (id) => {
 	return await db.producto.delete({
@@ -28,14 +40,22 @@ const deleteProduct = async (id) => {
 	});
 };
 
-const updateProduct = async (id,{id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta}) => {
+const updateProduct = async (
+	id,
+	{ id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta },
+) => {
 	return await db.producto.update({
-		where: {id_producto: id},
+		where: { id_producto: id },
 		data: {
-			id_producto, nombre, categoria, cantidad, min_cantidad, precio_venta
-		}
-	})
-}
+			id_producto,
+			nombre,
+			categoria,
+			cantidad,
+			min_cantidad,
+			precio_venta,
+		},
+	});
+};
 
 export {
 	getAllProducts,

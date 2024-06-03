@@ -68,18 +68,15 @@ const getOrder = async (id) => {
 };
 
 const getAllOrders = async (desde, hasta, limit, offset, dato, orden) => {
-
- 
 	return await db.pedido.findMany({
 		where: {
 			fecha: {
 				gt: desde,
-				lt: hasta
+				lt: hasta,
 			},
-
 		},
 		orderBy: {
-			[dato]: orden
+			[dato]: orden,
 		},
 		take: limit,
 		skip: offset,

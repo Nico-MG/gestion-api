@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import "dotenv/config";
 const validateLog = (credentials, result) => {
-        const SECRET_KEY = process.env.SECRET_KEY;
-        const user = credentials.rut;
+	const SECRET_KEY = process.env.SECRET_KEY;
+	const user = credentials.rut;
 	const password = credentials.password;
-       
+
 	if (!user || !password) {
 		return { message: "Vacio" };
 	}
@@ -21,9 +21,7 @@ const validateLog = (credentials, result) => {
 		path: "/",
 	});
 
-	return  serialized;
-
+	return serialized;
 };
-
 
 export default validateLog;

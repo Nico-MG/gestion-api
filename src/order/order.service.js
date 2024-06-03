@@ -10,7 +10,14 @@ const getOrderService = async (id) => {
 	return await getOrder(id);
 };
 
-const getAllOrdersService = async (desde, hasta, limit, offset, dato, orden) => {
+const getAllOrdersService = async (
+	desde,
+	hasta,
+	limit,
+	offset,
+	dato,
+	orden,
+) => {
 	return await getAllOrders(desde, hasta, limit, offset, dato, orden);
 };
 
