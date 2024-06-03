@@ -6,22 +6,18 @@ import {
 	updateProduct,
 } from "./product.model.js";
 
-const createProductService = async (
-	id,
-	nombre,
-	categoria,
-	cantidad,
-	minCantidad,
-	precio,
-) => {
-	return await createProduct(
-		id,
-		nombre,
-		categoria,
-		cantidad,
-		minCantidad,
-		precio,
-	);
+const createProductService = async (req) => {
+	const product = getProduct(req.params("id"))
+	if (product) {
+		return {
+			status: 400, message: "producto existe"
+		}
+	}
+	const newProduct = createProduct(req.body)
+
+	return {
+		status: 200, message: "producto creado, id: " + newProduct.id_producto
+	}
 };
 
 const deleteProductService = async (id) => {

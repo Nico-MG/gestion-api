@@ -26,27 +26,8 @@ const getAllProductsController = async (req, res) => {
 };
 
 const createProductController = async (req, res) => {
-	const {
-		id_producto,
-		nombre,
-		categoria,
-		cantidad,
-		min_cantidad,
-		precio_venta,
-	} = req.body;
-	try {
-		const result = await createProductService(
-			id_producto,
-			nombre,
-			categoria,
-			cantidad,
-			min_cantidad,
-			precio_venta,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
+	const result = await createProductService(req);
+	res.status(result.status).json({ error: result.message });
 };
 
 const deleteProductController = async (req, res) => {
