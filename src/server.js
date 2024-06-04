@@ -2,8 +2,9 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 
-import productRoute from "./product/product.controller.js";
-import providerRoute from "./provider/provider.controller.js";
+import productsRoute from "./products/products.controller.js";
+import providersRoute from "./providers/providers.controller.js";
+import ordersRoute from "./orders/orders.controller.js";
 import verifyToken from "./core/middlewares/verifyToken.js";
 import validatorData from "./core/middlewares/validatorData.js";
 
@@ -13,8 +14,9 @@ const port = process.env.PORT || 3000;
 server.use(cors());
 server.use(express.json());
 
-server.use("/product", validatorData, productRoute);
-server.use("/provider", providerRoute);
+server.use("/products", validatorData, productsRoute);
+server.use("/providers", providersRoute);
+server.use("/orders", ordersRoute);
 
 server.use("/test", verifyToken, (req, res) => {
 	//ruta de prueba protegida

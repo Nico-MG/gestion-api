@@ -9,7 +9,16 @@ const getProduct = async (id) => {
 };
 
 const getAllProducts = async () => {
-	return await db.producto.findMany();
+	const data = await db.producto.findMany();
+	const newData = [];
+	for (const product of data) {
+		const newProduct = {};
+		newProduct.idp = product.id_producto;
+		// TODO: otros atributos
+		newData.push(newProduct);
+	}
+
+	return newData;
 };
 
 const createProduct = async ({

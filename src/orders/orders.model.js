@@ -1,49 +1,44 @@
 import db from "../core/db/connection.js";
 
-const createOrder = async (id, rutp, rutu, fecha, compra, dOrder) => {
+const createOrder = async ({
+	id_pedido,
+	rut_proveedor,
+	rut_usuario,
+	fecha,
+	compra_total,
+	orderDetails,
+}) => {
 	return await db.pedido.create({
 		data: {
-			id_pedido: id,
-			rut_proveedor: rutp,
-			rut_usuario: rutu,
+			id_pedido,
+			rut_proveedor,
+			rut_usuario,
 			fecha,
-			compra_total: compra,
+			compra_total,
 			detalle_pedido: {
-				create: dOrder,
+				create: orderDetails,
 			},
 		},
 	});
 };
 
-const updateOrder = async (id, newId, rutp, rutu, fecha, compra, dOrder) => {
-	await Promise.all(
-		dOrder.map(async (detalle) => {
-			await db.detalle_pedido.update({
-				where: {
-					id_pedido_id_producto: {
-						id_pedido: id,
-						id_producto: detalle.id_producto,
-					},
-				},
-				data: {
-					cantidad: detalle.cantidad,
-					precio_unidad: detalle.precio_unidad,
-					precio_total: detalle.precio_total,
-				},
-			});
-		}),
-	);
-
+const updateOrder = async (
+	id,
+	{ id_pedido, rut_proveedor, rut_usuario, fecha, compra_total, orderDetails },
+) => {
 	return await db.pedido.update({
 		where: {
 			id_pedido: id,
 		},
 		data: {
-			id_pedido: newId,
-			rut_proveedor: rutp,
-			rut_usuario: rutu,
+			id_pedido,
+			rut_proveedor,
+			rut_usuario,
 			fecha,
-			compra_total: compra,
+			compra_total,
+			detalle_pedido: {
+				update: orderDetails,
+			},
 		},
 	});
 };
@@ -75,12 +70,14 @@ const getAllOrders = async ({
 	dato,
 	orden,
 	texto,
-	numero,
 }) => {
 	return await db.pedido.findMany({
 		where: {
-			[dato || "id_pedido"]: {
-				contains: texto || "",
+			OR: {
+				[dato || "total_venta"]: numero || 0,
+				[dato || "id_pedido"]: {
+					contains: texto || "",
+				},
 			},
 			fecha: {
 				gt: desde || new Date("2000-01-01"),
@@ -88,7 +85,7 @@ const getAllOrders = async ({
 			},
 		},
 		orderBy: {
-			[dato  || "id_pedido"]: orden || "asc",
+			[dato || "id_pedido"]: orden || "asc",
 		},
 		take: limit || 10,
 		skip: offset || 0,

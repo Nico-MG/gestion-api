@@ -44,7 +44,7 @@ const deleteProductService = async (req) => {
 		const newProduct = await deleteProduct(req.params.id);
 		return {
 			status: 200,
-			message: `producto actualizado, id: ${newProduct.id_producto}`,
+			message: `producto eliminado, id: ${newProduct.id_producto}`,
 			data: newProduct,
 		};
 	} catch (error) {

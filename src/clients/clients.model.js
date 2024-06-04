@@ -1,40 +1,40 @@
 import db from "../core/db/prisma.js";
 
-const createClient = async (rut, nombre, apellido) => {
+const createClient = async ({ rut_cliente, nombre, apellido }) => {
 	return await db.cliente.create({
 		data: {
-			rut_cliente: rut,
+			rut_cliente,
 			nombre,
 			apellido,
 		},
 	});
 };
 
-const updateClient = async (rut, newRut, nombre, apellido) => {
+const updateClient = async (id, { rut_cliente, nombre, apellido }) => {
 	return await db.cliente.update({
 		where: {
-			rut_cliente: rut,
+			rut_cliente: id,
 		},
 		data: {
-			rut_cliente: newRut,
+			rut_cliente,
 			nombre,
 			apellido,
 		},
 	});
 };
 
-const deleteClient = async (rut) => {
+const deleteClient = async (id) => {
 	return await db.cliente.delete({
 		where: {
-			rut_cliente: rut,
+			rut_cliente: id,
 		},
 	});
 };
 
-const getClient = async (rut) => {
+const getClient = async (id) => {
 	return await db.cliente.findUnique({
 		where: {
-			rut_cliente: rut,
+			rut_cliente: id,
 		},
 	});
 };

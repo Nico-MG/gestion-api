@@ -1,5 +1,19 @@
 import getLoginUser from "./auth.service.js";
 import validateLog from "../core/middlewares/login.js";
+import { Router } from "express";
+
+const authRoute = Router();
+
+authRoute.post("/login", async (req, res) => {
+	// TODO: hacer el login
+});
+authRoute.post("/registrer", async (req, res) => {
+	// ?: hacemos un registrar usuario?
+});
+authRoute.post("logout", async (req, res) => {
+	// TODO: hacer el cerrar sesion
+	// ?: necesitamos una nueva tabla
+});
 
 const getLoginController = async (req, res) => {
 	const id = req.body.id;

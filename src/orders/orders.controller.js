@@ -5,92 +5,43 @@ import {
 	updateOrderService,
 	deleteOrderService,
 } from "./orders.service.js";
+import { Router } from "express";
 
-const getOrderController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await getOrderService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+const ordersRoute = Router();
 
-const getAllOrdersController = async (req, res) => {
-	try {
-		
+ordersRoute.get("/:id", async (req, res) => {
+	const result = await getOrderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-		const result = await getAllOrdersService(req);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+ordersRoute.get("/", async (req, res) => {
+	const result = await getAllOrdersService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const createOrderController = async (req, res) => {
-	const {
-		id_pedido,
-		rut_proveedor,
-		rut_usuario,
-		fecha,
-		compra_total,
-		detalle_pedido,
-	} = req.body;
-	try {
-		const result = await createOrderService(
-			id_pedido,
-			rut_proveedor,
-			rut_usuario,
-			fecha,
-			compra_total,
-			detalle_pedido,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+ordersRoute.post("/create", async (req, res) => {
+	const result = await createOrderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const deleteOrderController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await deleteOrderService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+ordersRoute.put("/:id/edit", async (req, res) => {
+	const result = await updateOrderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const updateOrderController = async (req, res) => {
-	const { id } = req.params;
-	const {
-		id_pedido,
-		rut_proveedor,
-		rut_usuario,
-		fecha,
-		compra_total,
-		detalle_pedido,
-	} = req.body;
-	try {
-		const result = await updateOrderService(
-			id,
-			id_pedido,
-			rut_proveedor,
-			rut_usuario,
-			fecha,
-			compra_total,
-			detalle_pedido,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+ordersRoute.get("/:id/delete", async (req, res) => {
+	const result = await deleteOrderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-export {
-	getOrderController,
-	getAllOrdersController,
-	createOrderController,
-	updateOrderController,
-	deleteOrderController,
-};
+export default ordersRoute;

@@ -5,61 +5,43 @@ import {
 	updateClientService,
 	deleteClientService,
 } from "./clients.service.js";
+import { Router } from "express";
 
-const getClientController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await getClientService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+const clientsRoute = Router();
 
-const getAllClientsController = async (req, res) => {
-	try {
-		const result = await getAllClientsService();
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+clientsRoute.get("/:id", async (req, res) => {
+	const result = await getClientService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const createClientController = async (req, res) => {
-	const { rut_cliente, nombre, apellido } = req.body;
-	try {
-		const result = await createClientService(rut_cliente, nombre, apellido);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+clientsRoute.get("/", async (req, res) => {
+	const result = await getAllClientsService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const deleteClientController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await deleteClientService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+clientsRoute.post("/create", async (req, res) => {
+	const result = await createClientService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const updateClientController = async (req, res) => {
-	const { id } = req.params;
-	const { rut_cliente, nombre, apellido } = req.body;
-	try {
-		const result = await updateClientService(rut_cliente, nombre, apellido);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+clientsRoute.delete("/:id/delete", async (req, res) => {
+	const result = await deleteClientService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-export {
-	getClientController,
-	getAllClientsController,
-	createClientController,
-	updateClientController,
-	deleteClientController,
-};
+clientsRoute.put("/:id/edit", async (req, res) => {
+	const result = await updateClientService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
+
+export default clientsRoute;
