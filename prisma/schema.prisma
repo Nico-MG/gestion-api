@@ -18,7 +18,7 @@ model Clients {
 model RefundDetails {
   refund_id  String   @db.VarChar(20)
   product_id String   @db.VarChar(20)
-  quantity   Int?
+  quantity   Int
   refunds    Refunds  @relation(fields: [refund_id], references: [refund_id], onDelete: Cascade)
   products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
@@ -28,9 +28,9 @@ model RefundDetails {
 model OrderDetails {
   order_id   String   @db.VarChar(20)
   product_id String   @db.VarChar(20)
-  quantity   Int?
-  unit_price  Int?
-  line_total Int?
+  quantity   Int
+  unit_price Int
+  line_total Int
   orders     Orders   @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
   products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
@@ -40,9 +40,9 @@ model OrderDetails {
 model SaleDetails {
   sale_id    String   @db.VarChar(20)
   product_id String   @db.VarChar(20)
-  quantity   Int?
-  unit_price Int?
-  line_total Int?
+  quantity   Int
+  unit_price Int
+  line_total Int
   products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
   sales      Sales    @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade)
 
@@ -51,28 +51,28 @@ model SaleDetails {
 
 model Refunds {
   refund_id      String          @id @db.VarChar(20)
-  sale_id        String?         @db.VarChar(20)
-  date           DateTime?       @db.Timestamp(6)
-  description    String?
+  sale_id        String          @db.VarChar(20)
+  date           DateTime        @db.Timestamp(6)
+  description    String
   refund_details RefundDetails[]
   sales          Sales?          @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade)
 }
 
 model Notifications {
   notification_id Int       @id @default(autoincrement())
-  date            DateTime? @db.Timestamp(6)
-  product_id      String?   @db.VarChar(20)
-  title           String?   @db.VarChar(20)
-  description     String?
+  date            DateTime  @db.Timestamp(6)
+  product_id      String    @db.VarChar(20)
+  title           String    @db.VarChar(20)
+  description     String
   products        Products? @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 }
 
 model Orders {
   order_id       String         @id @db.VarChar(20)
-  provider_rut   String?        @db.VarChar(20)
-  user_rut       String?        @db.VarChar(20)
-  date           DateTime?      @db.Timestamp(6)
-  total_purchase Int?
+  provider_rut   String         @db.VarChar(20)
+  user_rut       String         @db.VarChar(20)
+  date           DateTime       @db.Timestamp(6)
+  total_purchase Int
   order_details  OrderDetails[]
   providers      Providers?     @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
   users          Users?         @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
@@ -80,11 +80,11 @@ model Orders {
 
 model Products {
   product_id     String          @id @db.VarChar(20)
-  name           String?         @db.VarChar(20)
-  type           String?         @db.VarChar(20)
-  quantity       Int?
-  min_quantity   Int?
-  price          Int?
+  name           String          @db.VarChar(20)
+  type           String          @db.VarChar(20)
+  quantity       Int
+  min_quantity   Int
+  price          Int
   refund_details RefundDetails[]
   order_details  OrderDetails[]
   sale_details   SaleDetails[]
@@ -93,19 +93,19 @@ model Products {
 
 model Providers {
   provider_rut String   @id @db.VarChar(20)
-  name         String?  @db.VarChar(20)
-  address      String?  @db.VarChar(20)
-  phone        String?  @db.VarChar(20)
-  type         String?  @db.VarChar(20)
+  name         String   @db.VarChar(20)
+  address      String   @db.VarChar(20)
+  phone        String   @db.VarChar(20)
+  type         String   @db.VarChar(20)
   orders       Orders[]
 }
 
 model Users {
   user_rut String   @id @db.VarChar(20)
-  mail     String?  @db.VarChar(50)
-  password String?  @db.VarChar(60)
-  name     String?  @db.VarChar(20)
-  lastname String?  @db.VarChar(20)
+  mail     String   @db.VarChar(50)
+  password String   @db.VarChar(60)
+  name     String   @db.VarChar(20)
+  lastname String   @db.VarChar(20)
   orders   Orders[]
   sales    Sales[]
 }
