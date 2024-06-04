@@ -16,28 +16,28 @@ providerRoute.get("/:id", async (req, res) => {
 		.json({ message: result.message, data: result.data });
 });
 
-providerRoute.get("/", async (_, res) => {
-	const result = await getAllProvidersService();
+providerRoute.get("/", async (req, res) => {
+	const result = await getAllProvidersService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
-providerRoute.post("/", async (req, res) => {
+providerRoute.post("/create", async (req, res) => {
 	const result = await createProviderService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
-providerRoute.delete("/:id", async (req, res) => {
+providerRoute.delete("/:id/delete", async (req, res) => {
 	const result = await deleteProviderService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
-providerRoute.put("/:id", async (req, res) => {
+providerRoute.put("/:id/edit", async (req, res) => {
 	const result = await updateProviderService(req);
 	res
 		.status(result.status)

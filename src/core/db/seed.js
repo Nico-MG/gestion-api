@@ -13,3 +13,9 @@ function randomProvider() {
 
 // en proceso
 db.proveedor.create({data: randomProvider()})
+db.producto.findUnique({
+    omit: {
+        categoria: true
+    }
+    
+})

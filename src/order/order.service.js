@@ -11,7 +11,7 @@ const getOrderService = async (id) => {
 };
 
 const getAllOrdersService = async (req) => {
-	return await getAllOrders(req.body);
+	return await getAllOrders(req.query);
 };
 
 const updateOrderService = async (

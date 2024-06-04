@@ -8,7 +8,7 @@ import {
 
 const getProviderService = async (req) => {
 	try {
-		const provider = await getProvider();
+		const provider = await getProvider(req.params.id);
 		if (!provider) {
 			return {
 				status: 400,
@@ -31,7 +31,7 @@ const getProviderService = async (req) => {
 	}
 };
 
-const getAllProvidersService = async () => {
+const getAllProvidersService = async (req) => {
 	try {
 		const providerAll = await getAllProviders();
 		if (providerAll.length === 0) {

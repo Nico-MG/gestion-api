@@ -16,28 +16,28 @@ productRoute.get("/:id", async (req, res) => {
 		.json({ message: result.message, data: result.data });
 });
 
-productRoute.get("/", async (_, res) => {
-	const result = await getAllProductsService();
+productRoute.get("/", async (req, res) => {
+	const result = await getAllProductsService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
-productRoute.post("/", async (req, res) => {
+productRoute.post("/create", async (req, res) => {
 	const result = await createProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
-productRoute.put("/:id", async (req, res) => {
+productRoute.put("/:id/edit", async (req, res) => {
 	const result = await deleteProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
-productRoute.delete("/:id", async (req, res) => {
+productRoute.delete("/:id/delete", async (req, res) => {
 	const result = await updateProductService(req);
 	res
 		.status(result.status)

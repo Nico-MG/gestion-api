@@ -75,22 +75,23 @@ const getAllOrders = async ({
 	dato,
 	orden,
 	texto,
+	numero,
 }) => {
 	return await db.pedido.findMany({
 		where: {
-			[dato]: {
-				contains: texto,
+			[dato || "id_pedido"]: {
+				contains: texto || "",
 			},
 			fecha: {
-				gt: desde,
-				lt: hasta,
+				gt: desde || new Date("2000-01-01"),
+				lt: hasta || new Date(),
 			},
 		},
 		orderBy: {
-			[dato]: orden,
+			[dato  || "id_pedido"]: orden || "asc",
 		},
-		take: limit,
-		skip: offset,
+		take: limit || 10,
+		skip: offset || 0,
 		include: {
 			detalle_pedido: true,
 		},

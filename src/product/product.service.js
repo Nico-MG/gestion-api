@@ -105,7 +105,7 @@ const getProductService = async (req) => {
 	}
 };
 
-const getAllProductsService = async () => {
+const getAllProductsService = async (req) => {
 	try {
 		const allProduct = await getAllProducts();
 		if (allProduct.length === 0) {
