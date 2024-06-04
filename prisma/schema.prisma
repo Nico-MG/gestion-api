@@ -68,14 +68,14 @@ model Notifications {
 }
 
 model Orders {
-  order_id       String         @id @db.VarChar(20)
-  provider_rut   String         @db.VarChar(20)
-  user_rut       String         @db.VarChar(20)
-  date           DateTime       @db.Timestamp(6)
-  total_purchase Int
-  order_details  OrderDetails[]
-  providers      Providers?     @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
-  users          Users?         @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
+  order_id     String   @id @db.VarChar(20)
+  provider_rut String   @db.VarChar(20)
+  user_rut     String   @db.VarChar(20)
+  date         DateTime @db.Timestamp(6)
+  total_price   Int
+  order_details OrderDetails[]
+  providers     Providers?     @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
+  users         Users?         @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
 }
 
 model Products {
