@@ -5,46 +5,43 @@ import {
 	updateProductService,
 	deleteProductService,
 } from "./product.service.js";
+import { Router } from "express";
 
-const getProductController = async (req, res) => {
+const productRoute = Router();
+
+productRoute.get("/:id", async (req, res) => {
 	const result = await getProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
-};
+});
 
-const getAllProductsController = async (_, res) => {
+productRoute.get("/", async (_, res) => {
 	const result = await getAllProductsService();
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
-};
+});
 
-const createProductController = async (req, res) => {
+productRoute.post("/", async (req, res) => {
 	const result = await createProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
-};
+});
 
-const deleteProductController = async (req, res) => {
+productRoute.put("/:id", async (req, res) => {
 	const result = await deleteProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
-};
+});
 
-const updateProductController = async (req, res) => {
+productRoute.delete("/:id", async (req, res) => {
 	const result = await updateProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
-};
+});
 
-export {
-	getProductController,
-	getAllProductsController,
-	createProductController,
-	updateProductController,
-	deleteProductController,
-};
+export default productRoute;

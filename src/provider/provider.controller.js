@@ -5,74 +5,43 @@ import {
 	updateProviderService,
 	deleteProviderService,
 } from "./provider.service.js";
+import { Router } from "express";
 
-const getProviderController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await getProviderService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+const providerRoute = Router();
 
-const getAllProvidersController = async (req, res) => {
-	try {
-		const result = await getAllProvidersService();
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+providerRoute.get("/:id", async (req, res) => {
+	const result = await getProviderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const createProviderController = async (req, res) => {
-	const { rut_proveedor, nombre, direccion, numero, tipo } = req.body;
-	try {
-		const result = await createProviderService(
-			rut_proveedor,
-			nombre,
-			direccion,
-			numero,
-			tipo,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+providerRoute.get("/", async (_, res) => {
+	const result = await getAllProvidersService();
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const deleteProviderController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await deleteProviderService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+providerRoute.post("/", async (req, res) => {
+	const result = await createProviderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const updateProviderController = async (req, res) => {
-	const { id } = req.params;
-	const { rut_proveedor, nombre, direccion, numero, tipo } = req.body;
-	try {
-		const result = await updateProviderService(
-			id,
-			rut_proveedor,
-			nombre,
-			direccion,
-			numero,
-			tipo,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+providerRoute.delete("/:id", async (req, res) => {
+	const result = await deleteProviderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-export {
-	getProviderController,
-	getAllProvidersController,
-	createProviderController,
-	updateProviderController,
-	deleteProviderController,
-};
+providerRoute.put("/:id", async (req, res) => {
+	const result = await updateProviderService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
+
+export default providerRoute

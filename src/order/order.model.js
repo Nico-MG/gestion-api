@@ -67,9 +67,20 @@ const getOrder = async (id) => {
 	});
 };
 
-const getAllOrders = async ({desde, hasta, limit, offset, dato, orden}) => {
+const getAllOrders = async ({
+	desde,
+	hasta,
+	limit,
+	offset,
+	dato,
+	orden,
+	texto,
+}) => {
 	return await db.pedido.findMany({
 		where: {
+			[dato]: {
+				contains: texto,
+			},
 			fecha: {
 				gt: desde,
 				lt: hasta,

@@ -2,9 +2,9 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 
-import { productRoute } from "./core/routes/product.route.js";
+import productRoute from "./product/product.controller.js";
+import providerRoute from "./provider/provider.controller.js";
 import { userRoute } from "./core/routes/user.route.js";
-import { providerRoute } from "./core/routes/provider.route.js";
 import { orderRoute } from "./core/routes/order.route.js";
 import { loginRoute } from "./core/routes/login.route.js";
 import verifyToken from "./core/middlewares/verifyToken.js";

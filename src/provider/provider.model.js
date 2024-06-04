@@ -1,9 +1,15 @@
 import db from "../core/db/prisma.js";
 
-const createProvider = async (rut, nombre, direccion, numero, tipo) => {
+const createProvider = async ({
+	rut_proveedor,
+	nombre,
+	direccion,
+	numero,
+	tipo,
+}) => {
 	return await db.proveedor.create({
 		data: {
-			rut_proveedor: rut,
+			rut_proveedor,
 			nombre,
 			direccion,
 			numero,
@@ -12,13 +18,16 @@ const createProvider = async (rut, nombre, direccion, numero, tipo) => {
 	});
 };
 
-const updateProvider = async (rut, newRut, nombre, direccion, numero, tipo) => {
+const updateProvider = async (
+	id,
+	{ rut_proveedor, nombre, direccion, numero, tipo },
+) => {
 	return await db.proveedor.update({
 		where: {
-			rut_proveedor: rut,
+			rut_proveedor: id,
 		},
 		data: {
-			rut_proveedor: newRut,
+			rut_proveedor,
 			nombre,
 			direccion,
 			numero,
@@ -27,18 +36,18 @@ const updateProvider = async (rut, newRut, nombre, direccion, numero, tipo) => {
 	});
 };
 
-const deleteProvider = async (rut) => {
+const deleteProvider = async (id) => {
 	return await db.proveedor.delete({
 		where: {
-			rut_proveedor: rut,
+			rut_proveedor: id,
 		},
 	});
 };
 
-const getProvider = async (rut) => {
+const getProvider = async (id) => {
 	return await db.proveedor.findUnique({
 		where: {
-			rut_proveedor: rut,
+			rut_proveedor: id,
 		},
 	});
 };

@@ -19,11 +19,12 @@ const getOrderController = async (req, res) => {
 const getAllOrdersController = async (req, res) => {
 	try {
 		req.query.limit ??= 10;
-		req.query.offset ??= 0;
-		req.query.dato ??= "id_pedido";
-		req.query.orden ??= "asc";
 		req.query.desde ??= new Date("2000-01-01");
 		req.query.hasta ??= new Date();
+		req.query.offset ??= 0;
+		req.query.orden ??= "asc";
+		req.query.dato ??= "id_pedido";
+		req.query.texto ??= "";
 
 		const result = await getAllOrdersService(req);
 		return res.json(result);
