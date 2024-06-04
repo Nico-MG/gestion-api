@@ -1,5 +1,5 @@
 import {faker} from '@faker-js/faker'
-import db from './prisma.js'
+import db from './connection.js'
 
 function randomProvider() {
     return {
