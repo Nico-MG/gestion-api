@@ -31,14 +31,14 @@ productsRoute.post("/create", async (req, res) => {
 });
 
 productsRoute.put("/:id/edit", async (req, res) => {
-	const result = await deleteProductService(req);
+	const result = await updateProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
 
 productsRoute.delete("/:id/delete", async (req, res) => {
-	const result = await updateProductService(req);
+	const result = await deleteProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
