@@ -54,6 +54,7 @@ model Refunds {
   sale_id        String          @db.VarChar(20)
   date           DateTime        @db.Timestamp(6)
   description    String
+  image_refund   String
   refund_details RefundDetails[]
   sales          Sales?          @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade)
 }
