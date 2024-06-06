@@ -7,15 +7,17 @@ export const getProductService = async (req) => {
 		if (!product) {
 			return {
 				status: 400,
-				message: "No se encontro el producto",
+				message: "No se encontró el producto",
 				data: null,
 			};
 		}
-        
+
+		const adaptedProduct = adapterFront(mapProducts, product);
+
 		return {
 			status: 200,
-			message: "Se encontro el producto",
-			data: adapterFront(mapProducts, product),
+			message: "Producto encontrado",
+			data: adaptedProduct,
 		};
 	} catch (error) {
 		return {
@@ -26,10 +28,10 @@ export const getProductService = async (req) => {
 	}
 };
 
-export const getAllProductsService = async (req) => {
+export const getAllProductsService = async () => {
 	try {
-		const allProduct = await getAllProducts();
-		if (allProduct.length === 0) {
+		const allProducts = await getAllProducts();
+		if (allProducts.length === 0) {
 			return {
 				status: 400,
 				message: "No se encontraron productos",
@@ -37,15 +39,14 @@ export const getAllProductsService = async (req) => {
 			};
 		}
 
-		const newAllProducts = [];
-		for (const product of allProduct) {
-			newAllProducts.push(adapterFront(mapProducts, product));
-		}
+		const adaptedProducts = allProducts.map((product) =>
+			adapterFront(mapProducts, product),
+		);
 
 		return {
 			status: 200,
-			message: "Se encontraron productos",
-			data: newAllProducts,
+			message: "Productos encontrados",
+			data: adaptedProducts,
 		};
 	} catch (error) {
 		return {

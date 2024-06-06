@@ -10,7 +10,7 @@ import { Router } from "express";
 const productsRoute = Router();
 
 productsRoute.get("/", async (req, res) => {
-	const result = await getAllProductsService(req);
+	const result = await getAllProductsService();
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });

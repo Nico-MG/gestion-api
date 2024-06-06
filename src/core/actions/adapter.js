@@ -92,7 +92,7 @@ export const mapUsers = {
 };
 
 export const mapSales = {
-	sale_id: "sale_id",
+	ids: "sale_id",
 	client_rut: "client_rut",
 	user_rut: "user_rut",
 	date: "date",
@@ -102,6 +102,8 @@ export const mapSales = {
 	clients: "clients",
 	users: "users",
 };
+
+// [[dale_id, sale_id],[cl,cl],]
 
 // Función para convertir datos del frontend a la estructura de la base de datos
 export const adapterDB = (mapping, reqBody) =>

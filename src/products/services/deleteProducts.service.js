@@ -7,15 +7,17 @@ export const deleteProductService = async (req) => {
 		if (!product) {
 			return {
 				status: 400,
-				mesage: "producto no existe",
+				message: "Producto no existe",
 				data: null,
 			};
 		}
-		const newProduct = await deleteProduct(req.params.id);
+
+		const deletedProduct = await deleteProduct(req.params.id);
+
 		return {
 			status: 200,
-			message: `producto eliminado, id: ${newProduct.id_producto}`,
-			data: adapterFront(mapProducts, newProduct),
+			message: `Producto eliminado, id: ${deletedProduct.product_id}`,
+			data: adapterFront(mapProducts, deletedProduct),
 		};
 	} catch (error) {
 		return {
