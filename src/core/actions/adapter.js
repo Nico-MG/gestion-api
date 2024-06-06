@@ -7,19 +7,17 @@ export const mapProducts = {
 	min_cantidad: "min_quantity",
 	precio: "price",
 };
+
 export const mapClients = {
 	client_rut: "client_rut",
 	name: "name",
 	lastname: "lastname",
-	sales: "sales",
 };
 
 export const mapRefundDetails = {
 	refund_id: "refund_id",
 	product_id: "product_id",
 	quantity: "quantity",
-	refunds: "refunds",
-	products: "products",
 };
 
 export const mapOrderDetails = {
@@ -28,8 +26,6 @@ export const mapOrderDetails = {
 	quantity: "quantity",
 	unit_price: "unit_price",
 	line_total: "line_total",
-	orders: "orders",
-	products: "products",
 };
 
 export const mapSaleDetails = {
@@ -38,8 +34,6 @@ export const mapSaleDetails = {
 	quantity: "quantity",
 	unit_price: "unit_price",
 	line_total: "line_total",
-	products: "products",
-	sales: "sales",
 };
 
 export const mapRefunds = {
@@ -48,8 +42,6 @@ export const mapRefunds = {
 	date: "date",
 	description: "description",
 	image_refund: "image_refund",
-	refund_details: "refund_details",
-	sales: "sales",
 };
 
 export const mapNotifications = {
@@ -58,7 +50,6 @@ export const mapNotifications = {
 	product_id: "product_id",
 	title: "title",
 	description: "description",
-	products: "products",
 };
 
 export const mapOrders = {
@@ -67,9 +58,6 @@ export const mapOrders = {
 	user_rut: "user_rut",
 	date: "date",
 	total_purchase: "total_purchase",
-	order_details: "order_details",
-	providers: "providers",
-	users: "users",
 };
 
 export const mapProviders = {
@@ -78,7 +66,6 @@ export const mapProviders = {
 	address: "address",
 	phone: "phone",
 	type: "type",
-	orders: "orders",
 };
 
 export const mapUsers = {
@@ -87,8 +74,6 @@ export const mapUsers = {
 	password: "password",
 	name: "name",
 	lastname: "lastname",
-	orders: "orders",
-	sales: "sales",
 };
 
 export const mapSales = {
@@ -97,10 +82,6 @@ export const mapSales = {
 	user_rut: "user_rut",
 	date: "date",
 	total_price: "total_price",
-	sale_details: "sale_details",
-	refunds: "refunds",
-	clients: "clients",
-	users: "users",
 };
 
 // [[dale_id, sale_id],[cl,cl],]

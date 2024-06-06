@@ -9,7 +9,7 @@ import { Router } from "express";
 
 const productsRoute = Router();
 
-productsRoute.get("/", async (req, res) => {
+productsRoute.get("/", async (_, res) => {
 	const result = await getAllProductsService();
 	res
 		.status(result.status)
