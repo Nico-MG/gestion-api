@@ -1,4 +1,5 @@
-import { adapterFront, mapProducts } from "../../core/actions/adapter.js";
+import { adapterFront } from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
 import { getAllProducts, getProduct } from "../products.model.js";
 
 export const getProductService = async (req) => {
@@ -12,7 +13,7 @@ export const getProductService = async (req) => {
 			};
 		}
 
-		const adaptedProduct = adapterFront(mapProducts, product);
+		const adaptedProduct = adapterFront(tables.products, product);
 
 		return {
 			status: 200,
@@ -40,7 +41,7 @@ export const getAllProductsService = async () => {
 		}
 
 		const adaptedProducts = allProducts.map((product) =>
-			adapterFront(mapProducts, product),
+			adapterFront(tables.products, product),
 		);
 
 		return {

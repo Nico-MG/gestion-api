@@ -23,8 +23,6 @@ productsRoute.get("/:id", async (req, res) => {
 		.json({ message: result.message, data: result.data });
 });
 
-// [POST] .../products/create
-
 productsRoute.post("/create", async (req, res) => {
 	const result = await createProductService(req);
 	res
@@ -32,16 +30,12 @@ productsRoute.post("/create", async (req, res) => {
 		.json({ message: result.message, data: result.data });
 });
 
-// [PUT] .../produts/:id/edit
-
 productsRoute.put("/:id/edit", async (req, res) => {
 	const result = await updateProductService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });
-
-// [DELETE] .../produts/:id/delete
 
 productsRoute.delete("/:id/delete", async (req, res) => {
 	const result = await deleteProductService(req);

@@ -1,34 +1,34 @@
 import db from "../core/database/connection.js";
 
 const getAllProducts = async () => {
-	return await db.producto.findMany();
+	return await db.products.findMany();
 };
 
 const getProduct = async (id) => {
-	return await db.producto.findUnique({
+	return await db.products.findUnique({
 		where: {
-			id_producto: id,
+			product_id: id,
 		},
 	});
 };
 
 const createProduct = async (body) => {
-	return await db.producto.create({
+	return await db.products.create({
 		data: body,
 	});
 };
 
 const updateProduct = async (id, body) => {
-	return await db.producto.update({
-		where: { id_producto: id },
+	return await db.products.update({
+		where: { product_id: id },
 		data: body,
 	});
 };
 
 const deleteProduct = async (id) => {
-	return await db.producto.delete({
+	return await db.products.delete({
 		where: {
-			id_producto: id,
+			product_id: id,
 		},
 	});
 };
