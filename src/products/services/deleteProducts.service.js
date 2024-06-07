@@ -9,7 +9,7 @@ export const deleteProductService = async (req) => {
 			return {
 				status: 400,
 				message: "Producto no existe",
-				data: null,
+				data: {},
 			};
 		}
 
@@ -25,7 +25,7 @@ export const deleteProductService = async (req) => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: {},
 		};
 	}
 };

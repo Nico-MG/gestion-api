@@ -29,7 +29,7 @@ export const createProductService = async (req) => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: {},
 		};
 	}
 };

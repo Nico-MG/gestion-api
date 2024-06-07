@@ -9,7 +9,7 @@ export const getProductService = async (req) => {
 			return {
 				status: 400,
 				message: "No se encontró el producto",
-				data: null,
+				data: {},
 			};
 		}
 
@@ -24,7 +24,7 @@ export const getProductService = async (req) => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: {},
 		};
 	}
 };
@@ -36,7 +36,7 @@ export const getAllProductsService = async () => {
 			return {
 				status: 400,
 				message: "No se encontraron productos",
-				data: null,
+				data: [],
 			};
 		}
 
@@ -53,7 +53,7 @@ export const getAllProductsService = async () => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: [],
 		};
 	}
 };
