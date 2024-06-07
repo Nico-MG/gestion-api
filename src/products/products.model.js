@@ -1,4 +1,4 @@
-import db from "../core/db/connection.js";
+import db from "../core/database/connection.js";
 
 const getAllProducts = async () => {
 	return await db.producto.findMany();
