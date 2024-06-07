@@ -34,7 +34,7 @@ export const getAllProductsService = async () => {
 		const allProducts = await getAllProducts();
 		if (allProducts.length === 0) {
 			return {
-				status: 400,
+				status: 200,
 				message: "No se encontraron productos",
 				data: [],
 			};
