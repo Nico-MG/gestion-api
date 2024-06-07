@@ -13,11 +13,12 @@ export const deleteProductService = async (req) => {
 		}
 
 		const deletedProduct = await deleteProduct(req.params.id);
+        const adapterProduct = adapterFront(mapProducts, deletedProduct);
 
 		return {
 			status: 200,
-			message: `Producto eliminado, id: ${deletedProduct.product_id}`,
-			data: adapterFront(mapProducts, deletedProduct),
+			message: `Producto eliminado, id: ${adapterProduct.idp}`,
+			data: adapterProduct,
 		};
 	} catch (error) {
 		return {

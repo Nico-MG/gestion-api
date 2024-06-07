@@ -21,11 +21,12 @@ export const updateProductService = async (req) => {
 			req.params.id,
 			updatedProductData,
 		);
+		const adapterProduct = adapterFront(mapProducts, updatedProduct)
 
 		return {
 			status: 200,
-			message: `Producto actualizado, id: ${updatedProduct.product_id}`,
-			data: adapterFront(mapProducts, updatedProduct),
+			message: `Producto actualizado, id: ${adapterProduct.idp}`,
+			data: adapterProduct,
 		};
 	} catch (error) {
 		return {
