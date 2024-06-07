@@ -4,13 +4,11 @@ import express from "express";
 
 // middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
-import validatorData from "./core/middlewares/validatorData.js";
+//import validatorData from "./core/middlewares/validatorData.js";
 
 // routes
 import productsRoute from "./products/products.controller.js";
-//import providersRoute from "./providers/providers.controller.js";
-//import ordersRoute from "./orders/orders.controller.js";
-//import refundsRoute from "./refunds/refunds.controller.js";
+import usersRoute from "./users/users.controller.js";
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -19,9 +17,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use("/products", productsRoute);
-//server.use("/providers", providersRoute);
-//server.use("/orders", ordersRoute);
-//server.use("/refunds", refundsRoute);
+server.use("/users", usersRoute)
 
 server.use("/test", verifyToken, (req, res) => {
 	//ruta de prueba protegida

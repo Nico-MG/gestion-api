@@ -7,8 +7,17 @@ const iProduct = {
 	precio: ["price", "number"],
 };
 
+const iUser = {
+	rutu: ["user_rut", "string"],
+	email: ["mail", "string"],
+	pwd: ["password", "string"],
+	nombre: ["name", "string"],
+	apellido: ["lastname", "string"]
+}
+
 const tables = {
 	products: iProduct,
+	users: iUser
 };
 
 export default tables;

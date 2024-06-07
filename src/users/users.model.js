@@ -1,57 +1,38 @@
-import db from "../core/db/connection.js";
-
-const createUser = async (rut, correo, contrasena, nombre, apellido) => {
-	return await db.usuario.create({
-		data: {
-			rut_usuario: rut,
-			correo,
-			contrasena,
-			nombre,
-			apellido,
-		},
-	});
-};
-
-const updateUser = async (
-	rut,
-	newRut,
-	correo,
-	contrasena,
-	nombre,
-	apellido,
-) => {
-	return await db.usuario.update({
-		where: {
-			rut_usuario: rut,
-		},
-		data: {
-			rut_usuario: newRut,
-			correo,
-			contrasena,
-			nombre,
-			apellido,
-		},
-	});
-};
-
-const deleteUser = async (rut) => {
-	return await db.usuario.delete({
-		where: {
-			rut_usuario: rut,
-		},
-	});
-};
-
-const getUser = async (rut) => {
-	return await db.usuario.findUnique({
-		where: {
-			rut_usuario: rut,
-		},
-	});
-};
+import db from '../core/database/connection.js'
 
 const getAllUsers = async () => {
-	return await db.usuario.findMany();
+	return await db.users.findMany();
+};
+
+const getUser = async (id) => {
+	return await db.users.findUnique({
+		where: {
+			user_rut: id,
+		},
+	});
+};
+
+const createUser = async (body) => {
+	return await db.users.create({
+		data: body
+	})
+}
+
+const updateUser = async (id, body) => {
+	return await db.users.update({
+		where: {
+			user_rut: id,
+		},
+		data: body,
+	});
+};
+
+const deleteUser = async (id) => {
+	return await db.users.delete({
+		where: {
+			user_rut: id,
+		},
+	});
 };
 
 export { createUser, updateUser, deleteUser, getAllUsers, getUser };
