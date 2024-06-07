@@ -1,8 +1,5 @@
-import {
-	adapterDB,
-	adapterFront,
-	mapProducts,
-} from "../../core/actions/adapter.js";
+import { adapterDB, adapterFront } from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
 import { getProduct, updateProduct } from "../products.model.js";
 
 export const updateProductService = async (req) => {
@@ -12,16 +9,16 @@ export const updateProductService = async (req) => {
 			return {
 				status: 400,
 				message: "Producto no existe",
-				data: null,
+				data: {},
 			};
 		}
 
-		const updatedProductData = adapterDB(mapProducts, req.body);
+		const updatedProductData = adapterDB(tables.products, req.body);
 		const updatedProduct = await updateProduct(
 			req.params.id,
 			updatedProductData,
 		);
-		const adapterProduct = adapterFront(mapProducts, updatedProduct)
+		const adapterProduct = adapterFront(tables.products, updatedProduct);
 
 		return {
 			status: 200,
@@ -32,7 +29,7 @@ export const updateProductService = async (req) => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: {},
 		};
 	}
 };

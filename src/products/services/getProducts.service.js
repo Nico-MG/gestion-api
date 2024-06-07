@@ -1,4 +1,5 @@
-import { adapterFront, mapProducts } from "../../core/actions/adapter.js";
+import { adapterFront } from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
 import { getAllProducts, getProduct } from "../products.model.js";
 
 export const getProductService = async (req) => {
@@ -8,11 +9,11 @@ export const getProductService = async (req) => {
 			return {
 				status: 400,
 				message: "No se encontró el producto",
-				data: null,
+				data: {},
 			};
 		}
 
-		const adaptedProduct = adapterFront(mapProducts, product);
+		const adaptedProduct = adapterFront(tables.products, product);
 
 		return {
 			status: 200,
@@ -23,7 +24,7 @@ export const getProductService = async (req) => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: {},
 		};
 	}
 };
@@ -35,12 +36,12 @@ export const getAllProductsService = async () => {
 			return {
 				status: 400,
 				message: "No se encontraron productos",
-				data: null,
+				data: [],
 			};
 		}
 
 		const adaptedProducts = allProducts.map((product) =>
-			adapterFront(mapProducts, product),
+			adapterFront(tables.products, product),
 		);
 
 		return {
@@ -52,7 +53,7 @@ export const getAllProductsService = async () => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: [],
 		};
 	}
 };

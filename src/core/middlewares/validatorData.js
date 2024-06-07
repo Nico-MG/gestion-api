@@ -1,4 +1,4 @@
-import tableStructure from "../actions/tableStructures.js";
+import tables from "../database/tableStructures.js";
 const regular_expression = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
 const validatorData = (req, res, next) => {

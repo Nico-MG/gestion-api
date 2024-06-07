@@ -1,4 +1,5 @@
-import { adapterFront, mapProducts } from "../../core/actions/adapter.js";
+import { adapterFront } from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
 import { deleteProduct, getProduct } from "../products.model.js";
 
 export const deleteProductService = async (req) => {
@@ -8,12 +9,12 @@ export const deleteProductService = async (req) => {
 			return {
 				status: 400,
 				message: "Producto no existe",
-				data: null,
+				data: {},
 			};
 		}
 
 		const deletedProduct = await deleteProduct(req.params.id);
-        const adapterProduct = adapterFront(mapProducts, deletedProduct);
+		const adapterProduct = adapterFront(tables.products, deletedProduct);
 
 		return {
 			status: 200,
@@ -24,7 +25,7 @@ export const deleteProductService = async (req) => {
 		return {
 			status: 500,
 			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			data: {},
 		};
 	}
 };

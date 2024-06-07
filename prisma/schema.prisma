@@ -10,8 +10,8 @@ datasource db {
 
 model Clients {
   client_rut String  @id @db.VarChar(20)
-  name       String? @db.VarChar(20)
-  lastname   String? @db.VarChar(20)
+  name       String  @db.VarChar(20)
+  lastname   String  @db.VarChar(20)
   sales      Sales[]
 }
 
@@ -113,10 +113,10 @@ model Users {
 
 model Sales {
   sale_id      String        @id @db.VarChar(20)
-  client_rut   String?       @db.VarChar(20)
-  user_rut     String?       @db.VarChar(20)
-  date         DateTime?     @db.Timestamp(6)
-  total_price  Int?
+  client_rut   String        @db.VarChar(20)
+  user_rut     String        @db.VarChar(20)
+  date         DateTime      @db.Timestamp(6)
+  total_price  Int 
   sale_details SaleDetails[]
   refunds      Refunds[]
   clients      Clients?      @relation(fields: [client_rut], references: [client_rut], onDelete: Cascade)
