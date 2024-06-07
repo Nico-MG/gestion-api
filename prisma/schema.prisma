@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -7,115 +8,117 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model cliente {
-  rut_cliente String  @id @db.VarChar(20)
-  nombre      String? @db.VarChar(20)
-  apellido    String? @db.VarChar(20)
-  venta       venta[]
+model Clients {
+  client_rut String  @id @db.VarChar(20)
+  name       String  @db.VarChar(20)
+  lastname   String  @db.VarChar(20)
+  sales      Sales[]
 }
 
-model detalle_devolucion {
-  id_devolucion String     @db.VarChar(20)
-  id_producto   String     @db.VarChar(20)
-  cantidad      Int?
-  devolucion    devolucion @relation(fields: [id_devolucion], references: [id_devolucion], onDelete: Cascade)
-  producto      producto   @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+model RefundDetails {
+  refund_id  String   @db.VarChar(20)
+  product_id String   @db.VarChar(20)
+  quantity   Int
+  refunds    Refunds  @relation(fields: [refund_id], references: [refund_id], onDelete: Cascade)
+  products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
-  @@id([id_devolucion, id_producto])
+  @@id([refund_id, product_id])
 }
 
-model detalle_pedido {
-  id_pedido     String   @db.VarChar(20)
-  id_producto   String   @db.VarChar(20)
-  cantidad      Int?
-  precio_unidad Int?
-  precio_total  Int?
-  pedido        pedido   @relation(fields: [id_pedido], references: [id_pedido], onDelete: Cascade)
-  producto      producto @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+model OrderDetails {
+  order_id   String   @db.VarChar(20)
+  product_id String   @db.VarChar(20)
+  quantity   Int
+  unit_price Int
+  line_total Int
+  orders     Orders   @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+  products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
-  @@id([id_pedido, id_producto])
+  @@id([order_id, product_id])
 }
 
-model detalle_venta {
-  id_venta     String   @db.VarChar(20)
-  id_producto  String   @db.VarChar(20)
-  cantidad     Int?
-  precio_total Int?
-  producto     producto @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
-  venta        venta    @relation(fields: [id_venta], references: [id_venta], onDelete: Cascade)
+model SaleDetails {
+  sale_id    String   @db.VarChar(20)
+  product_id String   @db.VarChar(20)
+  quantity   Int
+  unit_price Int
+  line_total Int
+  products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+  sales      Sales    @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade)
 
-  @@id([id_venta, id_producto])
+  @@id([sale_id, product_id])
 }
 
-model devolucion {
-  id_devolucion      String               @id @db.VarChar(20)
-  id_venta           String?              @db.VarChar(20)
-  fecha              DateTime?            @db.Timestamp(6)
-  descripcion        String?
-  detalle_devolucion detalle_devolucion[]
-  venta              venta?               @relation(fields: [id_venta], references: [id_venta], onDelete: Cascade)
+model Refunds {
+  refund_id      String          @id @db.VarChar(20)
+  sale_id        String          @db.VarChar(20)
+  date           DateTime        @db.Timestamp(6)
+  description    String
+  image_refund   String
+  refund_details RefundDetails[]
+  sales          Sales?          @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade)
 }
 
-model notificacion {
-  id_notificacion Int       @id @default(autoincrement())
-  fecha           DateTime? @db.Timestamp(6)
-  id_producto     String?   @db.VarChar(20)
-  titulo          String?   @db.VarChar(20)
-  descripcion     String?
-  producto        producto? @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade)
+model Notifications {
+  notification_id Int       @id @default(autoincrement())
+  date            DateTime  @db.Timestamp(6)
+  product_id      String    @db.VarChar(20)
+  title           String    @db.VarChar(20)
+  description     String
+  products        Products? @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 }
 
-model pedido {
-  id_pedido      String           @id @db.VarChar(20)
-  rut_proveedor  String?          @db.VarChar(20)
-  rut_usuario    String?          @db.VarChar(20)
-  fecha          DateTime?        @db.Timestamp(6)
-  compra_total   Int?
-  detalle_pedido detalle_pedido[]
-  proveedor      proveedor?       @relation(fields: [rut_proveedor], references: [rut_proveedor], onDelete: Cascade)
-  usuario        usuario?         @relation(fields: [rut_usuario], references: [rut_usuario], onDelete: Cascade)
+model Orders {
+  order_id       String         @id @db.VarChar(20)
+  provider_rut   String         @db.VarChar(20)
+  user_rut       String         @db.VarChar(20)
+  date           DateTime       @db.Timestamp(6)
+  total_purchase Int
+  order_details  OrderDetails[]
+  providers      Providers?     @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
+  users          Users?         @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
 }
 
-model producto {
-  id_producto        String               @id @db.VarChar(20)
-  nombre             String?              @db.VarChar(20)
-  categoria          String?              @db.VarChar(20)
-  cantidad           Int?
-  min_cantidad       Int?
-  precio_venta       Int?
-  detalle_devolucion detalle_devolucion[]
-  detalle_pedido     detalle_pedido[]
-  detalle_venta      detalle_venta[]
-  notificacion       notificacion[]
+model Products {
+  product_id     String          @id @db.VarChar(20)
+  name           String          @db.VarChar(20)
+  type           String          @db.VarChar(20)
+  quantity       Int
+  min_quantity   Int
+  price          Int
+  refund_details RefundDetails[]
+  order_details  OrderDetails[]
+  sale_details   SaleDetails[]
+  notifications  Notifications[]
 }
 
-model proveedor {
-  rut_proveedor String   @id @db.VarChar(20)
-  nombre        String?  @db.VarChar(20)
-  direccion     String?  @db.VarChar(20)
-  numero        String?  @db.VarChar(20)
-  tipo          String?  @db.VarChar(20)
-  pedido        pedido[]
+model Providers {
+  provider_rut String   @id @db.VarChar(20)
+  name         String   @db.VarChar(20)
+  address      String   @db.VarChar(20)
+  phone        String   @db.VarChar(20)
+  type         String   @db.VarChar(20)
+  orders       Orders[]
 }
 
-model usuario {
-  rut_usuario String   @id @db.VarChar(20)
-  correo      String?  @db.VarChar(50)
-  contrasena  String?  @db.VarChar(60)
-  nombre      String?  @db.VarChar(20)
-  apellido    String?  @db.VarChar(20)
-  pedido      pedido[]
-  venta       venta[]
+model Users {
+  user_rut String   @id @db.VarChar(20)
+  mail     String   @db.VarChar(50)
+  password String   @db.VarChar(60)
+  name     String   @db.VarChar(20)
+  lastname String   @db.VarChar(20)
+  orders   Orders[]
+  sales    Sales[]
 }
 
-model venta {
-  id_venta      String          @id @db.VarChar(20)
-  rut_cliente   String?         @db.VarChar(20)
-  rut_usuario   String?         @db.VarChar(20)
-  fecha         DateTime?       @db.Timestamp(6)
-  venta_total   Int?
-  detalle_venta detalle_venta[]
-  devolucion    devolucion[]
-  cliente       cliente?        @relation(fields: [rut_cliente], references: [rut_cliente], onDelete: Cascade)
-  usuario       usuario?        @relation(fields: [rut_usuario], references: [rut_usuario], onDelete: Cascade)
+model Sales {
+  sale_id      String        @id @db.VarChar(20)
+  client_rut   String        @db.VarChar(20)
+  user_rut     String        @db.VarChar(20)
+  date         DateTime      @db.Timestamp(6)
+  total_price  Int 
+  sale_details SaleDetails[]
+  refunds      Refunds[]
+  clients      Clients?      @relation(fields: [client_rut], references: [client_rut], onDelete: Cascade)
+  users        Users?        @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
 }

@@ -3,23 +3,20 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 function verifyToken(req, res, next) {
-    const SECRET_KEY = process.env.SECRET_KEY;
-    const token = req.headers.cookie;
+	const SECRET_KEY = process.env.SECRET_KEY;
+	const token = req.headers.cookie;
 
-    if(!token){
-	res.send("invalid token");
-    }
-    
-    try{
-     	const key = token.split('=')[1]; // 
-     	const payload = jwt.verify(key, SECRET_KEY);
-	next();
+	if (!token) {
+		res.send("invalid token");
+	}
 
-    } catch {
-	
-     	res.sendStatus(403);
-     }
-	
-    }
+	try {
+		const key = token.split("=")[1];
+		const payload = jwt.verify(key, SECRET_KEY);
+		next();
+	} catch {
+		res.sendStatus(403);
+	}
+}
 
 export default verifyToken;

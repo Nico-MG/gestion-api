@@ -2,13 +2,15 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 
-import { productRoute } from "./core/routes/product.route.js";
-import { userRoute } from "./core/routes/user.route.js";
-import { providerRoute } from "./core/routes/provider.route.js";
-import { orderRoute } from "./core/routes/order.route.js";
-import { loginRoute } from "./core/routes/login.route.js";
+// middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
 import validatorData from "./core/middlewares/validatorData.js";
+
+// routes
+import productsRoute from "./products/products.controller.js";
+//import providersRoute from "./providers/providers.controller.js";
+//import ordersRoute from "./orders/orders.controller.js";
+//import refundsRoute from "./refunds/refunds.controller.js";
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -16,14 +18,14 @@ const port = process.env.PORT || 3000;
 server.use(cors());
 server.use(express.json());
 
-server.use("/login", loginRoute);
-server.use("/user", userRoute);
-server.use("/product", validatorData,productRoute);
-server.use("/provider", providerRoute);
-server.use("/order", orderRoute);
+server.use("/products", productsRoute);
+//server.use("/providers", providersRoute);
+//server.use("/orders", ordersRoute);
+//server.use("/refunds", refundsRoute);
 
-server.use("/test", verifyToken, (req,res) => { //ruta de prueba protegida
-    res.sendStatus(200);
+server.use("/test", verifyToken, (req, res) => {
+	//ruta de prueba protegida
+	res.sendStatus(200);
 });
 
 server

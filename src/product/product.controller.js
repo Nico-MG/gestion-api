@@ -92,3 +92,4 @@ export {
 	updateProductController,
 	deleteProductController,
 };
+
