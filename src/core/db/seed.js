@@ -18,3 +18,9 @@ db.producto.findUnique({
 		categoria: true,
 	},
 });
+
+const prueba = db.cliente.findUniqueOrThrow({
+	where: {
+		nombre: "Jose",
+	},
+});

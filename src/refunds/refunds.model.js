@@ -1,6 +1,6 @@
 import db from "../core/db/connection.js";
 
-const createRefund = async (id, idv, fecha, desc, dRefund) => {
+const createRefund = async ({ id, idv, fecha, desc, dRefund }) => {
 	return await db.devolucion.create({
 		data: {
 			id_devolucion: id,
@@ -14,23 +14,7 @@ const createRefund = async (id, idv, fecha, desc, dRefund) => {
 	});
 };
 
-const updateRefund = async (id, newId, idv, fecha, desc, dRefund) => {
-	await Promise.all(
-		dRefund.map(async (detalle) => {
-			await db.detalle_devolucion.update({
-				where: {
-					id_devolucion_id_producto: {
-						id_devolucion: id,
-						id_producto: detalle.id_producto,
-					},
-				},
-				data: {
-					cantidad: detalle.cantidad,
-				},
-			});
-		}),
-	);
-
+const updateRefund = async (id, { newId, idv, fecha, desc, dRefund }) => {
 	return await db.devolucion.update({
 		where: {
 			id_devolucion: id,
@@ -40,6 +24,9 @@ const updateRefund = async (id, newId, idv, fecha, desc, dRefund) => {
 			id_venta: idv,
 			fecha,
 			descripcion: desc,
+			detalle_devolucion: {
+				updateMany: dRefund,
+			},
 		},
 	});
 };

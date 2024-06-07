@@ -9,6 +9,7 @@ authRoute.post("/login", async (req, res) => {
 });
 authRoute.post("/registrer", async (req, res) => {
 	// ?: hacemos un registrar usuario?
+	// ?: deberiamos crear una tabla auth con roles
 });
 authRoute.post("logout", async (req, res) => {
 	// TODO: hacer el cerrar sesion

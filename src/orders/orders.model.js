@@ -37,7 +37,7 @@ const updateOrder = async (
 			fecha,
 			compra_total,
 			detalle_pedido: {
-				update: orderDetails,
+				updateMany: orderDetails,
 			},
 		},
 	});
@@ -70,15 +70,22 @@ const getAllOrders = async ({
 	dato,
 	orden,
 	texto,
+	numero,
 }) => {
 	return await db.pedido.findMany({
 		where: {
-			OR: {
-				[dato || "total_venta"]: numero || 0,
-				[dato || "id_pedido"]: {
-					contains: texto || "",
+			OR: [
+				{
+					[dato || "id_pedido"]: {
+						contains: texto || "",
+					},
 				},
-			},
+				{
+					[dato === "compra_total" ? dato : "id_pedido"]: numero
+						? { equals: numero }
+						: undefined,
+				},
+			],
 			fecha: {
 				gt: desde || new Date("2000-01-01"),
 				lt: hasta || new Date(),

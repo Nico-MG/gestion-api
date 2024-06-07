@@ -5,72 +5,43 @@ import {
 	updateRefundService,
 	deleteRefundService,
 } from "./refunds.service.js";
+import { Router } from "express";
 
-const getRefundController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await getRefundService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+const refundsRoute = Router();
 
-const getAllRefundsController = async (req, res) => {
-	try {
-		const result = await getAllRefundsService();
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+refundsRoute.get("/:id", async (req, res) => {
+	const result = await getRefundService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const createRefundController = async (req, res) => {
-	const { id_devolucion, id_venta, fecha, descripcion } = req.body;
-	try {
-		const result = await createRefundService(
-			id_devolucion,
-			id_venta,
-			fecha,
-			descripcion,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+refundsRoute.get("/", async (req, res) => {
+	const result = await getAllRefundsService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const deleteRefundController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await deleteRefundService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+refundsRoute.post("/create", async (req, res) => {
+	const result = await createRefundService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const updateRefundController = async (req, res) => {
-	const { id } = req.params;
-	const { id_devolucion, id_venta, fecha, descripcion } = req.body;
-	try {
-		const result = await updateRefundService(
-			id,
-			id_devolucion,
-			id_venta,
-			fecha,
-			descripcion,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+refundsRoute.put("/:id/edit", async (req, res) => {
+	const result = await updateRefundService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-export {
-	getRefundController,
-	getAllRefundsController,
-	createRefundController,
-	updateRefundController,
-	deleteRefundController,
-};
+refundsRoute.delete("/:id/delete", async (req, res) => {
+	const result = await deleteRefundService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
+
+export default refundsRoute;
