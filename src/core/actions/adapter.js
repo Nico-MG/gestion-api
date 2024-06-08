@@ -22,6 +22,11 @@ const removeDetails = (obj, propToRemove) => {
 	return newObj;
 };
 
+/**
+ * Se obtienen la lista de detalles de pedido | venta | devolucion
+ * @param {Object} obj - objeto que contiene sus detalles
+ * @returns {Array} - retorna una lista con los detalles
+ */
 const getDetails = (obj) => {
 	const keys = Object.keys(obj);
 	const lastKey = keys[keys.length - 1];
