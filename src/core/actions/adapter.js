@@ -1,3 +1,8 @@
+/**
+ * Invierte los formatos del front y de la db para adaptar los datos de la db al front
+ * @param {Object} mapping -  Tiene el formato del Json que envia el frontend y el formato de las tablas de la Base de Datos
+ * @returns {Object} - Retorna un objeto pero con los formatos del front y la db al reves 
+ */
 const invertMapping = (mapping) => {
 	return Object.entries(mapping).reduce((inv, [key, value]) => {
 		const [dbKey] = value;
@@ -6,6 +11,12 @@ const invertMapping = (mapping) => {
 	}, {});
 };
 
+/**
+ * Remueve los detalles de un pedido, venta o devolucion
+ * @param {Object} obj - Objeto donde se le removera los detalles
+ * @param {String} propToRemove - nombre de la llave a remover (son los detalles)
+ * @returns {Object} - retorna el objeto sin los detalles
+ */
 const removeDetails = (obj, propToRemove) => {
 	const { [propToRemove]: _, ...newObj } = obj;
 	return newObj;
