@@ -9,7 +9,7 @@ export const createProductService = async (req) => {
 			return {
 				status: 400,
 				message: "Producto ya existe",
-				data: product,
+				data: {},
 			};
 		}
 

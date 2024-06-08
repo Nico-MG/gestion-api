@@ -1,4 +1,4 @@
-import { adapterToFront } from "../../core/actions/adapter";
+import { adapterToFront, adapterToFrontWithDetails } from "../../core/actions/adapter";
 import tables from "../../core/database/tableStructures";
 
 export const getOrderService = async (req) => {
@@ -12,11 +12,7 @@ export const getOrderService = async (req) => {
 			};
 		}
 
-		order.order_details = adapterToFront(
-			tables.orders_details,
-			order.order_details,
-		);
-		const newOrder = adapterToFront(tables.orders, req.body);
+		const adaptedOrder = adapterToFrontWithDetails(tables.orders, tables.orders_details, order)
 
 		return {
 			status: 200,
@@ -24,10 +20,11 @@ export const getOrderService = async (req) => {
 			data: order,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			message: "Error interno del servidor",
+			data: {},
 		};
 	}
 };
@@ -42,16 +39,20 @@ export const getAllOrdersService = async (req) => {
 				data: null,
 			};
 		}
+
+		const adaptedOrders = orders.map(order => adapterToFrontWithDetails(tables.orders, tables.orders_details, order))
+
 		return {
 			status: 200,
-			message: `Se encontraron ordenes, Cantidad: ${orders.length}`,
-			data: orders,
+			message: `Se encontraron ordenes, Cantidad: ${adaptedOrders.length}`,
+			data: adaptedOrders,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			message: "Error interno del servidor",
+			data: {},
 		};
 	}
 };

@@ -72,5 +72,5 @@ export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
 		adaptedDetails(mapDetails, detail),
 	);
 	const adaptedBody = adapterToFront(mapBody, body);
-	return { adaptedBody, adaptedDetails };
+	return { ...adaptedBody, details: adaptedDetails };
 };

@@ -50,10 +50,11 @@ export const getAllUsersService = async () => {
 			data: adaptedUsers,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: [],
+			message: "Error interno del servidor",
+			data: {},
 		};
 	}
 };

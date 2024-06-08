@@ -22,9 +22,10 @@ export const deleteProductService = async (req) => {
 			data: adapterProduct,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
+			message: "Error interno del servidor",
 			data: {},
 		};
 	}

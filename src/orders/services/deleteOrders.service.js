@@ -1,3 +1,6 @@
+import { adapterToFrontWithDetails } from "../../core/actions/adapter";
+import tables from "../../core/database/tableStructures";
+
 export const deleteOrderService = async (req) => {
 	try {
 		const order = await getOrder(req.params.id);
@@ -5,20 +8,22 @@ export const deleteOrderService = async (req) => {
 			return {
 				status: 400,
 				mesage: "producto no existe",
-				data: null,
+				data: {},
 			};
 		}
 		const newOrder = await deleteOrder(req.params.id);
+		const adaptedNewOrder = adapterToFrontWithDetails(tables.orders, tables.orders_details, newOrder)
 		return {
 			status: 200,
-			message: `orden eliminado, id: ${newOrder.id_producto}`,
-			data: newOrder,
+			message: `orden eliminado, id: ${adaptedNewOrder.ido}`,
+			data: adaptedNewOrder,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			message: "Error interno del servidor",
+			data: {},
 		};
 	}
 };

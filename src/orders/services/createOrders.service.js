@@ -1,3 +1,5 @@
+import { adapterToDBWithDetails, adapterToFrontWithDetails } from "../../core/actions/adapter";
+import tables from "../../core/database/tableStructures.js"
 export const createOrderService = async (req) => {
 	try {
 		const order = await getOrder(req.params.id);
@@ -5,20 +7,25 @@ export const createOrderService = async (req) => {
 			return {
 				status: 400,
 				mesage: "producto ya existe",
-				data: order,
+				data: {},
 			};
 		}
-		const newOrder = await createOrder(req.body);
+
+		const {adaptedBody, adaptedDetails} = adapterToDBWithDetails(tables.orders, tables.orders_details, req.body)
+		
+		const newOrder = await createOrder(adaptedBody, adaptedDetails);
+		const adaptedNewOrder = adapterToFrontWithDetails(tables.orders, tables.orders_details, newOrder)
 		return {
 			status: 200,
-			message: `orden creado, id: ${newOrder.id_producto}`,
-			data: newOrder,
+			message: `orden creado, id: ${adaptedNewOrder.ido}`,
+			data: adaptedNewOrder,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
+			message: "Error interno del servidor",
+			data: {},
 		};
 	}
 };

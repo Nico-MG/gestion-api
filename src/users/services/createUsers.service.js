@@ -9,7 +9,7 @@ export const createUserService = async (req) => {
 			return {
 				status: 400,
 				message: "Usuario ya existe",
-				data: user,
+				data: {},
 			};
 		}
 
@@ -26,9 +26,10 @@ export const createUserService = async (req) => {
 			data: newUser,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
+			message: "Error interno del servidor",
 			data: {},
 		};
 	}

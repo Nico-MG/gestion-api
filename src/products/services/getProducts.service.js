@@ -21,9 +21,10 @@ export const getProductService = async (req) => {
 			data: adaptedProduct,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
+			message: "Error interno del servidor",
 			data: {},
 		};
 	}
@@ -50,10 +51,11 @@ export const getAllProductsService = async () => {
 			data: adaptedProducts,
 		};
 	} catch (error) {
+		console.error(error.message)
 		return {
 			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: [],
+			message: "Error interno del servidor",
+			data: {},
 		};
 	}
 };
