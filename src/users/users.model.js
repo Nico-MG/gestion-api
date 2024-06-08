@@ -1,4 +1,4 @@
-import db from '../core/database/connection.js'
+import db from "../core/database/connection.js";
 
 const getAllUsers = async () => {
 	return await db.users.findMany();
@@ -14,9 +14,9 @@ const getUser = async (id) => {
 
 const createUser = async (body) => {
 	return await db.users.create({
-		data: body
-	})
-}
+		data: body,
+	});
+};
 
 const updateUser = async (id, body) => {
 	return await db.users.update({

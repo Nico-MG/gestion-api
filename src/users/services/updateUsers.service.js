@@ -14,10 +14,7 @@ export const updateUserService = async (req) => {
 		}
 
 		const updatedUserData = adapterDB(tables.users, req.body);
-		const updatedUser = await updateUser(
-			req.params.id,
-			updatedUserData,
-		);
+		const updatedUser = await updateUser(req.params.id, updatedUserData);
 		const adapterUser = adapterFront(tables.users, updatedUser);
 
 		return {

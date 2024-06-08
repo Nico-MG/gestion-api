@@ -17,7 +17,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use("/products", productsRoute);
-server.use("/users", usersRoute)
+server.use("/users", usersRoute);
 
 server.use("/test", verifyToken, (req, res) => {
 	//ruta de prueba protegida

@@ -8,12 +8,15 @@ export const adapterDB = (mapping, reqBody) =>
 		return mapData;
 	}, {});
 
-const invertMapping = (mapping) =>
-	Object.entries(mapping).reduce((inv, [key, value]) => {
+const invertMapping = (mapping) => {
+
+	const lista = Object.entries(mapping)
+	return lista.reduce((inv, [key, value]) => {
 		const [dbKey] = value;
 		inv[dbKey] = [key];
 		return inv;
 	}, {});
+}
 
 export const adapterFront = (mapping, reqBody) => {
 	const invMap = invertMapping(mapping);
@@ -25,4 +28,12 @@ export const adapterFront = (mapping, reqBody) => {
 		}
 		return mapData;
 	}, {});
+};
+
+export const adapterDBWithDetails = (mapping, reqBody) => {
+	return 1;
+};
+
+export const adapterFrontWithDetails = (mapping, reqBody) => {
+	return 1;
 };
