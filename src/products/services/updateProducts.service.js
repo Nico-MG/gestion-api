@@ -1,4 +1,4 @@
-import { adapterDB, adapterFront } from "../../core/actions/adapter.js";
+import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
 import tables from "../../core/database/tableStructures.js";
 import { getProduct, updateProduct } from "../products.model.js";
 
@@ -13,12 +13,12 @@ export const updateProductService = async (req) => {
 			};
 		}
 
-		const updatedProductData = adapterDB(tables.products, req.body);
+		const updatedProductData = adapterToDB(tables.products, req.body);
 		const updatedProduct = await updateProduct(
 			req.params.id,
 			updatedProductData,
 		);
-		const adapterProduct = adapterFront(tables.products, updatedProduct);
+		const adapterProduct = adapterToFront(tables.products, updatedProduct);
 
 		return {
 			status: 200,

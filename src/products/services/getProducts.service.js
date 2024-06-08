@@ -1,4 +1,4 @@
-import { adapterFront } from "../../core/actions/adapter.js";
+import { adapterToFront } from "../../core/actions/adapter.js";
 import tables from "../../core/database/tableStructures.js";
 import { getAllProducts, getProduct } from "../products.model.js";
 
@@ -13,7 +13,7 @@ export const getProductService = async (req) => {
 			};
 		}
 
-		const adaptedProduct = adapterFront(tables.products, product);
+		const adaptedProduct = adapterToFront(tables.products, product);
 
 		return {
 			status: 200,
@@ -41,7 +41,7 @@ export const getAllProductsService = async () => {
 		}
 
 		const adaptedProducts = allProducts.map((product) =>
-			adapterFront(tables.products, product),
+			adapterToFront(tables.products, product),
 		);
 
 		return {

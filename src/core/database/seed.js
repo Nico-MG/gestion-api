@@ -10,17 +10,3 @@ function randomProvider() {
 		tipo: faker.commerce.department(),
 	};
 }
-
-// en proceso
-db.proveedor.create({ data: randomProvider() });
-db.producto.findUnique({
-	omit: {
-		categoria: true,
-	},
-});
-
-const prueba = db.cliente.findUniqueOrThrow({
-	where: {
-		nombre: "Jose",
-	},
-});

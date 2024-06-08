@@ -1,6 +1,6 @@
 import tables from "../../core/database/tableStructures.js";
 import { createUser, getUser } from "../users.model.js";
-import { adapterDB, adapterFront } from "../../core/actions/adapter.js";
+import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
 
 export const createUserService = async (req) => {
 	try {
@@ -14,11 +14,11 @@ export const createUserService = async (req) => {
 		}
 
 		// Convierte los datos del frontend al formato de la base de datos
-		const dbUserData = adapterDB(tables.users, req.body);
+		const dbUserData = adapterToDB(tables.users, req.body);
 		const createdUser = await createUser(dbUserData);
 
 		// Convierte los datos del formato de la base de datos al formato del frontend
-		const newUser = adapterFront(tables.users, createdUser);
+		const newUser = adapterToFront(tables.users, createdUser);
 
 		return {
 			status: 200,

@@ -1,39 +1,60 @@
-export const adapterDB = (mapping, reqBody) =>
-	Object.entries(reqBody).reduce((mapData, [frontKey, value]) => {
-		const dbEntry = mapping[frontKey];
-		if (dbEntry) {
-			const [dbKey] = dbEntry;
-			mapData[dbKey] = value;
-		}
-		return mapData;
-	}, {});
-
 const invertMapping = (mapping) => {
-
-	const lista = Object.entries(mapping)
-	return lista.reduce((inv, [key, value]) => {
+	return Object.entries(mapping).reduce((inv, [key, value]) => {
 		const [dbKey] = value;
 		inv[dbKey] = [key];
 		return inv;
 	}, {});
-}
+};
 
-export const adapterFront = (mapping, reqBody) => {
+const removeDetails = (obj, propToRemove) => {
+	const { [propToRemove]: _, ...newObj } = obj;
+	return newObj;
+};
+
+const getDetails = (obj) => {
+	const keys = Object.keys(obj);
+	const lastKey = keys[keys.length - 1];
+	return obj[lastKey];
+};
+
+const logicReduce = (mapping, data, [key, value]) => {
+	const entry = mapping[key];
+	if (entry) {
+		const [entryKey] = entry;
+		data[entryKey] = value;
+	}
+};
+
+export const adapterToDB = (mapping, reqBody) =>
+	Object.entries(reqBody).reduce((mapData, entry) => {
+		logicReduce(mapping, mapData, entry);
+		return mapData;
+	}, {});
+
+export const adapterToFront = (mapping, reqBody) => {
 	const invMap = invertMapping(mapping);
-	return Object.entries(reqBody).reduce((mapData, [dbKey, value]) => {
-		const frontEntry = invMap[dbKey];
-		if (frontEntry) {
-			const [frontKey] = frontEntry;
-			mapData[frontKey] = value;
-		}
+	return Object.entries(reqBody).reduce((mapData, entry) => {
+		logicReduce(invMap, mapData, entry);
 		return mapData;
 	}, {});
 };
 
-export const adapterDBWithDetails = (mapping, reqBody) => {
-	return 1;
+export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
+	const details = getDetails(reqBody);
+	const body = removeDetails(reqBody);
+	const adaptedDetails = details.map((detail) =>
+		adapterToDB(mapDetails, detail),
+	);
+	const adaptedBody = adapterToDB(mapBody, body);
+	return { adaptedBody, adaptedDetails };
 };
 
-export const adapterFrontWithDetails = (mapping, reqBody) => {
-	return 1;
+export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
+	const details = getDetails(reqBody);
+	const body = removeDetails(reqBody);
+	const adaptedDetails = details.map((detail) =>
+		adaptedDetails(mapDetails, detail),
+	);
+	const adaptedBody = adapterToFront(mapBody, body);
+	return { adaptedBody, adaptedDetails };
 };

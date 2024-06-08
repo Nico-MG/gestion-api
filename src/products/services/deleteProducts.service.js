@@ -1,4 +1,4 @@
-import { adapterFront } from "../../core/actions/adapter.js";
+import { adapterToFront } from "../../core/actions/adapter.js";
 import tables from "../../core/database/tableStructures.js";
 import { deleteProduct, getProduct } from "../products.model.js";
 
@@ -14,7 +14,7 @@ export const deleteProductService = async (req) => {
 		}
 
 		const deletedProduct = await deleteProduct(req.params.id);
-		const adapterProduct = adapterFront(tables.products, deletedProduct);
+		const adapterProduct = adapterToFront(tables.products, deletedProduct);
 
 		return {
 			status: 200,

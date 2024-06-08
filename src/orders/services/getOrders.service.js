@@ -1,4 +1,4 @@
-import { adapterDB, adapterFront } from "../../core/actions/adapter";
+import { adapterToFront } from "../../core/actions/adapter";
 import tables from "../../core/database/tableStructures";
 
 export const getOrderService = async (req) => {
@@ -12,11 +12,11 @@ export const getOrderService = async (req) => {
 			};
 		}
 
-		order.order_details = adapterFront(
+		order.order_details = adapterToFront(
 			tables.orders_details,
 			order.order_details,
 		);
-		const newOrder = adapterFront(tables.orders, req.body);
+		const newOrder = adapterToFront(tables.orders, req.body);
 
 		return {
 			status: 200,

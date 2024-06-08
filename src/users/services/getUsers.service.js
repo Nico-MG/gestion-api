@@ -1,4 +1,4 @@
-import { adapterFront } from "../../core/actions/adapter.js";
+import { adapterToFront } from "../../core/actions/adapter.js";
 import tables from "../../core/database/tableStructures.js";
 import { getAllUsers, getUser } from "../users.model.js";
 
@@ -13,7 +13,7 @@ export const getUserService = async (req) => {
 			};
 		}
 
-		const adaptedUser = adapterFront(tables.users, user);
+		const adaptedUser = adapterToFront(tables.users, user);
 
 		return {
 			status: 200,
@@ -41,7 +41,7 @@ export const getAllUsersService = async () => {
 		}
 
 		const adaptedUsers = allUsers.map((user) =>
-			adapterFront(tables.users, user),
+			adapterToFront(tables.users, user),
 		);
 
 		return {
