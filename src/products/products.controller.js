@@ -10,12 +10,48 @@ import { Router } from "express";
 
 const productsRoute = Router();
 
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Retrieve a list of products
+ *     responses:
+ *       200:
+ *         description: A list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Productos encontrados"
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Products'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error interno del servidor"
+ *                 data:
+ *                   type: object
+ *                   example: {}
+ */
 productsRoute.get("/", async (_, res) => {
-	const result = await getAllProductsService();
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
-});
+	try {
+	  const result = await getAllProductsService();
+	  res.status(result.status).json({ message: result.message, data: result.data });
+	} catch (error) {
+	  res.status(500).json({ message: "Error interno del servidor" });
+	}
+  });
 
 productsRoute.get("/:id", async (req, res) => {
 	const result = await getProductService(req);

@@ -5,6 +5,7 @@ import express from "express";
 // middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
 import validatorData from "./core/middlewares/validatorData.js";
+import setupSwagger from "./swagger.js";
 
 // routes
 import productsRoute from "./products/products.controller.js";
@@ -12,6 +13,7 @@ import usersRoute from "./users/users.controller.js";
 import ordersRoute from "./orders/orders.controller.js";
 
 const server = express();
+setupSwagger(server)
 const port = process.env.PORT || 3000;
 
 server.use(cors());
