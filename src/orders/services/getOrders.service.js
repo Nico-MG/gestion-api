@@ -1,5 +1,6 @@
-import { adapterToFront, adapterToFrontWithDetails } from "../../core/actions/adapter";
-import tables from "../../core/database/tableStructures";
+import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
+import { getAllOrders, getOrder } from "../orders.model.js";
 
 export const getOrderService = async (req) => {
 	try {
@@ -8,11 +9,15 @@ export const getOrderService = async (req) => {
 			return {
 				status: 400,
 				mesage: "producto no existe",
-				data: null,
+				data: {},
 			};
 		}
 
-		const adaptedOrder = adapterToFrontWithDetails(tables.orders, tables.orders_details, order)
+		const adaptedOrder = adapterToFrontWithDetails(
+			tables.orders,
+			tables.orders_details,
+			order,
+		);
 
 		return {
 			status: 200,
@@ -20,7 +25,7 @@ export const getOrderService = async (req) => {
 			data: order,
 		};
 	} catch (error) {
-		console.error(error.message)
+		console.error(error.message);
 		return {
 			status: 500,
 			message: "Error interno del servidor",
@@ -36,11 +41,13 @@ export const getAllOrdersService = async (req) => {
 			return {
 				status: 400,
 				mesage: "productos no existen",
-				data: null,
+				data: {},
 			};
 		}
 
-		const adaptedOrders = orders.map(order => adapterToFrontWithDetails(tables.orders, tables.orders_details, order))
+		const adaptedOrders = orders.map((order) =>
+			adapterToFrontWithDetails(tables.orders, tables.orders_details, order),
+		);
 
 		return {
 			status: 200,
@@ -48,7 +55,7 @@ export const getAllOrdersService = async (req) => {
 			data: adaptedOrders,
 		};
 	} catch (error) {
-		console.error(error.message)
+		console.error(error.message);
 		return {
 			status: 500,
 			message: "Error interno del servidor",

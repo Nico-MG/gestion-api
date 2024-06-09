@@ -78,7 +78,7 @@ const getAllOrders = async ({
 						}
 					: undefined,
 			].filter(Boolean), // Filtra los valores undefined
-			fecha: {
+			date: {
 				gt: desde || new Date("2000-01-01"),
 				lt: hasta || new Date(),
 			},

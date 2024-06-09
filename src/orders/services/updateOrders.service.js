@@ -1,5 +1,9 @@
-import { adapterToDBWithDetails, adapterToFrontWithDetails } from "../../core/actions/adapter";
-import tables from "../../core/database/tableStructures";
+import {
+	adapterToDBWithDetails,
+	adapterToFrontWithDetails,
+} from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
+import { getOrder, updateOrder } from "../orders.model.js";
 
 export const updateOrderService = async (req) => {
 	try {
@@ -11,16 +15,28 @@ export const updateOrderService = async (req) => {
 				data: null,
 			};
 		}
-		const {adaptedBody, adaptedDetails} = adapterToDBWithDetails(tables.orders, tables.orders_details, order)
-		const newOrder = await updateOrder(req.params.id, adaptedBody, adaptedDetails);
-		const adaptedNewOrder = adapterToFrontWithDetails(tables.orders, tables.orders_details, newOrder)
+		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
+			tables.orders,
+			tables.orders_details,
+			order,
+		);
+		const newOrder = await updateOrder(
+			req.params.id,
+			adaptedBody,
+			adaptedDetails,
+		);
+		const adaptedNewOrder = adapterToFrontWithDetails(
+			tables.orders,
+			tables.orders_details,
+			newOrder,
+		);
 		return {
 			status: 200,
 			message: `orden actualizado, id: ${adaptedNewOrder.ido}`,
 			data: adaptedNewOrder,
 		};
 	} catch (error) {
-		console.error(error.message)
+		console.error(error.message);
 		return {
 			status: 500,
 			message: "Error interno del servidor",

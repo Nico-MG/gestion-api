@@ -1,5 +1,6 @@
-import { adapterToFrontWithDetails } from "../../core/actions/adapter";
-import tables from "../../core/database/tableStructures";
+import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
+import tables from "../../core/database/tableStructures.js";
+import { getOrder, deleteOrder } from "../orders.model.js";
 
 export const deleteOrderService = async (req) => {
 	try {
@@ -12,14 +13,18 @@ export const deleteOrderService = async (req) => {
 			};
 		}
 		const newOrder = await deleteOrder(req.params.id);
-		const adaptedNewOrder = adapterToFrontWithDetails(tables.orders, tables.orders_details, newOrder)
+		const adaptedNewOrder = adapterToFrontWithDetails(
+			tables.orders,
+			tables.orders_details,
+			newOrder,
+		);
 		return {
 			status: 200,
 			message: `orden eliminado, id: ${adaptedNewOrder.ido}`,
 			data: adaptedNewOrder,
 		};
 	} catch (error) {
-		console.error(error.message)
+		console.error(error.message);
 		return {
 			status: 500,
 			message: "Error interno del servidor",

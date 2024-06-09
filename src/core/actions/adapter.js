@@ -1,7 +1,7 @@
 /**
  * Invierte los formatos del front y de la db para adaptar los datos de la db al front
  * @param {Object} mapping -  Tiene el formato del Json que envia el frontend y el formato de las tablas de la Base de Datos
- * @returns {Object} - Retorna un objeto pero con los formatos del front y la db al reves 
+ * @returns {Object} - Retorna un objeto pero con los formatos del front y la db al reves
  */
 const invertMapping = (mapping) => {
 	return Object.entries(mapping).reduce((inv, [key, value]) => {

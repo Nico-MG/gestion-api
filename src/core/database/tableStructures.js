@@ -31,11 +31,20 @@ const iOrderDetails = {
 	suma: ["line_total", "number"],
 };
 
+const iProvider = {
+	rutp: ["provider_rut", "string"],
+	nombre: ["name", "string"],
+	lugar: ["address", "number"],
+	numero: ["phone", "number"],
+	tipo: ["type", "number"],
+};
+
 const tables = {
 	products: iProduct,
 	users: iUser,
 	orders: iOrder,
 	orders_details: iOrderDetails,
+	providers: iProvider,
 };
 
 export default tables;

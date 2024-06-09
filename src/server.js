@@ -9,6 +9,7 @@ import verifyToken from "./core/middlewares/verifyToken.js";
 // routes
 import productsRoute from "./products/products.controller.js";
 import usersRoute from "./users/users.controller.js";
+import ordersRoute from "./orders/orders.controller.js";
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ server.use(express.json());
 
 server.use("/products", productsRoute);
 server.use("/users", usersRoute);
+server.use("/orders", ordersRoute);
 
 server.use("/test", verifyToken, (req, res) => {
 	//ruta de prueba protegida
