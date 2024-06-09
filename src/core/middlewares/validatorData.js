@@ -1,18 +1,21 @@
 import tables from "../database/tableStructures.js";
+import { adapterToDB } from "../actions/adapter.js";
+
 const regular_expression = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
 const validatorData = (req, res, next) => {
-	const direc = req.originalUrl.replace("/", "");
+	const direc = req.originalUrl.split("/")[1];
+	const dataTable = tables[direc];
 
-	for (const key in req.body) {
-		const value = req.body[key];
-		const structure_type = tableStructure[direc][key];
+	const dbProductData = adapterToDB(dataTable, req.body);
 
-		if (!structure_type) {
-			res.status(400).send(`${key} attribute invalid`);
-		}
+	for (const key in dataTable) {
+		const attribute = dataTable[key][0];
+		const type = dataTable[key][1];
 
-		if (regular_expression.test(value) || typeof value !== structure_type) {
+		const value = dbProductData[attribute];
+
+		if (regular_expression.test(value) || typeof value !== type) {
 			return res.status(400).send("Invalid data");
 		}
 	}

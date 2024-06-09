@@ -4,6 +4,7 @@ import {
 	createProductService,
 	updateProductService,
 	deleteProductService,
+	filtersProductsService
 } from "./services/index.js";
 import { Router } from "express";
 
@@ -39,6 +40,13 @@ productsRoute.put("/:id/edit", async (req, res) => {
 
 productsRoute.delete("/:id/delete", async (req, res) => {
 	const result = await deleteProductService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
+
+productsRoute.get("/filter", async (req, res) => {
+	const result = await filtersProductsService(req);
 	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
