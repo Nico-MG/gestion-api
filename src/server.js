@@ -13,11 +13,12 @@ import usersRoute from "./users/users.controller.js";
 import ordersRoute from "./orders/orders.controller.js";
 
 const server = express();
-setupSwagger(server)
+setupSwagger(server);
 const port = process.env.PORT || 3000;
 
 server.use(cors());
 server.use(express.json());
+server.disable("x-powered-by")
 
 server.use("/products", validatorData, productsRoute);
 server.use("/users", validatorData, usersRoute);
