@@ -1,28 +1,51 @@
-export const adapterDB = (mapping, reqBody) =>
-	Object.entries(reqBody).reduce((mapData, [frontKey, value]) => {
-		const dbEntry = mapping[frontKey];
-		if (dbEntry) {
-			const [dbKey] = dbEntry;
-			mapData[dbKey] = value;
+const invertMapping = (mapping) => {
+	const inv = {};
+	for (const key in mapping) {
+		if (mapping[key]) {
+			const value = mapping[key];
+			inv[value] = key;
 		}
-		return mapData;
-	}, {});
+	}
+	return inv;
+};
 
-const invertMapping = (mapping) =>
-	Object.entries(mapping).reduce((inv, [key, value]) => {
-		const [dbKey] = value;
-		inv[dbKey] = [key];
-		return inv;
-	}, {});
+export const adapterToDB = (mapping, reqBody) => {
+	const mapData = {};
+	for (const key in reqBody) {
+		if (reqBody[key]) {
+			const entryKey = mapping[key];
+			mapData[entryKey] = reqBody[key];
+		}
+	}
+	return mapData;
+};
 
-export const adapterFront = (mapping, reqBody) => {
+export const adapterToFront = (mapping, reqBody) => {
 	const invMap = invertMapping(mapping);
-	return Object.entries(reqBody).reduce((mapData, [dbKey, value]) => {
-		const frontEntry = invMap[dbKey];
-		if (frontEntry) {
-			const [frontKey] = frontEntry;
-			mapData[frontKey] = value;
+	const mapData = {};
+	for (const key in reqBody) {
+		if (reqBody[key]) {
+			const entryKey = invMap[key];
+			mapData[entryKey] = reqBody[key];
 		}
-		return mapData;
-	}, {});
+	}
+	return mapData;
+};
+
+export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
+	const { details, ...body } = reqBody;
+	const adaptedDetails = details.map((detail) =>
+		adapterToDB(mapDetails, detail),
+	);
+	const adaptedBody = adapterToDB(mapBody, body);
+	return { adaptedBody, adaptedDetails };
+};
+
+export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
+	const { details, ...body } = reqBody;
+	const adaptedDetails = details.map((detail) =>
+		adaptedDetails(mapDetails, detail),
+	);
+	const adaptedBody = adapterToFront(mapBody, body);
+	return { ...adaptedBody, details: adaptedDetails };
 };

@@ -4,7 +4,7 @@ import {
 	createOrderService,
 	updateOrderService,
 	deleteOrderService,
-} from "./orders.service.js";
+} from "./services/index.js";
 import { Router } from "express";
 
 const ordersRoute = Router();
