@@ -33,15 +33,15 @@ const deleteProduct = async (id) => {
 	});
 };
 
-const filtersProducts = async ({limit, offset, dato, orden}) => {
+const filtersProducts = async ({ limit, offset, dato, orden }) => {
 	return await db.products.findMany({
 		orderBy: {
 			[dato]: orden,
 		},
 		take: limit,
-		skip: offset
-	})
-}
+		skip: offset,
+	});
+};
 
 export {
 	getAllProducts,
@@ -49,5 +49,5 @@ export {
 	deleteProduct,
 	createProduct,
 	updateProduct,
-	filtersProducts
+	filtersProducts,
 };

@@ -1,6 +1,6 @@
 import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { getOrder, deleteOrder } from "../orders.model.js";
+import { iOrder, iOrderDetails } from "../../core/database/tableStructures.js";
 
 export const deleteOrderService = async (req) => {
 	try {
@@ -14,8 +14,8 @@ export const deleteOrderService = async (req) => {
 		}
 		const newOrder = await deleteOrder(req.params.id);
 		const adaptedNewOrder = adapterToFrontWithDetails(
-			tables.orders,
-			tables.orders_details,
+			iOrder,
+			iOrderDetails,
 			newOrder,
 		);
 		return {

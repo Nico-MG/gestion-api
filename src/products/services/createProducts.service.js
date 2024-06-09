@@ -1,6 +1,6 @@
 import { getProduct, createProduct } from "../products.model.js";
 import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
+import { iProduct } from "../../core/database/tableStructures.js";
 
 export const createProductService = async (req) => {
 	try {
@@ -13,12 +13,9 @@ export const createProductService = async (req) => {
 			};
 		}
 
-		// Convierte los datos del frontend al formato de la base de datos
-		const dbProductData = adapterToDB(tables.products, req.body);
+		const dbProductData = adapterToDB(iProduct, req.body);
 		const createdProduct = await createProduct(dbProductData);
-
-		// Convierte los datos del formato de la base de datos al formato del frontend
-		const newProduct = adapterToFront(tables.products, createdProduct);
+		const newProduct = adapterToFront(iProduct, createdProduct);
 
 		return {
 			status: 200,

@@ -1,6 +1,6 @@
 import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { getAllOrders, getOrder } from "../orders.model.js";
+import { iOrder, iOrderDetails } from "../../core/database/tableStructures.js";
 
 export const getOrderService = async (req) => {
 	try {
@@ -14,14 +14,14 @@ export const getOrderService = async (req) => {
 		}
 
 		const adaptedOrder = adapterToFrontWithDetails(
-			tables.orders,
-			tables.orders_details,
+			iOrder,
+			iOrderDetails,
 			order,
 		);
 
 		return {
 			status: 200,
-			message: `orden encontado, id: ${newOrder.ido}`,
+			message: `orden encontado, id: ${adaptedOrder.ido}`,
 			data: order,
 		};
 	} catch (error) {
@@ -46,7 +46,7 @@ export const getAllOrdersService = async (req) => {
 		}
 
 		const adaptedOrders = orders.map((order) =>
-			adapterToFrontWithDetails(tables.orders, tables.orders_details, order),
+			adapterToFrontWithDetails(iOrder, iOrderDetails, order),
 		);
 
 		return {

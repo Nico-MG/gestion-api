@@ -1,6 +1,6 @@
 import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { getUser, updateUser } from "../users.model.js";
+import { iUser } from "../../core/database/tableStructures.js";
 
 export const updateUserService = async (req) => {
 	try {
@@ -13,9 +13,9 @@ export const updateUserService = async (req) => {
 			};
 		}
 
-		const updatedUserData = adapterToDB(tables.users, req.body);
+		const updatedUserData = adapterToDB(iUser, req.body);
 		const updatedUser = await updateUser(req.params.id, updatedUserData);
-		const adapterUser = adapterToFront(tables.users, updatedUser);
+		const adapterUser = adapterToFront(iUser, updatedUser);
 
 		return {
 			status: 200,

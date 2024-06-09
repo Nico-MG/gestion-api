@@ -2,8 +2,8 @@ import {
 	adapterToDBWithDetails,
 	adapterToFrontWithDetails,
 } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { getOrder, updateOrder } from "../orders.model.js";
+import { iOrder, iOrderDetails } from "../../core/database/tableStructures.js";
 
 export const updateOrderService = async (req) => {
 	try {
@@ -16,8 +16,8 @@ export const updateOrderService = async (req) => {
 			};
 		}
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
-			tables.orders,
-			tables.orders_details,
+			iOrder,
+			iOrderDetails,
 			order,
 		);
 		const newOrder = await updateOrder(
@@ -26,8 +26,8 @@ export const updateOrderService = async (req) => {
 			adaptedDetails,
 		);
 		const adaptedNewOrder = adapterToFrontWithDetails(
-			tables.orders,
-			tables.orders_details,
+			iOrder,
+			iOrderDetails,
 			newOrder,
 		);
 		return {

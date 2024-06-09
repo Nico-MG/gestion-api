@@ -1,6 +1,6 @@
 import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { getProduct, updateProduct } from "../products.model.js";
+import { iProduct } from "../../core/database/tableStructures.js";
 
 export const updateProductService = async (req) => {
 	try {
@@ -13,12 +13,12 @@ export const updateProductService = async (req) => {
 			};
 		}
 
-		const updatedProductData = adapterToDB(tables.products, req.body);
+		const updatedProductData = adapterToDB(iProduct, req.body);
 		const updatedProduct = await updateProduct(
 			req.params.id,
 			updatedProductData,
 		);
-		const adapterProduct = adapterToFront(tables.products, updatedProduct);
+		const adapterProduct = adapterToFront(iProduct, updatedProduct);
 
 		return {
 			status: 200,

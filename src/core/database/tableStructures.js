@@ -1,50 +1,40 @@
-const iProduct = {
-	idp: ["product_id", "string"],
-	nombre: ["name", "string"],
-	cat: ["type", "string"],
-	cit: ["quantity", "number"],
-	mCit: ["min_quantity", "number"],
-	precio: ["price", "number"],
+export const iProduct = {
+	idp: "product_id",
+	nombre: "name",
+	cat: "type",
+	cit: "quantity",
+	mCit: "min_quantity",
+	precio: "price",
 };
 
-const iUser = {
-	rutu: ["user_rut", "string"],
-	email: ["mail", "string"],
-	pwd: ["password", "string"],
-	nombre: ["name", "string"],
-	apellido: ["lastname", "string"],
+export const iUser = {
+	rutu: "user_rut",
+	email: "mail",
+	pwd: "password",
+	nombre: "name",
+	apellido: "lastname",
 };
 
-const iOrder = {
-	ido: ["order_id", "string"],
-	rutp: ["provider_rut", "string"],
-	rutu: ["user_rut", "string"],
-	fecha: ["date", "datetime"],
-	total: ["total_purchase", "number"],
+export const iOrder = {
+	ido: "order_id",
+	rutp: "provider_rut",
+	rutu: "user_rut",
+	fecha: "date",
+	total: "total_purchase",
 };
 
-const iOrderDetails = {
-	ido: ["order_id", "string"],
-	idp: ["product_id", "string"],
-	cit: ["quantity", "number"],
-	precio: ["unit_price", "number"],
-	suma: ["line_total", "number"],
+export const iOrderDetails = {
+	ido: "order_id",
+	idp: "product_id",
+	cit: "quantity",
+	precio: "unit_price",
+	suma: "line_total",
 };
 
-const iProvider = {
-	rutp: ["provider_rut", "string"],
-	nombre: ["name", "string"],
-	lugar: ["address", "number"],
-	numero: ["phone", "number"],
-	tipo: ["type", "number"],
+export const iProvider = {
+	rutp: "provider_rut",
+	nombre: "name",
+	lugar: "address",
+	numero: "phone",
+	tipo: "type",
 };
-
-const tables = {
-	products: iProduct,
-	users: iUser,
-	orders: iOrder,
-	orders_details: iOrderDetails,
-	providers: iProvider,
-};
-
-export default tables;

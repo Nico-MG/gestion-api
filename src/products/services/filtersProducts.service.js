@@ -1,14 +1,13 @@
 import { adapterToFront } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { filtersProducts } from "../products.model.js";
+import { iProduct } from "../../core/database/tableStructures.js";
 
 export const filtersProductsService = async (req) => {
 	try {
-
-        req.params.desde ??= new Date("2000-01-01")
-        req.params.hasta ??= new Date()
-        req.params.dato ??= "product_id"
-        req.params.orden ??= "asc"
+		req.params.desde ??= new Date("2000-01-01");
+		req.params.hasta ??= new Date();
+		req.params.dato ??= "product_id";
+		req.params.orden ??= "asc";
 
 		const allProducts = await filtersProducts(req);
 		if (allProducts.length === 0) {
@@ -20,7 +19,7 @@ export const filtersProductsService = async (req) => {
 		}
 
 		const adaptedProducts = allProducts.map((product) =>
-			adapterToFront(tables.products, product),
+			adapterToFront(iProduct, product),
 		);
 
 		return {

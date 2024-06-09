@@ -2,8 +2,9 @@ import {
 	adapterToDBWithDetails,
 	adapterToFrontWithDetails,
 } from "../../core/actions/adapter.js";
-import tables from "../../core/database/tableStructures.js";
 import { getOrder, createOrder } from "../orders.model.js";
+import { iOrder, iOrderDetails } from "../../core/database/tableStructures.js";
+
 export const createOrderService = async (req) => {
 	try {
 		const order = await getOrder(req.params.id);
@@ -16,15 +17,15 @@ export const createOrderService = async (req) => {
 		}
 
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
-			tables.orders,
-			tables.orders_details,
+			iOrder,
+			iOrderDetails,
 			req.body,
 		);
 
 		const newOrder = await createOrder(adaptedBody, adaptedDetails);
 		const adaptedNewOrder = adapterToFrontWithDetails(
-			tables.orders,
-			tables.orders_details,
+			iOrder,
+			iOrderDetails,
 			newOrder,
 		);
 		return {

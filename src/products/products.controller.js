@@ -4,7 +4,7 @@ import {
 	createProductService,
 	updateProductService,
 	deleteProductService,
-	filtersProductsService
+	filtersProductsService,
 } from "./services/index.js";
 import { Router } from "express";
 
