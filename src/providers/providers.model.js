@@ -1,38 +1,17 @@
-import db from "../core/db/prisma.js";
+import db from "../core/database/connection.js"
 
-const createProvider = async ({
-	rut_proveedor,
-	nombre,
-	direccion,
-	numero,
-	tipo,
-}) => {
+const createProvider = async (body) => {
 	return await db.proveedor.create({
-		data: {
-			rut_proveedor,
-			nombre,
-			direccion,
-			numero,
-			tipo,
-		},
+		data: body,
 	});
 };
 
-const updateProvider = async (
-	id,
-	{ rut_proveedor, nombre, direccion, numero, tipo },
-) => {
+const updateProvider = async (id, body) => {
 	return await db.proveedor.update({
 		where: {
 			rut_proveedor: id,
 		},
-		data: {
-			rut_proveedor,
-			nombre,
-			direccion,
-			numero,
-			tipo,
-		},
+		data: body,
 	});
 };
 

@@ -18,7 +18,7 @@ const port = process.env.PORT || 3000;
 
 server.use(cors());
 server.use(express.json());
-server.disable("x-powered-by")
+server.disable("x-powered-by");
 
 server.use("/products", validatorData, productsRoute);
 server.use("/users", validatorData, usersRoute);
