@@ -23,7 +23,7 @@ export const getProductService = async (req) => {
 
 export const getAllProductsService = async () => {
 	const allProducts = await getAllProducts();
-	
+
 	const adaptedProducts = allProducts.map((product) =>
 		adapterToFront(iProduct, product),
 	);

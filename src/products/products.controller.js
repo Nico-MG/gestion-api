@@ -114,7 +114,6 @@ productsRoute.get("/:id", async (req, res) => {
 	}
 });
 
-
 /**
  * @swagger
  * /products/create:

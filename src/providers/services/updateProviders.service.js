@@ -1,20 +1,24 @@
 import { updateProvider, getProvider } from "../providers.model.js";
+import { iProvider } from "../../core/database/tableStructures.js";
+import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
 
 export const updateProviderService = async (req) => {
 	try {
 		const provider = await getProvider();
 		if (!provider) {
 			return {
-				status: 400,
+				status: 404,
 				message: "No existe el proveedor",
 				data: null,
 			};
 		}
-		const newProvider = await updateProvider(req.params.id, req.body);
+		const data = adapterToDB(iProvider, req.body);
+		const newProvider = await updateProvider(req.params.id, data);
+		const adaptedProvider = adapterToFront(iProvider, newProvider);
 		return {
 			status: 200,
-			message: `Se editó el proveedor ID: ${newProvider.id_proveedor}`,
-			data: newProvider,
+			message: `Se editó el proveedor ID: ${adaptedProvider.rutp}`,
+			data: adaptedProvider,
 		};
 	} catch (error) {
 		return {
