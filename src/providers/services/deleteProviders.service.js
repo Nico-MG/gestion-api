@@ -4,20 +4,22 @@ import { iProvider } from "../../core/database/tableStructures.js";
 
 export const deleteProviderService = async (req) => {
 	try {
-		const provider = await getProvider();
+		const provider = await getProvider(req.params.id);
 		if (!provider) {
 			return {
-				status: 404,
+				status: 400,
 				message: "No existe el proveedor",
 				data: null,
 			};
 		}
+	    
 		const newProvider = await deleteProvider(req.params.id);
-		const adaptedProvider = adapterToFront(iProvider, newProvider);
-		return {
+	        const adapterFront = adapterToFront(iProvider, newProvider)
+
+	    return {
 			status: 200,
-			message: `Se elimino el proveedor ID: ${adaptedProvider.rutp}`,
-			data: adaptedProvider,
+			message: `Se elimino el proveedor ID: ${newProvider.id_proveedor}`,
+			data: newProvider,
 		};
 	} catch (error) {
 		return {

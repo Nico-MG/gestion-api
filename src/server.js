@@ -11,6 +11,7 @@ import setupSwagger from "./swagger.js";
 import productsRoute from "./products/products.controller.js";
 import usersRoute from "./users/users.controller.js";
 import ordersRoute from "./orders/orders.controller.js";
+import providersRoute from "./providers/providers.controller.js";
 
 const server = express();
 setupSwagger(server);
@@ -23,6 +24,8 @@ server.disable("x-powered-by");
 server.use("/products", validatorData, productsRoute);
 server.use("/users", validatorData, usersRoute);
 server.use("/orders", ordersRoute);
+server.use("/providers", providersRoute);
+
 
 server.use("/test", verifyToken, (req, res) => {
 	//ruta de prueba protegida
