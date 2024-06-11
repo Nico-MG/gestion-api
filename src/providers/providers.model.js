@@ -1,38 +1,36 @@
-import db from "../core/database/connection.js"
+import db from "../core/database/connection.js";
 
 const createProvider = async (body) => {
-	return await db.proveedor.create({
-		data: body,
+	return await db.providers.create({
+		data:  body,
 	});
 };
 
-const updateProvider = async (id, body) => {
-	return await db.proveedor.update({
-		where: {
-			rut_proveedor: id,
-		},
+const updateProvider = async (id,body) => {
+	return await db.providers.update({
+		where: { provider_rut: id },
 		data: body,
 	});
 };
 
 const deleteProvider = async (id) => {
-	return await db.proveedor.delete({
+	return await db.providers.delete({
 		where: {
-			rut_proveedor: id,
+			provider_rut: id,
 		},
 	});
 };
 
 const getProvider = async (id) => {
-	return await db.proveedor.findUnique({
+	return await db.providers.findUnique({
 		where: {
-			rut_proveedor: id,
+			provider_rut: id,
 		},
 	});
 };
 
 const getAllProviders = async () => {
-	return await db.proveedor.findMany();
+	return await db.providers.findMany();
 };
 
 export {

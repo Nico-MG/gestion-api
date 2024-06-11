@@ -1,24 +1,20 @@
 import { getProvider, getAllProviders } from "../providers.model.js";
-import { adapterToFront } from "../../core/actions/adapter.js";
-import { iProvider } from "../../core/database/tableStructures.js";
 
 export const getProviderService = async (req) => {
 	try {
 		const provider = await getProvider(req.params.id);
 		if (!provider) {
 			return {
-				status: 404,
+				status: 400,
 				message: "No hay proveedor",
 				data: null,
 			};
 		}
 
-		const adaptedProvider = adapterToFront(iProvider, provider);
-
 		return {
 			status: 200,
-			message: `Se encontró al proveedor ID: ${adaptedProvider.rutp}`,
-			data: adaptedProvider,
+			message: `Se encontró al proveedor ID: ${provider.provider_rut}`,
+			data: provider,
 		};
 	} catch (error) {
 		return {
@@ -29,18 +25,21 @@ export const getProviderService = async (req) => {
 	}
 };
 
-export const getAllProvidersService = async () => {
+export const getAllProvidersService = async (req) => {
 	try {
 		const providerAll = await getAllProviders();
-
-		const adaptedAllProvider = providerAll.map((provider) =>
-			adapterToFront(iProvider, provider),
-		);
+		if (providerAll.length === 0) {
+			return {
+				status: 400,
+				message: "No hay proveedores",
+				data: null,
+			};
+		}
 
 		return {
 			status: 200,
-			message: `Se encontraron proveedores Cantidad: ${adaptedAllProvider.length}`,
-			data: adaptedAllProvider,
+			message: `Se encontraron proveedores Cantidad: ${providerAll.length}`,
+			data: providerAll,
 		};
 	} catch (error) {
 		return {
