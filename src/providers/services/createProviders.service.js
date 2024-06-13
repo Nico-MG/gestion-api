@@ -19,7 +19,7 @@ export const createProviderService = async (req) => {
 
 	const dbProviderData = adapterToDB(iProvider, req.body);
 	const createdProvider = await createProvider(dbProviderData)
-	const newProvider = adapterToDB(iProvider, createdProvider);
+	const newProvider = adapterToFront(iProvider, createdProvider);
 
 
 	return {
