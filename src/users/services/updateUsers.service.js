@@ -13,6 +13,17 @@ export const updateUserService = async (req) => {
 			};
 		}
 
+		if (req.params.id != req.body.rutu) {
+			const userAlreadyExists = await getUser(req.body.rutu);
+			if (userAlreadyExists) {
+				return {
+					status: 400,
+					message: "Usuario ya existe",
+					data: null,
+				};
+			}
+		}
+
 		const updatedUserData = adapterToDB(iUser, req.body);
 		const updatedUser = await updateUser(req.params.id, updatedUserData);
 		const adapterUser = adapterToFront(iUser, updatedUser);
