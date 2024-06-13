@@ -34,7 +34,7 @@ export const getAllProvidersService = async (req) => {
 		const providerAll = await getAllProviders();
 		if (providerAll.length === 0) {
 			return {
-				status: 400,
+				status: 200,
 				message: "No hay proveedores",
 				data: [],
 			};
