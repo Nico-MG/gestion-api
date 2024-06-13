@@ -8,7 +8,7 @@ export const createProviderService = async (req) => {
     try {
 
 	const provider = await getProvider(req.body.rutp);
-
+			
 	if( provider ) {
 	    return {
 		status  :  400,
