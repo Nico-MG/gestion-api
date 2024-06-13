@@ -8,7 +8,7 @@ export const getProductService = async (req) => {
 		return {
 			status: 404,
 			message: "No se encontró el producto",
-			data: {},
+			data: null,
 		};
 	}
 
