@@ -8,13 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Clients {
-  client_rut String  @id @db.VarChar(20)
-  name       String  @db.VarChar(20)
-  lastname   String  @db.VarChar(20)
-  sales      Sales[]
-}
-
 model RefundDetails {
   refund_id  String   @db.VarChar(20)
   product_id String   @db.VarChar(20)
@@ -25,16 +18,16 @@ model RefundDetails {
   @@id([refund_id, product_id])
 }
 
-model OrderDetails {
-  order_id   String   @db.VarChar(20)
-  product_id String   @db.VarChar(20)
-  quantity   Int
-  unit_price Int
-  line_total Int
-  orders     Orders   @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
-  products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+model PurchaseDetails {
+  purchase_id String    @db.VarChar(20)
+  product_id  String    @db.VarChar(20)
+  quantity    Int
+  unit_price  Int
+  line_total  Int
+  purchases   Purchases @relation(fields: [purchase_id], references: [purchase_id], onDelete: Cascade)
+  products    Products  @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 
-  @@id([order_id, product_id])
+  @@id([purchase_id, product_id])
 }
 
 model SaleDetails {
@@ -68,47 +61,48 @@ model Notifications {
   products        Products? @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 }
 
-model Orders {
-  order_id     String   @id @db.VarChar(20)
-  provider_rut String   @db.VarChar(20)
-  user_rut     String   @db.VarChar(20)
-  date         DateTime @db.Timestamp(6)
-  total_price   Int
-  order_details OrderDetails[]
-  providers     Providers?     @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
-  users         Users?         @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
+model Purchases {
+  purchase_id      String            @id @db.VarChar(20)
+  provider_rut     String            @db.VarChar(20)
+  user_rut         String            @db.VarChar(20)
+  date             DateTime          @db.Timestamp(6)
+  total_price      Int
+  purchase_details PurchaseDetails[]
+  providers        Providers?        @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
+  users            Users?            @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
 }
 
 model Products {
-  product_id     String          @id @db.VarChar(20)
-  name           String          @db.VarChar(20)
-  type           String          @db.VarChar(20)
-  quantity       Int
-  min_quantity   Int
-  price          Int
-  refund_details RefundDetails[]
-  order_details  OrderDetails[]
-  sale_details   SaleDetails[]
-  notifications  Notifications[]
+  product_id       String            @id @db.VarChar(20)
+  name             String            @db.VarChar(20)
+  type             String            @db.VarChar(20)
+  quantity         Int
+  min_quantity     Int
+  price            Int
+  refund_details   RefundDetails[]
+  purchase_details PurchaseDetails[]
+  sale_details     SaleDetails[]
+  notifications    Notifications[]
 }
 
 model Providers {
-  provider_rut String   @id @db.VarChar(20)
-  name         String   @db.VarChar(20)
-  address      String   @db.VarChar(20)
-  phone        String   @db.VarChar(20)
-  type         String   @db.VarChar(20)
-  orders       Orders[]
+  provider_rut String      @id @db.VarChar(20)
+  name         String      @db.VarChar(20)
+  address      String      @db.VarChar(20)
+  phone        String      @db.VarChar(20)
+  type         String      @db.VarChar(20)
+  purchases    Purchases[]
 }
 
 model Users {
-  user_rut String   @id @db.VarChar(20)
-  mail     String   @db.VarChar(50)
-  password String   @db.VarChar(60)
-  name     String   @db.VarChar(20)
-  lastname String   @db.VarChar(20)
-  orders   Orders[]
-  sales    Sales[]
+  user_rut  String      @id @db.VarChar(20)
+  mail      String      @db.VarChar(50)
+  password  String      @db.VarChar(60)
+  name      String      @db.VarChar(20)
+  lastname  String      @db.VarChar(20)
+  role      String      @db.VarChar(20)
+  purchases Purchases[]
+  sales     Sales[]
 }
 
 model Sales {
@@ -116,9 +110,8 @@ model Sales {
   client_rut   String        @db.VarChar(20)
   user_rut     String        @db.VarChar(20)
   date         DateTime      @db.Timestamp(6)
-  total_price  Int 
+  total_price  Int
   sale_details SaleDetails[]
   refunds      Refunds[]
-  clients      Clients?      @relation(fields: [client_rut], references: [client_rut], onDelete: Cascade)
   users        Users?        @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade)
 }
