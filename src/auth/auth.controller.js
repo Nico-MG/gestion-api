@@ -4,11 +4,8 @@ import { Router } from "express";
 const authRoute = Router();
 
 authRoute.post("/login", async (req, res) => {
-    const result = await getLoginUser(req);
-
-    res.setHeader('set-Cookie',result.cookie);
-    
-    res.status(result.status);
+    const result = await getLoginUser(req,res); 
+    res.sendStatus(result.status);
     
 });
 

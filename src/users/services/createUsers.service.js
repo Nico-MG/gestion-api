@@ -1,6 +1,7 @@
 import { createUser, getUser } from "../users.model.js";
 import { adapterToDB, adapterToFront } from "../../core/actions/adapter.js";
 import { iUser } from "../../core/database/tableStructures.js";
+import bcrypt from "bcrypt";
 
 export const createUserService = async (req) => {
 	try {
@@ -14,13 +15,18 @@ export const createUserService = async (req) => {
 		}
 
 		const dbUserData = adapterToDB(iUser, req.body);
-		const createdUser = await createUser(dbUserData);
-		const newUser = adapterToFront(iUser, createdUser);
+	    
+	        const salt = bcrypt.genSaltSync(12);
+	        const hash = bcrypt.hashSync(dbUserData.password,salt);
+ 	        dbUserData.password = hash;
 
+	        const createdUser = await createUser(dbUserData);
+	
+	    
 		return {
 			status: 200,
-			message: `Usuario creado, id: ${newUser.rutu}`,
-			data: newUser,
+			message: "Usuario creado",
+		        data: {},
 		};
 	} catch (error) {
 		console.error(error.message);
