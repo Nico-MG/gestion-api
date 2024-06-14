@@ -25,7 +25,7 @@ export const iPurchase = {
 };
 
 export const iPurchaseDetails = {
-	// idpu: "purchase_id",
+	idpu: "purchase_id",
 	idp: "product_id",
 	cit: "quantity",
 	precio: "unit_price",

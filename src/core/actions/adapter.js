@@ -33,19 +33,20 @@ export const adapterToFront = (mapping, reqBody) => {
 };
 
 export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
-	const { details, ...body } = reqBody;
-	const adaptedDetails = details.map((detail) =>
-		adapterToDB(mapDetails, detail),
+	const { detalles, ...body } = reqBody;
+	const adaptedDetails = detalles.map((detalle) =>
+		adapterToDB(mapDetails, detalle),
 	);
 	const adaptedBody = adapterToDB(mapBody, body);
 	return { adaptedBody, adaptedDetails };
 };
 
 export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
-	const { purchase_details, ...body } = reqBody;
-	const adaptedDetails = purchase_details.map((purchase_details) =>
-		adaptedDetails(mapDetails, purchase_details),
+	const claveDetalle = Object.keys(reqBody).find(key => Array.isArray(reqBody[key]));
+	const { [claveDetalle]: detalles, ...body } = reqBody;
+	const adaptedDetails = detalles.map((detalle) =>
+		adapterToFront(mapDetails, detalle),
 	);
 	const adaptedBody = adapterToFront(mapBody, body);
-	return { ...adaptedBody, details: adaptedDetails };
+	return { ...adaptedBody, detalles: adaptedDetails };
 };
