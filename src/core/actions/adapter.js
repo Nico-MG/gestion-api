@@ -42,9 +42,9 @@ export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
 };
 
 export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
-	const { details, ...body } = reqBody;
-	const adaptedDetails = details.map((detail) =>
-		adaptedDetails(mapDetails, detail),
+	const { purchase_details, ...body } = reqBody;
+	const adaptedDetails = purchase_details.map((purchase_details) =>
+		adaptedDetails(mapDetails, purchase_details),
 	);
 	const adaptedBody = adapterToFront(mapBody, body);
 	return { ...adaptedBody, details: adaptedDetails };

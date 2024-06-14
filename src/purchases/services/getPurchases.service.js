@@ -1,10 +1,10 @@
 import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
-import { getAllOrders, getOrder } from "../orders.model.js";
-import { iOrder, iOrderDetails } from "../../core/database/tableStructures.js";
+import { getAllPurchases, getPurchase } from "../purchases.model.js";
+import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures.js";
 
-export const getOrderService = async (req) => {
+export const getPurchaseService = async (req) => {
 	try {
-		const order = await getOrder(req.params.id);
+		const order = await getPurchase(req.params.id);
 		if (!order) {
 			return {
 				status: 400,
@@ -14,8 +14,8 @@ export const getOrderService = async (req) => {
 		}
 
 		const adaptedOrder = adapterToFrontWithDetails(
-			iOrder,
-			iOrderDetails,
+			iPurchase,
+			iPurchaseDetails,
 			order,
 		);
 
@@ -34,19 +34,19 @@ export const getOrderService = async (req) => {
 	}
 };
 
-export const getAllOrdersService = async (req) => {
+export const getAllPurchasesService = async (req) => {
 	try {
-		const orders = await getAllOrders(req.query);
+		const orders = await getAllPurchases(req.query);
 		if (orders.length === 0) {
 			return {
-				status: 400,
-				mesage: "productos no existen",
-				data: {},
+				status: 200,
+				message: "Compras no existen",
+				data: [],
 			};
 		}
 
 		const adaptedOrders = orders.map((order) =>
-			adapterToFrontWithDetails(iOrder, iOrderDetails, order),
+			adapterToFrontWithDetails(iPurchase, iPurchaseDetails, order),
 		);
 
 		return {

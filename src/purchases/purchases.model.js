@@ -1,26 +1,26 @@
 import db from "../core/database/connection.js";
 
-const createOrder = async (body, details) => {
-	return await db.orders.create({
-		include: { order_details: true },
+const createPurchase = async (body, details) => {
+	return await db.purchases.create({
+		include: { purchase_details: true },
 		data: {
 			...body,
-			order_details: {
+			purchase_details: {
 				create: details,
 			},
 		},
 	});
 };
 
-const updateOrder = async (id, body, details) => {
-	return await db.orders.update({
+const updatePurchase = async (id, body, details) => {
+	return await db.purchases.update({
 		where: {
-			order_id: id,
+			purchase_id: id,
 		},
-		include: { order_details: true },
+		include: { purchase_details: true },
 		data: {
 			...body,
-			order_details: {
+			purchase_details: {
 				upsert: details.map((detail) => ({
 					where: { product_id: detail.product_id },
 					update: detail,
@@ -31,26 +31,26 @@ const updateOrder = async (id, body, details) => {
 	});
 };
 
-const deleteOrder = async (id) => {
-	return await db.orders.delete({
+const deletePurchase = async (id) => {
+	return await db.purchases.delete({
 		where: {
-			order_id: id,
+			purchase_id: id,
 		},
 	});
 };
 
-const getOrder = async (id) => {
-	return await db.orders.findUnique({
+const getPurchase = async (id) => {
+	return await db.purchases.findUnique({
 		where: {
-			order_id: id,
+			purchase_id: id,
 		},
 		include: {
-			order_details: true,
+			purchase_details: true,
 		},
 	});
 };
 
-const getAllOrders = async ({
+const getAllPurchases = async ({
 	desde,
 	hasta,
 	limit,
@@ -60,19 +60,19 @@ const getAllOrders = async ({
 	texto,
 	numero,
 }) => {
-	return await db.orders.findMany({
+	return await db.purchases.findMany({
 		where: {
 			OR: [
 				texto
 					? {
-							[dato || "order_id"]: {
+							[dato || "purchase_id"]: {
 								contains: texto,
 							},
 						}
 					: undefined,
 				numero
 					? {
-							[dato === "compra_total" ? dato : "order_id"]: numero
+							[dato === "total_price" ? dato : "purchase_id"]: numero
 								? { equals: numero }
 								: undefined,
 						}
@@ -84,14 +84,14 @@ const getAllOrders = async ({
 			},
 		},
 		orderBy: {
-			[dato || "order_id"]: orden || "asc",
+			[dato || "purchase_id"]: orden || "asc",
 		},
 		take: limit || 10,
 		skip: offset || 0,
 		include: {
-			order_details: true,
+			purchase_details: true,
 		},
 	});
 };
 
-export { createOrder, updateOrder, deleteOrder, getAllOrders, getOrder };
+export { createPurchase, updatePurchase, deletePurchase, getAllPurchases, getPurchase };

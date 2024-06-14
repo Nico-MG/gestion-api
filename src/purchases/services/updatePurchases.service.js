@@ -2,12 +2,12 @@ import {
 	adapterToDBWithDetails,
 	adapterToFrontWithDetails,
 } from "../../core/actions/adapter.js";
-import { getOrder, updateOrder } from "../orders.model.js";
-import { iOrder, iOrderDetails } from "../../core/database/tableStructures.js";
+import { getPurchase, updatePurchase } from "../purchases.model.js";
+import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures.js";
 
-export const updateOrderService = async (req) => {
+export const updatePurchaseService = async (req) => {
 	try {
-		const order = await getOrder(req.params.id);
+		const order = await getPurchase(req.params.id);
 		if (!order) {
 			return {
 				status: 400,
@@ -16,18 +16,18 @@ export const updateOrderService = async (req) => {
 			};
 		}
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
-			iOrder,
-			iOrderDetails,
+			iPurchase,
+			iPurchaseDetails,
 			order,
 		);
-		const newOrder = await updateOrder(
+		const newOrder = await updatePurchase(
 			req.params.id,
 			adaptedBody,
 			adaptedDetails,
 		);
 		const adaptedNewOrder = adapterToFrontWithDetails(
-			iOrder,
-			iOrderDetails,
+			iPurchase,
+			iPurchaseDetails,
 			newOrder,
 		);
 		return {
