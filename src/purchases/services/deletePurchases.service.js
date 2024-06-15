@@ -7,25 +7,21 @@ import {
 
 export const deletePurchaseService = async (req) => {
 	try {
-		const order = await getPurchase(req.params.id);
-		if (!order) {
+		const purchase = await getPurchase(req.params.id);
+		if (!purchase) {
 			return {
 				status: 400,
-				mesage: "producto no existe",
+				message: "Compra no existe",
 				data: {},
 			};
 		}
 		const newOrder = await deletePurchase(req.params.id);
-		const adaptedNewOrder = adapterToFrontWithDetails(
-			iPurchase,
-			iPurchaseDetails,
-			newOrder,
-		);
 		return {
 			status: 200,
-			message: `orden eliminado, id: ${adaptedNewOrder.ido}`,
-			data: adaptedNewOrder,
+			message: `Compra eliminada, id: ${req.params.id}`,
+   		        data: {},
 		};
+	    
 	} catch (error) {
 		console.error(error.message);
 		return {

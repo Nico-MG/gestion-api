@@ -10,33 +10,35 @@ import {
 
 export const updatePurchaseService = async (req) => {
 	try {
-		const order = await getPurchase(req.params.id);
-		if (!order) {
+		const purchase = await getPurchase(req.params.id);
+		if (!purchase) {
 			return {
 				status: 400,
-				mesage: "producto no existe",
+				mesage: "Compra no existe",
 				data: null,
 			};
 		}
+	    
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
 			iPurchase,
 			iPurchaseDetails,
-			order,
+			purchase,
 		);
-		const newOrder = await updatePurchase(
-			req.params.id,
-			adaptedBody,
-			adaptedDetails,
-		);
-		const adaptedNewOrder = adapterToFrontWithDetails(
-			iPurchase,
-			iPurchaseDetails,
-			newOrder,
-		);
+		// const newOrder = await updatePurchase(
+		// 	req.params.id,
+		// 	adaptedBody,
+		// 	adaptedDetails,
+		// );
+		// const adaptedNewOrder = adapterToFrontWithDetails(
+		// 	iPurchase,
+		// 	iPurchaseDetails,
+		// 	newOrder,
+		// );
 		return {
 			status: 200,
-			message: `orden actualizado, id: ${adaptedNewOrder.ido}`,
-			data: adaptedNewOrder,
+			//message: `Compra actualizada, id: ${newOrder.purchase_id}`,
+		    message: "Hola mundo",
+		    data: {adaptedBody,adaptedDetails},
 		};
 	} catch (error) {
 		console.error(error.message);

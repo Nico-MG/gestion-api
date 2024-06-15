@@ -44,16 +44,11 @@ export const createPurchaseService = async (req) => {
 		);
 
 		const newPurchase = await createPurchase(adaptedBody, adaptedDetails);
-		const adaptedNewPurchase = adapterToFrontWithDetails(
-			iPurchase,
-			iPurchaseDetails,
-			newPurchase,
-		);
 		return {
 			status: 200,
-			message: `Compra creada, id: ${adaptedNewPurchase.idpu}`,
+		        message: `Compra creada, id: ${req.body.idpu}`,
 			// message : 'Pedido creado',
-			data: adaptedNewPurchase,
+		        data: {},
 		};
 	} catch (error) {
 		console.error(error.message);
