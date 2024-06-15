@@ -42,7 +42,9 @@ export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
 };
 
 export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
-	const claveDetalle = Object.keys(reqBody).find(key => Array.isArray(reqBody[key]));
+	const claveDetalle = Object.keys(reqBody).find((key) =>
+		Array.isArray(reqBody[key]),
+	);
 	const { [claveDetalle]: detalles, ...body } = reqBody;
 	const adaptedDetails = detalles.map((detalle) =>
 		adapterToFront(mapDetails, detalle),

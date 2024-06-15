@@ -15,18 +15,17 @@ export const createUserService = async (req) => {
 		}
 
 		const dbUserData = adapterToDB(iUser, req.body);
-	    
-	        const salt = bcrypt.genSaltSync(12);
-	        const hash = bcrypt.hashSync(dbUserData.password,salt);
- 	        dbUserData.password = hash;
 
-	        const createdUser = await createUser(dbUserData);
-	
-	    
+		const salt = bcrypt.genSaltSync(12);
+		const hash = bcrypt.hashSync(dbUserData.password, salt);
+		dbUserData.password = hash;
+
+		const createdUser = await createUser(dbUserData);
+
 		return {
 			status: 200,
 			message: "Usuario creado",
-		        data: {},
+			data: {},
 		};
 	} catch (error) {
 		console.error(error.message);

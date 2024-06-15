@@ -4,42 +4,35 @@ import cookie from "cookie";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 
+const getLoginUser = async (req, res) => {
+	const SECRET_KEY = process.env.SECRET_KEY;
+	const { rutu, pwd } = req.body;
 
-const getLoginUser = async (req,res) => {	
-    const SECRET_KEY = process.env.SECRET_KEY;
-    const { rutu , pwd } = req.body;
+	if (!rutu || !pwd) {
+		return { status: 401 };
+	}
 
-    if(!rutu || !pwd){
-	return { status : 401 };	
-    }
+	try {
+		const result = await getUser(rutu);
 
+		if (!result || !bcrypt.compareSync(pwd, result.password)) {
+			return { status: 401 };
+		}
 
-    try {
-    const result = await getUser(rutu);
+		const token = jwt.sign({ rutu }, SECRET_KEY, { expiresIn: "1h" });
 
-    if(!result || !bcrypt.compareSync(pwd, result.password) ){
-	return { status : 401 };
-    }
+		const serialized = cookie.serialize("my-token", token, {
+			httpOnly: true,
+			sameSite: "strict",
+			maxAge: 1000 * 60 * 60,
+			path: "/",
+		});
 
-    
-    const token = jwt.sign({ rutu }, SECRET_KEY, { expiresIn: "1h" });
-
-    const serialized = cookie.serialize("my-token", token, {
-		httpOnly: true,
-		sameSite: "strict",
-		maxAge: 1000 * 60 * 60,
-		path: "/",
-	});
-
-    res.setHeader('Set-Cookie',serialized);
-    return { status : 200};
-    } catch {
-
-	return { status : 500 }
-    }
-
-	
+		res.setHeader("Set-Cookie", serialized);
+		return { status: 200 };
+	} catch {
+		return { status: 500 };
+	}
 };
-
 
 export default getLoginUser;

@@ -7,15 +7,3 @@ export const getUser = async (id) => {
 		},
 	});
 };
-
-
-
-
-
-
-
-
-
-
-
-

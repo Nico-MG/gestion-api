@@ -94,4 +94,10 @@ const getAllPurchases = async ({
 	});
 };
 
-export { createPurchase, updatePurchase, deletePurchase, getAllPurchases, getPurchase };
+export {
+	createPurchase,
+	updatePurchase,
+	deletePurchase,
+	getAllPurchases,
+	getPurchase,
+};

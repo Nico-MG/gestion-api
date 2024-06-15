@@ -12,11 +12,11 @@ export const deleteProviderService = async (req) => {
 				data: null,
 			};
 		}
-	    
-		const newProvider = await deleteProvider(req.params.id);
-	        const adapterFront = adapterToFront(iProvider, newProvider)
 
-	    return {
+		const newProvider = await deleteProvider(req.params.id);
+		const adapterFront = adapterToFront(iProvider, newProvider);
+
+		return {
 			status: 200,
 			message: `Se elimino el proveedor ID: ${newProvider.id_proveedor}`,
 			data: newProvider,

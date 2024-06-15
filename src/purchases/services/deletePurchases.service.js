@@ -1,6 +1,9 @@
 import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
 import { getPurchase, deletePurchase } from "../purchases.model.js";
-import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures.js";
+import {
+	iPurchase,
+	iPurchaseDetails,
+} from "../../core/database/tableStructures.js";
 
 export const deletePurchaseService = async (req) => {
 	try {

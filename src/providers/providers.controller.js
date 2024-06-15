@@ -1,9 +1,9 @@
 import {
-    createProviderService,
-    deleteProviderService,
-    updateProviderService,
-    getProviderService,
-    getAllProvidersService
+	createProviderService,
+	deleteProviderService,
+	updateProviderService,
+	getProviderService,
+	getAllProvidersService,
 } from "./services/index.js";
 import { Router } from "express";
 
@@ -24,8 +24,8 @@ providersRoute.get("/", async (req, res) => {
 });
 
 providersRoute.post("/create", async (req, res) => {
-        const result = await createProviderService(req);
-        res
+	const result = await createProviderService(req);
+	res
 		.status(result.status)
 		.json({ message: result.message, data: result.data });
 });

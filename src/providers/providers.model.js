@@ -2,11 +2,11 @@ import db from "../core/database/connection.js";
 
 const createProvider = async (body) => {
 	return await db.providers.create({
-		data:  body,
+		data: body,
 	});
 };
 
-const updateProvider = async (id,body) => {
+const updateProvider = async (id, body) => {
 	return await db.providers.update({
 		where: { provider_rut: id },
 		data: body,

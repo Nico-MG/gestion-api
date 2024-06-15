@@ -3,7 +3,10 @@ import {
 	adapterToFrontWithDetails,
 } from "../../core/actions/adapter.js";
 import { getPurchase, updatePurchase } from "../purchases.model.js";
-import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures.js";
+import {
+	iPurchase,
+	iPurchaseDetails,
+} from "../../core/database/tableStructures.js";
 
 export const updatePurchaseService = async (req) => {
 	try {

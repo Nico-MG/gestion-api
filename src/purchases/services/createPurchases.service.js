@@ -3,12 +3,13 @@ import {
 	adapterToFrontWithDetails,
 } from "../../core/actions/adapter.js";
 import { getPurchase, createPurchase } from "../purchases.model.js";
-import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures.js";
-
-
+import {
+	iPurchase,
+	iPurchaseDetails,
+} from "../../core/database/tableStructures.js";
 
 // {
-  
+
 // 	"idpu" : "1234",
 // 	"rutp": "1342",
 // 	"rutu": "123532",
@@ -21,14 +22,12 @@ import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures
 //       "precio": 50,
 //       "suma":100
 //     }
-    
+
 //     ]
 // }
 
 export const createPurchaseService = async (req) => {
 	try {
-
-		
 		const purchase = await getPurchase(req.body.idpu);
 		if (purchase) {
 			return {
@@ -44,13 +43,13 @@ export const createPurchaseService = async (req) => {
 			req.body,
 		);
 
-	  const newPurchase = await createPurchase(adaptedBody, adaptedDetails);
+		const newPurchase = await createPurchase(adaptedBody, adaptedDetails);
 		const adaptedNewPurchase = adapterToFrontWithDetails(
 			iPurchase,
 			iPurchaseDetails,
 			newPurchase,
 		);
-		 return {
+		return {
 			status: 200,
 			message: `Compra creada, id: ${adaptedNewPurchase.idpu}`,
 			// message : 'Pedido creado',

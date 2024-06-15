@@ -1,6 +1,9 @@
 import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
 import { getAllPurchases, getPurchase } from "../purchases.model.js";
-import { iPurchase, iPurchaseDetails } from "../../core/database/tableStructures.js";
+import {
+	iPurchase,
+	iPurchaseDetails,
+} from "../../core/database/tableStructures.js";
 
 export const getPurchaseService = async (req) => {
 	try {

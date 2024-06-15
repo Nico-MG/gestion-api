@@ -13,7 +13,7 @@ export const updateUserService = async (req) => {
 			};
 		}
 
-		if (req.params.id != req.body.rutu) {
+		if (req.params.id !== req.body.rutu) {
 			const userAlreadyExists = await getUser(req.body.rutu);
 			if (userAlreadyExists) {
 				return {

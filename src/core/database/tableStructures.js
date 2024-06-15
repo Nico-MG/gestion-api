@@ -13,7 +13,7 @@ export const iUser = {
 	pwd: "password",
 	nombre: "name",
 	apellido: "lastname",
-	rol: 		"role"		
+	rol: "role",
 };
 
 export const iPurchase = {
