@@ -45,7 +45,7 @@ model SaleDetails {
 model Refunds {
   refund_id      String          @id @db.VarChar(20)
   sale_id        String          @db.VarChar(20)
-  date           DateTime        @db.Timestamp(6)
+  date           DateTime
   description    String
   image_refund   String
   refund_details RefundDetails[]
@@ -54,7 +54,7 @@ model Refunds {
 
 model Notifications {
   notification_id Int       @id @default(autoincrement())
-  date            DateTime  @db.Timestamp(6)
+  date            DateTime
   product_id      String    @db.VarChar(20)
   title           String    @db.VarChar(20)
   description     String
@@ -65,7 +65,7 @@ model Purchases {
   purchase_id      String            @id @db.VarChar(20)
   provider_rut     String            @db.VarChar(20)
   user_rut         String            @db.VarChar(20)
-  date             DateTime          @db.Timestamp(6)
+  date             DateTime
   total_price      Int
   purchase_details PurchaseDetails[]
   providers        Providers?        @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade)
@@ -109,7 +109,7 @@ model Sales {
   sale_id      String        @id @db.VarChar(20)
   client_rut   String        @db.VarChar(20)
   user_rut     String        @db.VarChar(20)
-  date         DateTime      @db.Timestamp(6)
+  date         DateTime
   total_price  Int
   sale_details SaleDetails[]
   refunds      Refunds[]

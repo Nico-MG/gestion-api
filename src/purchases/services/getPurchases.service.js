@@ -7,25 +7,25 @@ import {
 
 export const getPurchaseService = async (req) => {
 	try {
-		const order = await getPurchase(req.params.id);
-		if (!order) {
+		const purchase = await getPurchase(req.params.id);
+		if (!purchase) {
 			return {
 				status: 400,
-				mesage: "producto no existe",
+				mesage: "Compra no existe",
 				data: {},
 			};
 		}
 
-		const adaptedOrder = adapterToFrontWithDetails(
+		const adaptedPurchase = adapterToFrontWithDetails(
 			iPurchase,
 			iPurchaseDetails,
-			order,
+			purchase,
 		);
 
 		return {
 			status: 200,
-			message: `orden encontado, id: ${adaptedOrder.ido}`,
-			data: order,
+			message: `Compra encontrada, id: ${adaptedPurchase.idpu}`,
+			data: purchase,
 		};
 	} catch (error) {
 		console.error(error.message);
@@ -39,8 +39,8 @@ export const getPurchaseService = async (req) => {
 
 export const getAllPurchasesService = async (req) => {
 	try {
-		const orders = await getAllPurchases(req.query);
-		if (orders.length === 0) {
+		const purchases = await getAllPurchases(req.query);
+		if (purchases.length === 0) {
 			return {
 				status: 200,
 				message: "Compras no existen",
@@ -48,14 +48,14 @@ export const getAllPurchasesService = async (req) => {
 			};
 		}
 
-		const adaptedOrders = orders.map((order) =>
-			adapterToFrontWithDetails(iPurchase, iPurchaseDetails, order),
+		const adaptedPurchases = purchases.map((purchase) =>
+			adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 		);
 
 		return {
 			status: 200,
-			message: `Se encontraron ordenes, Cantidad: ${adaptedOrders.length}`,
-			data: adaptedOrders,
+			message: `Se encontraron compras, Cantidad: ${adaptedPurchases.length}`,
+			data: adaptedPurchases,
 		};
 	} catch (error) {
 		console.error(error.message);
