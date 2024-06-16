@@ -51,47 +51,17 @@ const getPurchase = async (id) => {
 };
 
 const getAllPurchases = async ({
-	desde,
-	hasta,
 	limit,
 	offset,
-	dato,
-	orden,
-	texto,
-	numero,
 }) => {
 	return await db.purchases.findMany({
 		where: {
-			OR: [
-				texto
-					? {
-							[dato || "purchase_id"]: {
-								contains: texto,
-							},
-						}
-					: undefined,
-				numero
-					? {
-							[dato === "total_price" ? dato : "purchase_id"]: numero
-								? { equals: numero }
-								: undefined,
-						}
-					: undefined,
-			].filter(Boolean), // Filtra los valores undefined
-			date: {
-				gt: desde || new Date("2000-01-01"),
-				lt: hasta || new Date(),
-			},
-		},
-		orderBy: {
-			[dato || "purchase_id"]: orden || "asc",
-		},
 		take: limit || 10,
 		skip: offset || 0,
 		include: {
 			purchase_details: true,
-		},
-	});
+		}
+	}});
 };
 
 export {

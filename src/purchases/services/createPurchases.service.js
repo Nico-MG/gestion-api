@@ -46,9 +46,9 @@ export const createPurchaseService = async (req) => {
 		const newPurchase = await createPurchase(adaptedBody, adaptedDetails);
 		return {
 			status: 200,
-		        message: `Compra creada, id: ${req.body.idpu}`,
+			message: `Compra creada, id: ${req.body.idpu}`,
 			// message : 'Pedido creado',
-		        data: {},
+			data: {},
 		};
 	} catch (error) {
 		console.error(error.message);

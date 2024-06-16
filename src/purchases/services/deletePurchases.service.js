@@ -19,9 +19,8 @@ export const deletePurchaseService = async (req) => {
 		return {
 			status: 200,
 			message: `Compra eliminada, id: ${req.params.id}`,
-   		        data: {},
+			data: {},
 		};
-	    
 	} catch (error) {
 		console.error(error.message);
 		return {

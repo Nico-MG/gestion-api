@@ -18,7 +18,7 @@ export const updatePurchaseService = async (req) => {
 				data: null,
 			};
 		}
-	    
+
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
 			iPurchase,
 			iPurchaseDetails,
@@ -37,8 +37,8 @@ export const updatePurchaseService = async (req) => {
 		return {
 			status: 200,
 			//message: `Compra actualizada, id: ${newOrder.purchase_id}`,
-		    message: "Hola mundo",
-		    data: {adaptedBody,adaptedDetails},
+			message: "Hola mundo",
+			data: {},
 		};
 	} catch (error) {
 		console.error(error.message);
