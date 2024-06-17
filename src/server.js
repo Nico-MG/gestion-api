@@ -1,6 +1,8 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
+import { WebSocketServer } from "ws";
+import db from "./core/database/connection.js";
 
 // middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
@@ -33,7 +35,7 @@ server.use("/test", verifyToken, (req, res) => {
 	res.sendStatus(200);
 });
 
-server
+const httpServer = server
 	.listen(port, () => {
 		console.log(`Server ready to listen on port: ${port}`);
 	})
@@ -46,5 +48,22 @@ server
 			console.error(`Server error: ${err}`);
 		}
 	});
+
+// Configura el servidor WebSocket
+const wss = new WebSocketServer({ server: httpServer });
+
+wss.on('connection', (ws) => {
+	console.log('New client connected');
+
+	ws.on('message', (message) => {
+		console.log(`Received message => ${message}`);
+		// Aquí puedes manejar los mensajes recibidos y enviar respuestas
+		ws.send(`Echo: ${message}`);
+	});
+
+	ws.on('close', () => {
+		console.log('Client disconnected');
+	});
+});
 
 export default server;
