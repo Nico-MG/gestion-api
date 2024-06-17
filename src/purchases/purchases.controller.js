@@ -37,7 +37,7 @@ purchasesRoute.put("/:id/edit", async (req, res) => {
 		.json({ message: result.message, data: result.data });
 });
 
-purchasesRoute.get("/:id/delete", async (req, res) => {
+purchasesRoute.delete("/:id/delete", async (req, res) => {
 	const result = await deletePurchaseService(req);
 	res
 		.status(result.status)

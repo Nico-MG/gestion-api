@@ -15,7 +15,9 @@ export const deletePurchaseService = async (req) => {
 				data: {},
 			};
 		}
-		const newOrder = await deletePurchase(req.params.id);
+
+		await deletePurchase(req.params.id);
+		
 		return {
 			status: 200,
 			message: `Compra eliminada, id: ${req.params.id}`,
