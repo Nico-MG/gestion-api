@@ -32,8 +32,8 @@ export const createPurchaseService = async (req) => {
 		if (purchase) {
 			return {
 				status: 400,
-				mesage: "Compra ya existe",
-				data: purchase,
+				message: "Compra ya existe",
+				data: {},
 			};
 		}
 

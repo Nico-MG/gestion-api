@@ -55,13 +55,12 @@ const getAllPurchases = async ({
 	offset,
 }) => {
 	return await db.purchases.findMany({
-		where: {
-		take: limit || 10,
-		skip: offset || 0,
+		take: Number(limit) || 10,
+		skip: Number(offset) || 0,
 		include: {
 			purchase_details: true,
 		}
-	}});
+	});
 };
 
 export {
