@@ -55,7 +55,7 @@ export const updateProductService = async (req) => {
 	if (!product) {
 		throw new NotFound("Producto");
 	}
-	if (productCode.length > 1) {
+	if (productCode.length > 1 && productCode[0].code === req.body.cod) {
 		throw new CodeRepeat("producto", req.body.cod);
 	}
 
