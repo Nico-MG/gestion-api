@@ -9,25 +9,30 @@ import { Router } from "express";
 
 const usersRoute = Router();
 
-usersRoute.get("/", async (_, res) => {
-	const result = await getAllUsersService();
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
-});
-
-usersRoute.get("/:id", async (req, res) => {
-	const result = await getUserService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+usersRoute.get("/", async (req, res) => {
+	try {
+		const result = await getAllUsersService(req);
+		return res.status(200).json({
+			message: `Usuarios encontrados: ${result.length}`,
+			data: result,
+		});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 usersRoute.post("/create", async (req, res) => {
-	const result = await createUserService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+	try {
+		await createProductService(req);
+		return res.status(200).json({ message: "Producto creado exitosamente" });
+	} catch (error) {
+		console.error(error);
+		if (error instanceof CodeRepeat) {
+			return res.status(400).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 usersRoute.put("/:id/edit", async (req, res) => {

@@ -51,11 +51,12 @@ export const deleteProductService = async (req) => {
 export const updateProductService = async (req) => {
 	const id = Number.parseInt(req.params.id);
 	const product = await getProduct(id);
+	const productCode = await getCodeProduct(req.body.cod);
 	if (!product) {
 		throw new NotFound("Producto");
 	}
-	if (product.code === req.body.cod) {
-		throw new CodeRepeat("producto", product.code);
+	if (productCode.length > 1) {
+		throw new CodeRepeat("producto", req.body.cod);
 	}
 
 	const updatedProductData = adapterToDB(iProduct, req.body);

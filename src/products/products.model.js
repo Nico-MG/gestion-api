@@ -23,20 +23,20 @@ export const getCodeProduct = async (code) => {
 };
 
 export const createProduct = async (body) => {
-	return await db.products.create({
+	await db.products.create({
 		data: body,
 	});
 };
 
 export const updateProduct = async (id, body) => {
-	return await db.products.update({
+	await db.products.update({
 		where: { product_id: id },
 		data: body,
 	});
 };
 
 export const deleteProduct = async (id) => {
-	return await db.products.delete({
+	await db.products.delete({
 		where: {
 			product_id: id,
 		},

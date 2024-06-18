@@ -26,20 +26,20 @@ productsRoute.get("/", async (req, res) => {
 productsRoute.post("/create", async (req, res) => {
 	try {
 		await createProductService(req);
-		res.status(200).json({ message: "Producto creado exitosamente" });
+		return res.status(200).json({ message: "Producto creado exitosamente" });
 	} catch (error) {
 		console.error(error);
 		if (error instanceof CodeRepeat) {
 			return res.status(400).json({ message: error.message });
 		}
-		res.status(500).json({ message: "Error interno del servidor" });
+		return res.status(500).json({ message: "Error interno del servidor" });
 	}
 });
 
 productsRoute.put("/:id/edit", async (req, res) => {
 	try {
 		await updateProductService(req);
-		res.status(200).json({ message: "Producto editado exitosamente" });
+		return res.status(200).json({ message: "Producto editado exitosamente" });
 	} catch (error) {
 		console.error(error);
 		if (error instanceof NotFound) {
@@ -48,7 +48,7 @@ productsRoute.put("/:id/edit", async (req, res) => {
 		if (error instanceof CodeRepeat) {
 			return res.status(400).json({ message: error.message });
 		}
-		res.status(500).json({ message: "Error interno del servidor" });
+		return res.status(500).json({ message: "Error interno del servidor" });
 	}
 });
 

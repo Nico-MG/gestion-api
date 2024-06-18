@@ -1,5 +1,5 @@
 export default class CodeRepeat extends Error {
 	constructor(model, code) {
-		super(`El ${model} ya tiene el codigo ${code}`);
+		super(`Ya existe un ${model} con el codigo ${code}`);
 	}
 }

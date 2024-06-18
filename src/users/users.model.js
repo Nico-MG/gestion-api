@@ -1,32 +1,25 @@
 import db from "../core/database/connection.js";
 
-const getAllUsers = async () => {
-	return await db.users.findMany({
-		select: {
-			password: false,
-		},
-	});
+export const getAllUsers = async () => {
+	return await db.users.findMany();
 };
 
-const getUser = async (id) => {
+export const getUser = async (id) => {
 	return await db.users.findUnique({
-		select: {
-			password: false,
-		},
 		where: {
 			user_rut: id,
 		},
 	});
 };
 
-const createUser = async (body) => {
-	return await db.users.create({
+export const createUser = async (body) => {
+	await db.users.create({
 		data: body,
 	});
 };
 
-const updateUser = async (id, body) => {
-	return await db.users.update({
+export const updateUser = async (id, body) => {
+	await db.users.update({
 		where: {
 			user_rut: id,
 		},
@@ -34,12 +27,10 @@ const updateUser = async (id, body) => {
 	});
 };
 
-const deleteUser = async (id) => {
-	return await db.users.delete({
+export const deleteUser = async (id) => {
+	await db.users.delete({
 		where: {
 			user_rut: id,
 		},
 	});
 };
-
-export { createUser, updateUser, deleteUser, getAllUsers, getUser };

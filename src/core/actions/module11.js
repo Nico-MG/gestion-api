@@ -1,8 +1,3 @@
-/**
- * Valida un RUT chileno usando el algoritmo del módulo 11.
- * @param {string} rut - El RUT en formato string (puede incluir puntos y guión).
- * @returns {boolean} - Retorna true si el RUT es válido, de lo contrario false.
- */
 const validarRut = (rut) => {
 	// Eliminar puntos y guión
 	const cleanRut = rut.replace(/\./g, "").replace("-", "");
