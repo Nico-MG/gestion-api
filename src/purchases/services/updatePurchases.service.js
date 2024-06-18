@@ -24,16 +24,7 @@ export const updatePurchaseService = async (req) => {
 			iPurchaseDetails,
 			purchase,
 		);
-		// const newOrder = await updatePurchase(
-		// 	req.params.id,
-		// 	adaptedBody,
-		// 	adaptedDetails,
-		// );
-		// const adaptedNewOrder = adapterToFrontWithDetails(
-		// 	iPurchase,
-		// 	iPurchaseDetails,
-		// 	newOrder,
-		// );
+		await updatePurchase(req.params.id, adaptedBody, adaptedDetails);
 		return {
 			status: 200,
 			//message: `Compra actualizada, id: ${newOrder.purchase_id}`,

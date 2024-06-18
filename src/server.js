@@ -52,17 +52,17 @@ const httpServer = server
 // Configura el servidor WebSocket
 const wss = new WebSocketServer({ server: httpServer });
 
-wss.on('connection', (ws) => {
-	console.log('New client connected');
+wss.on("connection", (ws) => {
+	console.log("New client connected");
 
-	ws.on('message', (message) => {
+	ws.on("message", (message) => {
 		console.log(`Received message => ${message}`);
 		// Aquí puedes manejar los mensajes recibidos y enviar respuestas
 		ws.send(`Echo: ${message}`);
 	});
 
-	ws.on('close', () => {
-		console.log('Client disconnected');
+	ws.on("close", () => {
+		console.log("Client disconnected");
 	});
 });
 

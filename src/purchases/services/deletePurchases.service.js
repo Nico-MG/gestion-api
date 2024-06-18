@@ -17,7 +17,7 @@ export const deletePurchaseService = async (req) => {
 		}
 
 		await deletePurchase(req.params.id);
-		
+
 		return {
 			status: 200,
 			message: `Compra eliminada, id: ${req.params.id}`,

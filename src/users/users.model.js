@@ -3,15 +3,15 @@ import db from "../core/database/connection.js";
 const getAllUsers = async () => {
 	return await db.users.findMany({
 		select: {
-			password: false
-		}
+			password: false,
+		},
 	});
 };
 
 const getUser = async (id) => {
 	return await db.users.findUnique({
 		select: {
-			password: false
+			password: false,
 		},
 		where: {
 			user_rut: id,
