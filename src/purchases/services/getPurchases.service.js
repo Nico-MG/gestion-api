@@ -11,7 +11,7 @@ export const getPurchaseService = async (req) => {
 		if (!purchase) {
 			return {
 				status: 400,
-				mesage: "Compra no existe",
+				message: "Compra no existe",
 				data: {},
 			};
 		}
@@ -55,7 +55,7 @@ export const getAllPurchasesService = async (req) => {
 		return {
 			status: 200,
 			message: `Se encontraron compras, Cantidad: ${adaptedPurchases.length}`,
-			data: adaptedPurchases,
+			data: purchases,
 		};
 	} catch (error) {
 		console.error(error.message);

@@ -14,7 +14,7 @@ import {
 // 	"total": 3214,
 //   "details": [
 //     {
-//       "idp": "98989",
+//       "idp": 1,
 //       "cit":2,
 //       "precio": 50,
 //       "suma":100
@@ -25,14 +25,6 @@ import {
 
 export const createPurchaseService = async (req) => {
 	try {
-		const purchase = await getPurchase(req.body.idpu);
-		if (purchase) {
-			return {
-				status: 400,
-				message: "Compra ya existe",
-				data: {},
-			};
-		}
 
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
 			iPurchase,
@@ -40,12 +32,11 @@ export const createPurchaseService = async (req) => {
 			req.body,
 		);
 
-		await createPurchase(adaptedBody, adaptedDetails);
+		 const result = await createPurchase(adaptedBody, adaptedDetails);
 		return {
 			status: 200,
-			message: `Compra creada, id: ${req.body.idpu}`,
-			// message : 'Pedido creado',
-			data: {},
+			message: `Compra creada, id: ${req.body.cod}`,
+		        data: {result},
 		};
 	} catch (error) {
 		console.error(error.message);
