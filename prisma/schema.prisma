@@ -12,10 +12,13 @@ model RefundDetails {
   refund_id  Int 
   product_id Int 
   quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   refunds    Refunds  @relation(fields: [refund_id], references: [refund_id], onDelete: Cascade, onUpdate: Cascade)
   products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([refund_id, product_id])
+  @@index([product_id])
 }
 
 model PurchaseDetails {
@@ -24,10 +27,13 @@ model PurchaseDetails {
   quantity    Int
   unit_price  Int
   line_total  Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   purchases   Purchases @relation(fields: [purchase_id], references: [purchase_id], onDelete: Cascade, onUpdate: Cascade)
   products    Products  @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([purchase_id, product_id])
+  @@index([product_id])
 }
 
 model SaleDetails {
@@ -36,10 +42,13 @@ model SaleDetails {
   quantity   Int
   unit_price Int
   line_total Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
   sales      Sales    @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([sale_id, product_id])
+  @@index([product_id])
 }
 
 model Refunds {
@@ -49,8 +58,13 @@ model Refunds {
   date           DateTime
   description    String
   image_refund   String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   refund_details RefundDetails[]
   sales          Sales?          @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([refund_code])
+  @@index([sale_id])
 }
 
 model Notifications {
@@ -59,19 +73,29 @@ model Notifications {
   date            DateTime
   title           String    @db.VarChar(20)
   description     String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
   products        Products? @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([product_id])
 }
 
 model Purchases {
-  purchase_id      Int                @id @default(autoincrement())
-  purchase_code    String             @db.VarChar(20)
+  purchase_id      Int               @id @default(autoincrement())
+  purchase_code    String            @db.VarChar(20)
   provider_rut     String           
   user_rut         String
   date             DateTime
   total_price      Int
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   purchase_details PurchaseDetails[]
   providers        Providers?        @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade, onUpdate: Cascade)
   users            Users?            @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([provider_rut])
+  @@index([user_rut])
+  @@index([purchase_code])
 }
 
 model Products {
@@ -82,10 +106,14 @@ model Products {
   quantity         Int
   min_quantity     Int
   price            Int
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   refund_details   RefundDetails[]
   purchase_details PurchaseDetails[]
   sale_details     SaleDetails[]
   notifications    Notifications[]
+
+  @@index([product_code])
 }
 
 model Providers {
@@ -94,7 +122,16 @@ model Providers {
   address      String      @db.VarChar(20)
   phone        String      @db.VarChar(20)
   type         String      @db.VarChar(20)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   purchases    Purchases[]
+
+  @@index([name])
+}
+
+enum UsersRoles {
+  ADMIN
+  USER
 }
 
 model Users {
@@ -103,9 +140,13 @@ model Users {
   password  String      @db.VarChar(60)
   name      String      @db.VarChar(20)
   lastname  String      @db.VarChar(20)
-  role      String      @db.VarChar(20)
+  role      UsersRoles  @default(USER)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   purchases Purchases[]
   sales     Sales[]
+
+  @@index([mail])
 }
 
 model Sales {
@@ -115,7 +156,13 @@ model Sales {
   user_rut     String
   date         DateTime
   total_price  Int
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   sale_details SaleDetails[]
   refunds      Refunds[]
   users        Users?        @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([client_rut])
+  @@index([user_rut])
+  @@index([date])
 }
