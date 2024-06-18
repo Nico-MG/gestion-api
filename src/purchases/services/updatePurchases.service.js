@@ -24,7 +24,7 @@ export const updatePurchaseService = async (req) => {
 		await updatePurchase(req.params.id, adaptedBody, adaptedDetails);
 		return {
 			status: 200,
-			message: "Hola mundo",
+			message: "Compra actualizada",
 			data: {},
 		};
 	} catch (error) {

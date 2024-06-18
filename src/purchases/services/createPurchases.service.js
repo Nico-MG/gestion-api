@@ -32,11 +32,11 @@ export const createPurchaseService = async (req) => {
 			req.body,
 		);
 
-		 const result = await createPurchase(adaptedBody, adaptedDetails);
+		await createPurchase(adaptedBody, adaptedDetails);
 		return {
 			status: 200,
 			message: `Compra creada, id: ${req.body.cod}`,
-		        data: {result},
+		        data: {},
 		};
 	} catch (error) {
 		console.error(error.message);
