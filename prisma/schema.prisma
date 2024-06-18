@@ -9,74 +9,74 @@ datasource db {
 }
 
 model RefundDetails {
-  refund_uid  String   
-  product_uid String   
+  refund_id  Int 
+  product_id Int 
   quantity   Int
-  refunds    Refunds  @relation(fields: [refund_uid], references: [refund_uid], onDelete: Cascade, onUpdate: Cascade)
-  products   Products @relation(fields: [product_uid], references: [product_uid], onDelete: Cascade, onUpdate: Cascade)
+  refunds    Refunds  @relation(fields: [refund_id], references: [refund_id], onDelete: Cascade, onUpdate: Cascade)
+  products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@id([refund_uid, product_uid])
+  @@id([refund_id, product_id])
 }
 
 model PurchaseDetails {
-  purchase_uid String    
-  product_uid  String  
+  purchase_id Int   
+  product_id  Int 
   quantity    Int
   unit_price  Int
   line_total  Int
-  purchases   Purchases @relation(fields: [purchase_uid], references: [purchase_uid], onDelete: Cascade, onUpdate: Cascade)
-  products    Products  @relation(fields: [product_uid], references: [product_uid], onDelete: Cascade, onUpdate: Cascade)
+  purchases   Purchases @relation(fields: [purchase_id], references: [purchase_id], onDelete: Cascade, onUpdate: Cascade)
+  products    Products  @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@id([purchase_uid, product_uid])
+  @@id([purchase_id, product_id])
 }
 
 model SaleDetails {
-  sale_uid    String  
-  product_uid String   
+  sale_id    Int  
+  product_id Int   
   quantity   Int
   unit_price Int
   line_total Int
-  products   Products @relation(fields: [product_uid], references: [product_uid], onDelete: Cascade, onUpdate: Cascade)
-  sales      Sales    @relation(fields: [sale_uid], references: [sale_uid], onDelete: Cascade, onUpdate: Cascade)
+  products   Products @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
+  sales      Sales    @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@id([sale_uid, product_uid])
+  @@id([sale_id, product_id])
 }
 
 model Refunds {
-  refund_uid String @id @default(cuid())
-  refund_id      String          @db.VarChar(20)
-  sale_uid        String         
+  refund_id      Int             @id @default(autoincrement())
+  refund_code    String          @db.VarChar(20)
+  sale_id        Int         
   date           DateTime
   description    String
   image_refund   String
   refund_details RefundDetails[]
-  sales          Sales?          @relation(fields: [sale_uid], references: [sale_uid], onDelete: Cascade, onUpdate: Cascade)
+  sales          Sales?          @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Notifications {
   notification_id Int       @id @default(autoincrement())
+  product_id      Int   
   date            DateTime
-  product_uid      String   
   title           String    @db.VarChar(20)
   description     String
-  products        Products? @relation(fields: [product_uid], references: [product_uid], onDelete: Cascade, onUpdate: Cascade)
+  products        Products? @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Purchases {
-  purchase_uid String @id @default(cuid())
-  purchase_id      String             @db.VarChar(20)
-  provider_urut     String           
-  user_urut         String
+  purchase_id      Int                @id @default(autoincrement())
+  purchase_code    String             @db.VarChar(20)
+  provider_rut     String           
+  user_rut         String
   date             DateTime
   total_price      Int
   purchase_details PurchaseDetails[]
-  providers        Providers?        @relation(fields: [provider_urut], references: [provider_urut], onDelete: Cascade, onUpdate: Cascade)
-  users            Users?            @relation(fields: [user_urut], references: [user_urut], onDelete: Cascade, onUpdate: Cascade)
+  providers        Providers?        @relation(fields: [provider_rut], references: [provider_rut], onDelete: Cascade, onUpdate: Cascade)
+  users            Users?            @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Products {
-  product_uid String @id @default(cuid())
-  product_id       String            @db.VarChar(20)
+  product_id       Int               @id @default(autoincrement())
+  product_code     String            @db.VarChar(20)
   name             String            @db.VarChar(20)
   type             String            @db.VarChar(20)
   quantity         Int
@@ -89,8 +89,7 @@ model Products {
 }
 
 model Providers {
-  provider_urut String @id @default(cuid())
-  provider_rut String      @db.VarChar(20)
+  provider_rut String      @id @db.VarChar(20)
   name         String      @db.VarChar(20)
   address      String      @db.VarChar(20)
   phone        String      @db.VarChar(20)
@@ -99,27 +98,24 @@ model Providers {
 }
 
 model Users {
-  user_urut String @id @default(cuid())
-  user_rut  String      @db.VarChar(20)
-  mail      String      @db.VarChar(50)
+  user_rut  String      @id @db.VarChar(20)
+  mail      String      @unique @db.VarChar(50)
   password  String      @db.VarChar(60)
   name      String      @db.VarChar(20)
   lastname  String      @db.VarChar(20)
   role      String      @db.VarChar(20)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   purchases Purchases[]
   sales     Sales[]
 }
 
 model Sales {
-  sale_uid String @id @default(cuid())
-  sale_id      String        @db.VarChar(20)
+  sale_id      Int           @id @default(autoincrement())
+  sale_code    String        @db.VarChar(20)
   client_rut   String        @db.VarChar(20)
-  user_urut     String
+  user_rut     String
   date         DateTime
   total_price  Int
   sale_details SaleDetails[]
   refunds      Refunds[]
-  users        Users?        @relation(fields: [user_urut], references: [user_urut], onDelete: Cascade, onUpdate: Cascade)
+  users        Users?        @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade, onUpdate: Cascade)
 }
