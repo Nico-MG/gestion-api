@@ -4,75 +4,44 @@ import {
 	createSaleService,
 	updateSaleService,
 	deleteSaleService,
-} from "./sales.service.js";
+} from "./services/index.js";
+import { Router } from "express";
 
-const getSaleController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await getSaleService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+const salesRoute = Router();
 
-const getAllSalesController = async (req, res) => {
-	try {
-		const result = await getAllSalesService();
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+salesRoute.get("/:id", async (req, res) => {
+	const result = await getSaleService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const createSaleController = async (req, res) => {
-	const { id_venta, rut_cliente, rut_usuario, fecha, venta_total } = req.body;
-	try {
-		const result = await createSaleService(
-			id_venta,
-			rut_cliente,
-			rut_usuario,
-			fecha,
-			venta_total,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+salesRoute.get("/", async (req, res) => {
+	const result = await getAllSalesService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const deleteSaleController = async (req, res) => {
-	const { id } = req.params;
-	try {
-		const result = await deleteSaleService(id);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+salesRoute.post("/create", async (req, res) => {
+	const result = await createSaleService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-const updateSaleController = async (req, res) => {
-	const { id } = req.params;
-	const { id_venta, rut_cliente, rut_usuario, fecha, venta_total } = req.body;
-	try {
-		const result = await updateSaleService(
-			id,
-			id_venta,
-			rut_cliente,
-			rut_usuario,
-			fecha,
-			venta_total,
-		);
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ error: error.message });
-	}
-};
+salesRoute.put("/:id/edit", async (req, res) => {
+	const result = await updateSaleService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
 
-export {
-	getSaleController,
-	getAllSalesController,
-	createSaleController,
-	updateSaleController,
-	deleteSaleController,
-};
+salesRoute.delete("/:id/delete", async (req, res) => {
+	const result = await deleteSaleService(req);
+	res
+		.status(result.status)
+		.json({ message: result.message, data: result.data });
+});
+
+export default salesRoute;

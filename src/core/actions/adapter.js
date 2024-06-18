@@ -12,10 +12,8 @@ const invertMapping = (mapping) => {
 export const adapterToDB = (mapping, reqBody) => {
 	const mapData = {};
 	for (const key in reqBody) {
-		if (reqBody[key]) {
-			const entryKey = mapping[key];
-			mapData[entryKey] = reqBody[key];
-		}
+		const entryKey = mapping[key];
+		mapData[entryKey] = reqBody[key];
 	}
 	return mapData;
 };
@@ -24,10 +22,8 @@ export const adapterToFront = (mapping, reqBody) => {
 	const invMap = invertMapping(mapping);
 	const mapData = {};
 	for (const key in reqBody) {
-		if (reqBody[key]) {
-			const entryKey = invMap[key];
-			mapData[entryKey] = reqBody[key];
-		}
+		const entryKey = invMap[key];
+		mapData[entryKey] = reqBody[key];
 	}
 	return mapData;
 };

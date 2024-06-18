@@ -1,4 +1,3 @@
-import { adapterToFrontWithDetails } from "../../core/actions/adapter.js";
 import { getPurchase, deletePurchase } from "../purchases.model.js";
 import {
 	iPurchase,

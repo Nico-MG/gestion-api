@@ -7,7 +7,7 @@ const getAllProducts = async () => {
 const getProduct = async (id) => {
 	return await db.products.findUnique({
 		where: {
-			product_id: id,
+			product_id: Number.parseInt(id),
 		},
 	});
 };
@@ -20,7 +20,7 @@ const createProduct = async (body) => {
 
 const updateProduct = async (id, body) => {
 	return await db.products.update({
-		where: { product_id: id },
+		where: { product_id: Number.parseInt(id) },
 		data: body,
 	});
 };
@@ -28,7 +28,7 @@ const updateProduct = async (id, body) => {
 const deleteProduct = async (id) => {
 	return await db.products.delete({
 		where: {
-			product_id: id,
+			product_id: Number.parseInt(id),
 		},
 	});
 };

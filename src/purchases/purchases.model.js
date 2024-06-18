@@ -13,7 +13,7 @@ const createPurchase = async (body, details) => {
 };
 
 const updatePurchase = async (id, body, details) => {
-	await db.purchase_details.deleteMany({
+	await db.purchaseDetails.deleteMany({
 		where: {
 			purchase_id: id,
 			product_id: {
@@ -60,12 +60,6 @@ const getPurchase = async (id) => {
 
 const getAllPurchases = async ({ limit, offset, desde, hasta }) => {
 	return await db.purchases.findMany({
-		where: {
-			date: {
-				gte: new Date(toString(desde)) || new Date("2000-01-01"),
-				lte: new Date(toString(hasta)) || new Date(),
-			},
-		},
 		take: Number(limit) || 10,
 		skip: Number(offset) || 0,
 		include: {

@@ -1,7 +1,4 @@
-import {
-	adapterToDBWithDetails,
-	adapterToFrontWithDetails,
-} from "../../core/actions/adapter.js";
+import { adapterToDBWithDetails } from "../../core/actions/adapter.js";
 import { getPurchase, updatePurchase } from "../purchases.model.js";
 import {
 	iPurchase,

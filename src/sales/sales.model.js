@@ -1,51 +1,18 @@
 import db from "../core/db/connection.js";
 
-const createSale = async (id, rutc, rutu, fecha, venta, dSale) => {
+const createSale = async (body, details) => {
 	return await db.venta.create({
 		data: {
-			id_venta: id,
-			rut_cliente: rutc,
-			rut_usuario: rutu,
-			fecha,
-			venta_total: venta,
+			...body,
 			detalle_venta: {
-				create: dSale,
+				create: details,
 			},
 		},
 	});
 };
 
-const updateSale = async (id, newId, rutc, rutu, fecha, venta, dSale) => {
-	await Promise.all(
-		dSale.map(async (detalle) => {
-			await db.detalle_venta.update({
-				where: {
-					id_venta_id_producto: {
-						id_venta: id,
-						id_producto: detalle.id_producto,
-					},
-				},
-				data: {
-					cantidad: detalle.cantidad,
-					precio_unidad: detalle.precio_unidad,
-					precio_total: detalle.precio_total,
-				},
-			});
-		}),
-	);
-
-	return await db.venta.update({
-		where: {
-			id_venta: id,
-		},
-		data: {
-			id_venta: newId,
-			rut_cliente: rutc,
-			rut_usuario: rutu,
-			fecha,
-			venta_total: venta,
-		},
-	});
+const updatePurchase = async (id, body, details) => {
+	// TODO: hacer el update segun el update de purchases
 };
 
 const deleteSale = async (id) => {

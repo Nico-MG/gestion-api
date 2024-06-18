@@ -12,17 +12,7 @@ export const updateProductService = async (req) => {
 		};
 	}
 
-	if (req.params.id !== req.body.idp) {
-		const productAlreadyExists = await getProduct(req.body.idp);
-		if (productAlreadyExists) {
-			return {
-				status: 400,
-				message: "Producto ya existe",
-				data: null,
-			};
-		}
-	}
-
+	
 	const updatedProductData = adapterToDB(iProduct, req.body);
 	const updatedProduct = await updateProduct(req.params.id, updatedProductData);
 	const adapterProduct = adapterToFront(iProduct, updatedProduct);

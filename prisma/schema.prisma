@@ -9,8 +9,8 @@ datasource db {
 }
 
 model RefundDetails {
-  refund_id  Int 
-  product_id Int 
+  refund_id  Int
+  product_id Int
   quantity   Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -19,11 +19,12 @@ model RefundDetails {
 
   @@id([refund_id, product_id])
   @@index([product_id])
+  @@index([refund_id])
 }
 
 model PurchaseDetails {
-  purchase_id Int   
-  product_id  Int 
+  purchase_id Int
+  product_id  Int
   quantity    Int
   unit_price  Int
   line_total  Int
@@ -34,11 +35,12 @@ model PurchaseDetails {
 
   @@id([purchase_id, product_id])
   @@index([product_id])
+  @@index([purchase_id])
 }
 
 model SaleDetails {
-  sale_id    Int  
-  product_id Int   
+  sale_id    Int
+  product_id Int
   quantity   Int
   unit_price Int
   line_total Int
@@ -49,30 +51,29 @@ model SaleDetails {
 
   @@id([sale_id, product_id])
   @@index([product_id])
+  @@index([sale_id])
 }
 
 model Refunds {
   refund_id      Int             @id @default(autoincrement())
-  refund_code    String          @db.VarChar(20)
-  sale_id        Int         
-  date           DateTime
-  description    String
-  image_refund   String
+  sale_id        Int
+  code           String          @db.VarChar(20)
+  date           String          @db.VarChar(10)
+  description    String          @db.Text
+  note_refund    String          @db.VarChar(20)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   refund_details RefundDetails[]
   sales          Sales?          @relation(fields: [sale_id], references: [sale_id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@index([refund_code])
   @@index([sale_id])
 }
 
 model Notifications {
   notification_id Int       @id @default(autoincrement())
-  product_id      Int   
-  date            DateTime
+  product_id      Int
   title           String    @db.VarChar(20)
-  description     String
+  description     String    @db.Text
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   products        Products? @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
@@ -82,10 +83,10 @@ model Notifications {
 
 model Purchases {
   purchase_id      Int               @id @default(autoincrement())
-  purchase_code    String            @db.VarChar(20)
-  provider_rut     String           
+  code             String            @db.VarChar(20)
+  provider_rut     String
   user_rut         String
-  date             DateTime
+  date             String            @db.VarChar(10)
   total_price      Int
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
@@ -95,12 +96,11 @@ model Purchases {
 
   @@index([provider_rut])
   @@index([user_rut])
-  @@index([purchase_code])
 }
 
 model Products {
   product_id       Int               @id @default(autoincrement())
-  product_code     String            @db.VarChar(20)
+  code             String            @db.VarChar(20)
   name             String            @db.VarChar(20)
   type             String            @db.VarChar(20)
   quantity         Int
@@ -113,7 +113,7 @@ model Products {
   sale_details     SaleDetails[]
   notifications    Notifications[]
 
-  @@index([product_code])
+  @@index([product_id])
 }
 
 model Providers {
@@ -126,43 +126,37 @@ model Providers {
   updatedAt    DateTime    @updatedAt
   purchases    Purchases[]
 
-  @@index([name])
-}
-
-enum UsersRoles {
-  ADMIN
-  USER
+  @@index([provider_rut])
 }
 
 model Users {
   user_rut  String      @id @db.VarChar(20)
-  mail      String      @unique @db.VarChar(50)
+  mail      String      @db.VarChar(50)
   password  String      @db.VarChar(60)
   name      String      @db.VarChar(20)
   lastname  String      @db.VarChar(20)
-  role      UsersRoles  @default(USER)
+  role      String      @db.VarChar(20)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   purchases Purchases[]
   sales     Sales[]
 
-  @@index([mail])
+  @@index([user_rut])
 }
 
 model Sales {
   sale_id      Int           @id @default(autoincrement())
-  sale_code    String        @db.VarChar(20)
+  code         String        @db.VarChar(20)
   client_rut   String        @db.VarChar(20)
   user_rut     String
-  date         DateTime
+  date         String        @db.VarChar(10)
   total_price  Int
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   sale_details SaleDetails[]
   refunds      Refunds[]
   users        Users?        @relation(fields: [user_rut], references: [user_rut], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([client_rut])
   @@index([user_rut])
-  @@index([date])
 }

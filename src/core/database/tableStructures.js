@@ -1,5 +1,6 @@
 export const iProduct = {
 	idp: "product_id",
+	cod: "code",
 	nombre: "name",
 	cat: "type",
 	cit: "quantity",
@@ -18,6 +19,7 @@ export const iUser = {
 
 export const iPurchase = {
 	idpu: "purchase_id",
+	cod: "code",
 	rutp: "provider_rut",
 	rutu: "user_rut",
 	fecha: "date",
@@ -25,7 +27,6 @@ export const iPurchase = {
 };
 
 export const iPurchaseDetails = {
-	idpu: "purchase_id",
 	idp: "product_id",
 	cit: "quantity",
 	precio: "unit_price",
@@ -38,4 +39,20 @@ export const iProvider = {
 	lugar: "address",
 	numero: "phone",
 	tipo: "type",
+};
+
+export const iSales = {
+	ids: "sale_id",
+	cod: "code",
+	rutc: "client_rut",
+	rutu: "user_rut",
+	fecha: "date",
+	precio: "total_price",
+};
+
+export const iSalesDetails = {
+	idp: "product_id",
+	cit: "quantity",
+	precio: "unit_price",
+	total: "line_total",
 };

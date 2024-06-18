@@ -1,7 +1,4 @@
-import {
-	adapterToDBWithDetails,
-	adapterToFrontWithDetails,
-} from "../../core/actions/adapter.js";
+import { adapterToDBWithDetails } from "../../core/actions/adapter.js";
 import { getPurchase, createPurchase } from "../purchases.model.js";
 import {
 	iPurchase,
@@ -43,7 +40,7 @@ export const createPurchaseService = async (req) => {
 			req.body,
 		);
 
-		const newPurchase = await createPurchase(adaptedBody, adaptedDetails);
+		await createPurchase(adaptedBody, adaptedDetails);
 		return {
 			status: 200,
 			message: `Compra creada, id: ${req.body.idpu}`,
