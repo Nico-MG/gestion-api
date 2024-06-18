@@ -1,7 +1,16 @@
 import db from "../core/database/connection.js";
 
-export const getAllUsers = async () => {
-	return await db.users.findMany();
+export const getAllUsers = async ({ limit, offset, dato, orden }) => {
+	return await db.users.findMany({
+		orderBy: {
+			[dato]: orden,
+		},
+		take: limit,
+		skip: offset,
+		omit: {
+			password: true
+		}
+	});
 };
 
 export const getUser = async (id) => {

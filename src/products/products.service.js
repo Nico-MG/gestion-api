@@ -38,6 +38,21 @@ export const createProductService = async (req) => {
 	await createProduct(createdProductData);
 };
 
+export const updateProductService = async (req) => {
+	const id = Number.parseInt(req.params.id);
+	const product = await getProduct(id);
+	const productCode = await getCodeProduct(req.body.cod);
+	if (!product) {
+		throw new NotFound("Producto");
+	}
+	if (productCode.length > 1) {
+		throw new CodeRepeat("producto", req.body.cod);
+	}
+
+	const updatedProductData = adapterToDB(iProduct, req.body);
+	await updateProduct(id, updatedProductData);
+};
+
 export const deleteProductService = async (req) => {
 	const id = Number.parseInt(req.params.id);
 	const product = await getProduct(id);
@@ -46,19 +61,4 @@ export const deleteProductService = async (req) => {
 	}
 
 	await deleteProduct(id);
-};
-
-export const updateProductService = async (req) => {
-	const id = Number.parseInt(req.params.id);
-	const product = await getProduct(id);
-	const productCode = await getCodeProduct(req.body.cod);
-	if (!product) {
-		throw new NotFound("Producto");
-	}
-	if (productCode.length > 1 && productCode[0].code === req.body.cod) {
-		throw new CodeRepeat("producto", req.body.cod);
-	}
-
-	const updatedProductData = adapterToDB(iProduct, req.body);
-	await updateProduct(id, updatedProductData);
 };

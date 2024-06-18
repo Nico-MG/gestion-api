@@ -1,6 +1,6 @@
-const validarRut = (rut) => {
+export default function moduleRut(rut) {
 	// Eliminar puntos y guión
-	const cleanRut = rut.replace(/\./g, "").replace("-", "");
+	const cleanRut = rut.replace("/\./g", "").replace("-", "");
 
 	// Separar el número del verificador
 	const rutBody = cleanRut.slice(0, -1);
@@ -35,10 +35,4 @@ const validarRut = (rut) => {
 
 	// Comparar el dígito verificador esperado con el proporcionado
 	return verificador === expectedVerifierChar;
-};
-
-// Ejemplo de uso
-console.log(validarRut("12.345.678-5")); // false
-console.log(validarRut("12.345.678-K")); // false
-console.log(validarRut("12.345.678-9")); // true
-console.log(validarRut("12.345.679-0")); // true
+}

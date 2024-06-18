@@ -1,10 +1,11 @@
+import InvalidRut from "../core/errors/invalidRut.js";
+import NotFound from "../core/errors/notFound.js";
 import {
 	getAllUsersService,
-	getUserService,
 	deleteUserService,
 	updateUserService,
 	createUserService,
-} from "./services/index.js";
+} from "./users.service.js";
 import { Router } from "express";
 
 const usersRoute = Router();
@@ -24,11 +25,11 @@ usersRoute.get("/", async (req, res) => {
 
 usersRoute.post("/create", async (req, res) => {
 	try {
-		await createProductService(req);
-		return res.status(200).json({ message: "Producto creado exitosamente" });
+		await createUserService(req);
+		return res.status(200).json({ message: "Usuario creado exitosamente" });
 	} catch (error) {
 		console.error(error);
-		if (error instanceof CodeRepeat) {
+		if (error instanceof InvalidRut) {
 			return res.status(400).json({ message: error.message });
 		}
 		return res.status(500).json({ message: "Error interno del servidor" });
@@ -36,17 +37,32 @@ usersRoute.post("/create", async (req, res) => {
 });
 
 usersRoute.put("/:id/edit", async (req, res) => {
-	const result = await updateUserService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+	try {
+		await updateUserService(req);
+		return res.status(200).json({ message: "Usuario editado exitosamente" });
+	} catch (error) {
+		console.error(error);
+		if (error instanceof NotFound) {
+			return res.status(404).json({ message: error.message });
+		}
+		if (error instanceof InvalidRut) {
+			return res.status(400).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 usersRoute.delete("/:id/delete", async (req, res) => {
-	const result = await deleteUserService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+	try {
+		await deleteUserService(req);
+		return res.status(200).json({ message: "Usuario eliminado exitosamente" });
+	} catch (error) {
+		console.error(error);
+		if (error instanceof NotFound) {
+			return res.status(404).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 export default usersRoute;

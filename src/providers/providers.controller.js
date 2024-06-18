@@ -1,47 +1,70 @@
+import InvalidRut from "../core/errors/invalidRut.js";
+import NotFound from "../core/errors/notFound.js";
 import {
 	createProviderService,
 	deleteProviderService,
 	updateProviderService,
-	getProviderService,
 	getAllProvidersService,
-} from "./services/index.js";
+} from "./providers.service.js";
 import { Router } from "express";
 
 const providersRoute = Router();
 
-providersRoute.get("/:id", async (req, res) => {
-	const result = await getProviderService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
-});
-
 providersRoute.get("/", async (req, res) => {
-	const result = await getAllProvidersService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+	try {
+		const result = await getAllProvidersService(req);
+		return res.status(200).json({
+			message: `Proveedores encontrados: ${result.length}`,
+			data: result,
+		});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 providersRoute.post("/create", async (req, res) => {
-	const result = await createProviderService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
-});
-
-providersRoute.delete("/:id/delete", async (req, res) => {
-	const result = await deleteProviderService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+	try {
+		await createProviderService(req);
+		return res.status(200).json({ message: "Proveedor creado exitosamente" });
+	} catch (error) {
+		console.error(error);
+		if (error instanceof InvalidRut) {
+			return res.status(400).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 providersRoute.put("/:id/edit", async (req, res) => {
-	const result = await updateProviderService(req);
-	res
-		.status(result.status)
-		.json({ message: result.message, data: result.data });
+	try {
+		await updateProviderService(req);
+		return res.status(200).json({ message: "Proveedor editado exitosamente" });
+	} catch (error) {
+		console.error(error);
+		if (error instanceof NotFound) {
+			return res.status(404).json({ message: error.message });
+		}
+		if (error instanceof InvalidRut) {
+			return res.status(400).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
+});
+
+providersRoute.delete("/:id/delete", async (req, res) => {
+	try {
+		await deleteProviderService(req);
+		return res
+			.status(200)
+			.json({ message: "Proveedor eliminado exitosamente" });
+	} catch (error) {
+		console.error(error);
+		if (error instanceof NotFound) {
+			return res.status(404).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
 });
 
 export default providersRoute;
