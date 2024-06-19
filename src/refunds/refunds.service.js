@@ -1,138 +1,88 @@
+import NotFound from "../core/errors/notFound.js";
+import CodeRepeat from "../core/errors/codeRepeat.js";
+import { iRefund, iRefundDetails } from "../core/database/tableStructures.js";
+import {
+	adapterToDBWithDetails,
+	adapterToFrontWithDetails,
+} from "../core/actions/adapter.js";
 import {
 	getAllRefunds,
 	getRefund,
+	getCodeRefund,
 	deleteRefund,
 	createRefund,
 	updateRefund,
 } from "./refunds.model.js";
 
-const createRefundService = async (req) => {
-	try {
-		const refund = await getRefund(req.body.id_producto);
-		if (refund) {
-			return {
-				status: 400,
-				message: "Producto existe",
-				data: refund,
-			};
-		}
-		const newRefund = await createRefund(req.body);
-		return {
-			status: 200,
-			message: `Producto creado, id: ${newRefund.id_producto}`,
-			data: newRefund,
-		};
-	} catch (error) {
-		return {
-			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
-		};
-	}
+export const getAllRefundsService = async (req) => {
+	const query = {
+		dato: iRefund[req.query.dato] || "refund_id",
+		orden: req.query.orden || "asc",
+		limit: Number.parseInt(req.query.limit) || 10,
+		offset: Number.parseInt(req.query.offset) || 0,
+	};
+
+	const allRefund = await getAllRefunds(query);
+
+	const adaptedRefund = allRefund.map((refund) =>
+		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
+	);
+
+	return adaptedRefund;
 };
 
-const deleteRefundService = async (req) => {
-	try {
-		const refund = await getRefund(req.params.id);
-		if (!product) {
-			return {
-				status: 400,
-				mesage: "producto no existe",
-				data: null,
-			};
-		}
-		const newRefund = await deleteRefund(req.params.id);
-		return {
-			status: 200,
-			message: `producto eliminado, id: ${newRefund.id_producto}`,
-			data: newRefund,
-		};
-	} catch (error) {
-		return {
-			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
-		};
+export const getRefundService = async (req) => {
+	const id = Number.parseInt(req.params.id);
+	const refund = await getRefund(id);
+	if (!refund) {
+		throw new NotFound("Devolucion");
 	}
+
+	const adaptedRefund = adapterToFrontWithDetails(iRefund, iRefundDetails, refund);
+	return adaptedRefund;
 };
 
-const updateRefundService = async (req) => {
-	try {
-		const refund = await getRefund(req.params.id);
-		if (!refund) {
-			return {
-				status: 400,
-				mesage: "producto no existe",
-				data: null,
-			};
-		}
-		const newRefund = await updateRefund(req.params.id, req.body);
-		return {
-			status: 200,
-			message: `producto actualizado, id: ${newRefund.id_producto}`,
-			data: newRefund,
-		};
-	} catch (error) {
-		return {
-			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
-		};
+
+export const createRefundService = async (req) => {
+	const refund = await getCodeRefund(req.body.cod);
+	if (refund === 1) {
+		throw new CodeRepeat("devolucion", req.body.cod);
 	}
+	const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
+		iRefund,
+		iRefundDetails,
+		req.body,
+	);
+	await createRefund(adaptedBody, adaptedDetails);
 };
 
-const getRefundService = async (req) => {
-	try {
-		const refund = await getRefund(req.params.id);
-		if (!refund) {
-			return {
-				status: 400,
-				message: "No se encontro el producto",
-				data: null,
-			};
-		}
-		return {
-			status: 200,
-			message: "Se encontro el producto",
-			data: refund,
-		};
-	} catch (error) {
-		return {
-			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
-		};
+
+
+export const updateRefundService = async (req) => {
+	const id = Number.parseInt(req.params.id);
+	const refund = await getRefund(id);
+	const refundCode = await getCodeRefund(req.body.cod);
+	if (!refund) {
+		throw new NotFound("Devolucion");
 	}
+	if (refundCode.length > 1) {
+		throw new CodeRepeat("devolucion", req.body.cod);
+	}
+
+	const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
+		iRefund,
+		iRefundDetails,
+		req.body,
+	);
+	await updateRefund(id, adaptedBody, adaptedDetails);
 };
 
-const getAllRefundsService = async (req) => {
-	try {
-		const allRefunds = await getAllRefunds();
-		if (allRefunds.length === 0) {
-			return {
-				status: 400,
-				message: "No se encontraron devoluciones",
-				data: null,
-			};
-		}
-		return {
-			status: 200,
-			message: "Se encontraron devoluciones",
-			data: allRefunds,
-		};
-	} catch (error) {
-		return {
-			status: 500,
-			message: `Error interno del servidor: ${error.message}`,
-			data: null,
-		};
+export const deleteRefundService = async (req) => {
+	const id = Number.parseInt(req.params.id);
+	const refund = await getRefund(id);
+	if (!refund) {
+		throw new NotFound("Devolcion");
 	}
-};
 
-export {
-	getAllRefundsService,
-	getRefundService,
-	createRefundService,
-	updateRefundService,
-	deleteRefundService,
+	await deleteRefund(id);
 };

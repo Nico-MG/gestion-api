@@ -27,8 +27,8 @@ export const getAllPurchasesService = async (req) => {
 
 	const allPurchases = await getAllPurchases(query);
 
-	const adaptedPurchases = allPurchases.map((Purchase) =>
-		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, Purchase),
+	const adaptedPurchases = allPurchases.map((purchase) =>
+		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 
 	return adaptedPurchases;
@@ -47,7 +47,7 @@ export const getPurchaseService = async (req) => {
 
 export const createPurchaseService = async (req) => {
 	const purchase = await getCodePurchase(req.body.cod);
-	if (purchase !== 0) {
+	if (purchase === 1) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 

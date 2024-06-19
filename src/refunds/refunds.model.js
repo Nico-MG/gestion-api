@@ -1,61 +1,84 @@
-import db from "../core/db/connection.js";
+import db from "../core/database/connection.js";
 
-const createRefund = async ({ id, idv, fecha, desc, dRefund }) => {
-	return await db.devolucion.create({
+export const getAllRefunds = async ({ dato, orden, limit, offset }) => {
+	return await db.refunds.findMany({
+		orderBy: {
+			[dato]: orden,
+		},
+		take: limit,
+		skip: offset,
+		include: {
+			refund_details: true,
+		},
+	});
+};
+
+export const getRefund = async (id) => {
+	return await db.refunds.findUnique({
+		where: {
+			refund_id: id,
+		},
+		include: {
+			refund_details: true,
+		},
+	});
+};
+
+export const getCodeRefund = async (code) => {
+	return await db.refunds.findMany({
+		where: {
+			code: code,
+		},
+	});
+};
+
+export const createRefund = async (body, details) => {
+	await db.refunds.create({
 		data: {
-			id_devolucion: id,
-			id_venta: idv,
-			fecha,
-			descripcion: desc,
-			detalle_devolucion: {
-				create: dRefund,
+			...body,
+			refund_details: {
+				create: details,
 			},
 		},
 	});
 };
 
-const updateRefund = async (id, { newId, idv, fecha, desc, dRefund }) => {
-	return await db.devolucion.update({
+export const updateRefund = async (id, body, details) => {
+	await db.refundDetails.deleteMany({
 		where: {
-			id_devolucion: id,
+			refund_id: id,
+			product_id: {
+				notIn: details.map((detail) => detail.product_id),
+			},
 		},
+	});
+	await db.refunds.update({
+		where: {
+			refund_id: id,
+		},
+		include: { refund_details: true },
 		data: {
-			id_devolucion: newId,
-			id_venta: idv,
-			fecha,
-			descripcion: desc,
-			detalle_devolucion: {
-				updateMany: dRefund,
+			...body,
+			refund_details: {
+				upsert: details.map((detail) => ({
+					where: {
+						refund_id_product_id: {
+							refund_id: id,
+							product_id: detail.product_id,
+						},
+					},
+					update: detail,
+					create: detail,
+				})),
 			},
 		},
 	});
 };
 
-const deleteRefund = async (id) => {
-	return await db.devolucion.delete({
+export const deleteRefund = async (id) => {
+	return await db.refunds.delete({
 		where: {
-			id_devolucion: id,
+			refund_id: id,
 		},
 	});
 };
-
-const getRefund = async (id) => {
-	return await db.devolucion.findUnique({
-		where: {
-			id_devolucion: id,
-		},
-		include: {
-			detalle_devolucion: true,
-		},
-	});
-};
-
-const getAllRefunds = async () => {
-	return await db.devolucion.findMany({
-		include: {
-			detalle_devolucion: true,
-		},
-	});
-};
-
-export { createRefund, updateRefund, deleteRefund, getAllRefunds, getRefund };

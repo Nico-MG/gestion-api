@@ -56,3 +56,17 @@ export const iSalesDetails = {
 	precio: "unit_price",
 	total: "line_total",
 };
+
+export const iRefund = {
+	idr: "refund_id",
+	ids: "sale_id",
+	cod: "code",
+	fecha: "date",
+	desc: "description",
+	nota: "note_refund",
+}
+
+export const iRefundDetails = {
+	idp: "product_id",
+	cit: "quantity"
+}
