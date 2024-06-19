@@ -6,7 +6,7 @@ import {
 	createPurchaseService,
 	updatePurchaseService,
 	deletePurchaseService,
-} from "./services/index.js";
+} from "./purchases.service.js";
 import { Router } from "express";
 
 const purchasesRoute = Router();
