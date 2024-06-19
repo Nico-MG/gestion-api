@@ -30,7 +30,7 @@ export const getAllProductsService = async (req) => {
 
 export const createProductService = async (req) => {
 	const product = await getCodeProduct(req.body.cod);
-	if (product.length === 1) {
+	if (product.length !== 0) {
 		throw new CodeRepeat("producto", product[0].code);
 	}
 

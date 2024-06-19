@@ -46,7 +46,7 @@ export const getSaleService = async (req) => {
 
 export const createSaleService = async (req) => {
 	const sale = await getCodeSale(req.body.cod);
-	if (sale === 1) {
+	if (sale !== 0) {
 		throw new CodeRepeat("venta", req.body.cod);
 	}
 	if (!moduleRut(req.body.rutc)) {
