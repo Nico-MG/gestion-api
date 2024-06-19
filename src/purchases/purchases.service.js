@@ -11,6 +11,7 @@ import {
 import {
 	getAllPurchases,
 	getPurchase,
+    getCodePurchase,
 	createPurchase,
 	updatePurchase,
 	deletePurchase,
