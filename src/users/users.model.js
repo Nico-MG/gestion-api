@@ -8,8 +8,8 @@ export const getAllUsers = async ({ limit, offset, dato, orden }) => {
 		take: limit,
 		skip: offset,
 		omit: {
-			password: true
-		}
+			password: true,
+		},
 	});
 };
 

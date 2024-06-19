@@ -15,7 +15,7 @@ const createPurchase = async (body, details) => {
 const updatePurchase = async (id, body, details) => {
 	await db.purchaseDetails.deleteMany({
 		where: {
-		    purchase_id: Number.parseInt(id),
+			purchase_id: Number.parseInt(id),
 			product_id: {
 				notIn: details.map((detail) => detail.product_id),
 			},
@@ -23,14 +23,19 @@ const updatePurchase = async (id, body, details) => {
 	});
 	return await db.purchases.update({
 		where: {
-		    purchase_id: Number.parseInt(id),
+			purchase_id: Number.parseInt(id),
 		},
 		include: { purchase_details: true },
 		data: {
 			...body,
 			purchase_details: {
 				upsert: details.map((detail) => ({
-				    where: { purchase_id_product_id :  {purchase_id: Number.parseInt(id) , product_id: detail.product_id }},
+					where: {
+						purchase_id_product_id: {
+							purchase_id: Number.parseInt(id),
+							product_id: detail.product_id,
+						},
+					},
 					update: detail,
 					create: detail,
 				})),
@@ -42,7 +47,7 @@ const updatePurchase = async (id, body, details) => {
 const deletePurchase = async (id) => {
 	return await db.purchases.delete({
 		where: {
-		    purchase_id: Number.parseInt(id),
+			purchase_id: Number.parseInt(id),
 		},
 	});
 };
@@ -50,15 +55,13 @@ const deletePurchase = async (id) => {
 const getPurchase = async (id) => {
 	return await db.purchases.findUnique({
 		where: {
-		    purchase_id: Number.parseInt(id),
+			purchase_id: Number.parseInt(id),
 		},
 		include: {
 			purchase_details: true,
 		},
 	});
 };
-
-
 
 const getAllPurchases = async ({ limit, offset, desde, hasta }) => {
 	return await db.purchases.findMany({
@@ -75,6 +78,5 @@ export {
 	updatePurchase,
 	deletePurchase,
 	getAllPurchases,
-        getPurchase,
-
+	getPurchase,
 };

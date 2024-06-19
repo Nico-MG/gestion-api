@@ -12,6 +12,7 @@ import usersRoute from "./users/users.controller.js";
 import purchasesRoute from "./purchases/purchases.controller.js";
 import providersRoute from "./providers/providers.controller.js";
 import authRoute from "./auth/auth.controller.js";
+import salesRoute from "./sales/sales.controller.js";
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ server.use("/products", validatorData, productsRoute);
 server.use("/users", validatorData, usersRoute);
 server.use("/purchases", purchasesRoute);
 server.use("/providers", providersRoute);
+server.use("/sales", salesRoute)
 server.use("/auth", authRoute);
 
 server.use("/test", verifyToken, (req, res) => {

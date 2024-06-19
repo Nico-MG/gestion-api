@@ -1,6 +1,6 @@
 export default function moduleRut(rut) {
 	// Eliminar puntos y guión
-	const cleanRut = rut.replace("/\./g", "").replace("-", "");
+	const cleanRut = rut.replace("/./g", "").replace("-", "");
 
 	// Separar el número del verificador
 	const rutBody = cleanRut.slice(0, -1);

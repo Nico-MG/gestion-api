@@ -25,7 +25,6 @@ import {
 
 export const createPurchaseService = async (req) => {
 	try {
-
 		const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
 			iPurchase,
 			iPurchaseDetails,
@@ -36,7 +35,7 @@ export const createPurchaseService = async (req) => {
 		return {
 			status: 200,
 			message: `Compra creada, id: ${req.body.cod}`,
-		        data: {},
+			data: {},
 		};
 	} catch (error) {
 		console.error(error.message);
