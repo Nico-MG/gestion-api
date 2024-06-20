@@ -15,6 +15,7 @@ export const iUser = {
 	nombre: "name",
 	apellido: "lastname",
 	rol: "role",
+	estado: "status",
 };
 
 export const iPurchase = {
@@ -31,6 +32,7 @@ export const iPurchaseDetails = {
 	cit: "quantity",
 	precio: "unit_price",
 	suma: "line_total",
+	estado: "status",
 };
 
 export const iProvider = {
