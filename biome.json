@@ -7,6 +7,17 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true
-		}
+		},
+		"ignore": [
+			"node_modules",
+			"dist"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"ignore": [
+			"node_modules",
+			"dist"
+		]
 	}
 }

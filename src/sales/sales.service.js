@@ -30,7 +30,13 @@ export const getAllSalesService = async (req) => {
 		adapterToFrontWithDetails(iSales, iSalesDetails, sale),
 	);
 
-	return adaptedSales;
+	const formattedSales = adaptedSales.map(sale => ({
+		...sale,
+		detalles: sale.detalles.map(({productos, ...detalle}) => ({
+			...detalle,
+			cod: productos?.code,
+		})),
+	}));
 };
 
 export const getSaleService = async (req) => {

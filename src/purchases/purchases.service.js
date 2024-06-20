@@ -33,9 +33,9 @@ export const getAllPurchasesService = async (req) => {
 
 	const formattedPurchases = adaptedPurchases.map(purchase => ({
 		...purchase,
-		detalles: purchase.detalles.map(({undefined, ...detalle}) => ({
+		detalles: purchase.detalles.map(({productos, ...detalle}) => ({
 			...detalle,
-			cod: undefined?.code,
+			cod: productos?.code,
 		})),
 	}));
 

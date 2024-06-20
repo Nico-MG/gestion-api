@@ -28,7 +28,15 @@ export const getAllRefundsService = async (req) => {
 		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
 	);
 
-	return adaptedRefund;
+	const formattedRefund = adaptedRefund.map(refund => ({
+		...refund,
+		detalles: refund.detalles.map(({productos, ...detalle}) => ({
+			...detalle,
+			cod: productos?.code,
+		})),
+	}));
+
+	return formattedRefund;
 };
 
 export const getRefundService = async (req) => {

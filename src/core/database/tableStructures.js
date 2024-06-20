@@ -33,6 +33,7 @@ export const iPurchaseDetails = {
 	precio: "unit_price",
 	suma: "line_total",
 	estado: "status",
+	productos: "products",
 };
 
 export const iProvider = {
@@ -57,6 +58,7 @@ export const iSalesDetails = {
 	cit: "quantity",
 	precio: "unit_price",
 	total: "line_total",
+	productos: "products",
 };
 
 export const iRefund = {
@@ -70,5 +72,6 @@ export const iRefund = {
 
 export const iRefundDetails = {
 	idp: "product_id",
-	cit: "quantity"
+	cit: "quantity",
+	productos: "products",
 }
