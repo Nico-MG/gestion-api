@@ -36,7 +36,7 @@ export const getCodeSale = async (code) => {
 	return await db.sales.findMany({
 		where: {
 			code: code,
-		}
+		},
 	});
 };
 

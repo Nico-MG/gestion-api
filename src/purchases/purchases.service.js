@@ -11,11 +11,15 @@ import {
 import {
 	getAllPurchases,
 	getPurchase,
-    getCodePurchase,
+	getCodePurchase,
 	createPurchase,
 	updatePurchase,
 	deletePurchase,
 } from "./purchases.model.js";
+import {
+	getAllProductsService,
+	updateProductService,
+} from "../products/products.service.js";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
@@ -31,9 +35,9 @@ export const getAllPurchasesService = async (req) => {
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 
-	const formattedPurchases = adaptedPurchases.map(purchase => ({
+	const formattedPurchases = adaptedPurchases.map((purchase) => ({
 		...purchase,
-		detalles: purchase.detalles.map(({productos, ...detalle}) => ({
+		detalles: purchase.detalles.map(({ productos, ...detalle }) => ({
 			...detalle,
 			cod: productos?.code,
 		})),
@@ -49,7 +53,11 @@ export const getPurchaseService = async (req) => {
 		throw new NotFound("Compra");
 	}
 
-	const adaptedPurchase = adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase);
+	const adaptedPurchase = adapterToFrontWithDetails(
+		iPurchase,
+		iPurchaseDetails,
+		purchase,
+	);
 	return adaptedPurchase;
 };
 
@@ -64,7 +72,18 @@ export const createPurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
+
 	await createPurchase(adaptedBody, adaptedDetails);
+
+	// agregar la cantidad de productos de la compra
+	const productos = await getAllProductsService();
+	for (let idx = 0; idx < adaptedDetails.length; idx++) {
+		const productoValido = productos.find((producto) => producto.code === adaptedDetails[idx].products.code);
+		if (productoValido) {
+			productoValido.quantity += adaptedDetails[idx].quantity;
+			await updateProductService(productoValido.product_id, productoValido);
+		}
+	}
 };
 
 export const updatePurchaseService = async (req) => {
@@ -84,6 +103,17 @@ export const updatePurchaseService = async (req) => {
 		req.body,
 	);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
+
+	// actualizar la cantidad de productos de la compra
+	const productos = await getAllProductsService();
+	for (let idx = 0; idx < adaptedDetails.length; idx++) {
+		const productoValido = productos.find((producto) => producto.code === adaptedDetails[idx].products.code);
+		const diferencia = adaptedDetails[idx].quantity - purchase.detalles[idx].quantity;
+		if (productoValido && diferencia > 0) {
+			productoValido.quantity += diferencia;
+			await updateProductService(productoValido.product_id, productoValido);
+		}
+	}
 };
 
 export const deletePurchaseService = async (req) => {
@@ -94,4 +124,13 @@ export const deletePurchaseService = async (req) => {
 	}
 
 	await deletePurchase(id);
+	// borrar los productos de la compra
+	const productos = await getAllProductsService();
+	for (let idx = 0; idx < purchase.detalles.length; idx++) {
+		const productoValido = productos.find((producto) => producto.code === purchase.detalles[idx].products.code);
+		if (productoValido) {
+			productoValido.quantity -= purchase.detalles[idx].quantity;
+			await updateProductService(productoValido.product_id, productoValido);
+		}
+	}
 };

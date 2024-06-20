@@ -8,8 +8,8 @@ const updatePriceProducts = async (newPrice) => {
 	await db.products.updateMany({
 		data: {
 			price: newPrice,
-		}
-	})
+		},
+	});
 };
 
 /**

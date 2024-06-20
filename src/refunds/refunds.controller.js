@@ -72,7 +72,9 @@ refundsRoute.put("/:id/edit", async (req, res) => {
 refundsRoute.delete("/:id/delete", async (req, res) => {
 	try {
 		await deleteRefundService(req);
-		return res.status(200).json({ message: "Devolucion eliminada exitosamente" });
+		return res
+			.status(200)
+			.json({ message: "Devolucion eliminada exitosamente" });
 	} catch (error) {
 		console.error(error);
 

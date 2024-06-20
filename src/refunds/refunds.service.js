@@ -28,9 +28,9 @@ export const getAllRefundsService = async (req) => {
 		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
 	);
 
-	const formattedRefund = adaptedRefund.map(refund => ({
+	const formattedRefund = adaptedRefund.map((refund) => ({
 		...refund,
-		detalles: refund.detalles.map(({productos, ...detalle}) => ({
+		detalles: refund.detalles.map(({ productos, ...detalle }) => ({
 			...detalle,
 			cod: productos?.code,
 		})),
@@ -46,10 +46,13 @@ export const getRefundService = async (req) => {
 		throw new NotFound("Devolucion");
 	}
 
-	const adaptedRefund = adapterToFrontWithDetails(iRefund, iRefundDetails, refund);
+	const adaptedRefund = adapterToFrontWithDetails(
+		iRefund,
+		iRefundDetails,
+		refund,
+	);
 	return adaptedRefund;
 };
-
 
 export const createRefundService = async (req) => {
 	const refund = await getCodeRefund(req.body.cod);
@@ -63,8 +66,6 @@ export const createRefundService = async (req) => {
 	);
 	await createRefund(adaptedBody, adaptedDetails);
 };
-
-
 
 export const updateRefundService = async (req) => {
 	const id = Number.parseInt(req.params.id);

@@ -30,9 +30,9 @@ export const getAllSalesService = async (req) => {
 		adapterToFrontWithDetails(iSales, iSalesDetails, sale),
 	);
 
-	const formattedSales = adaptedSales.map(sale => ({
+	const formattedSales = adaptedSales.map((sale) => ({
 		...sale,
-		detalles: sale.detalles.map(({productos, ...detalle}) => ({
+		detalles: sale.detalles.map(({ productos, ...detalle }) => ({
 			...detalle,
 			cod: productos?.code,
 		})),

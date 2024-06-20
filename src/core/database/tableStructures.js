@@ -68,10 +68,10 @@ export const iRefund = {
 	fecha: "date",
 	desc: "description",
 	nota: "note_refund",
-}
+};
 
 export const iRefundDetails = {
 	idp: "product_id",
 	cit: "quantity",
 	productos: "products",
-}
+};
