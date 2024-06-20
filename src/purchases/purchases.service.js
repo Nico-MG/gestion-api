@@ -31,7 +31,15 @@ export const getAllPurchasesService = async (req) => {
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 
-	return adaptedPurchases;
+	const formattedPurchases = adaptedPurchases.map(purchase => ({
+		...purchase,
+		detalles: purchase.detalles.map(detalle => ({
+			...detalle,
+			code: detalle.product.code,
+		})),
+	}));
+
+	return formattedPurchases;
 };
 
 export const getPurchaseService = async (req) => {
