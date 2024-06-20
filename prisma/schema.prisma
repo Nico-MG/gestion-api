@@ -122,6 +122,7 @@ model Providers {
   address      String      @db.VarChar(20)
   phone        String      @db.VarChar(20)
   type         String      @db.VarChar(20)
+  status       Boolean
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   purchases    Purchases[]
@@ -135,6 +136,7 @@ model Users {
   password  String      @db.VarChar(60)
   name      String      @db.VarChar(20)
   lastname  String      @db.VarChar(20)
+  status    Boolean
   role      String      @db.VarChar(20)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
