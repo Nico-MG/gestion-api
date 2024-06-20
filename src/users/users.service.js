@@ -32,12 +32,11 @@ export const createUserService = async (req) => {
 		throw new InvalidRut(req.body.rutu);
 	}
 
-    	const createdUsertData = adapterToDB(iUser, req.body);
+	const createdUsertData = adapterToDB(iUser, req.body);
 
-        const salt = bcrypt.genSaltSync(12);
+	const salt = bcrypt.genSaltSync(12);
 	const hash = bcrypt.hashSync(createdUsertData.password, salt);
 	createdUsertData.password = hash;
-
 
 	await createUser(createdUsertData);
 };
