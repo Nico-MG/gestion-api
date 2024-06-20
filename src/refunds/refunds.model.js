@@ -8,7 +8,15 @@ export const getAllRefunds = async ({ dato, orden, limit, offset }) => {
 		take: limit,
 		skip: offset,
 		include: {
-			refund_details: true,
+			refund_details: {
+				include: {
+					products: {
+						select: {
+							code: true,
+						},
+					},
+				},
+			},
 		},
 	});
 };

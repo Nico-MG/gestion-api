@@ -8,7 +8,15 @@ export const getAllPurchases = async ({ limit, offset, dato, orden }) => {
 		take: limit,
 		skip: offset,
 		include: {
-			purchase_details: true,
+			purchase_details: {
+				include: {
+					products: {
+						select: {
+							code: true,
+						},
+					},
+				},
+			},
 		},
 	});
 };
@@ -27,10 +35,10 @@ export const getPurchase = async (id) => {
 export const getCodePurchase = async (code) => {
 	return await db.purchases.findMany({
 		where: {
-			code: code
-		}
-	})
-}
+			code: code,
+		},
+	});
+};
 
 export const createPurchase = async (body, details) => {
 	await db.purchases.create({

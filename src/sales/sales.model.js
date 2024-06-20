@@ -8,7 +8,15 @@ export const getAllSales = async ({ dato, orden, limit, offset }) => {
 		take: limit,
 		skip: offset,
 		include: {
-			sale_details: true,
+			sale_details: {
+				include: {
+					products: {
+						select: {
+							code: true,
+						},
+					},
+				},
+			},
 		},
 	});
 };

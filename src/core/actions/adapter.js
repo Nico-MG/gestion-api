@@ -1,3 +1,9 @@
+/**
+ * Adapta un objeto de la API a un objeto de la base de datos.
+ * @param {Object} mapping - El mapeo de la API a la base de datos.
+ * @param {Object} reqBody - El objeto de la API.
+ * @returns {Object} El objeto adaptado.
+ */
 const invertMapping = (mapping) => {
 	const inv = {};
 	for (const key in mapping) {
@@ -9,6 +15,12 @@ const invertMapping = (mapping) => {
 	return inv;
 };
 
+/**
+ * Adapta un objeto de la API a un objeto de la base de datos.
+ * @param {Object} mapping - El mapeo de la API a la base de datos.
+ * @param {Object} reqBody - El objeto de la API.
+ * @returns {Object} El objeto adaptado.
+ */
 export const adapterToDB = (mapping, reqBody) => {
 	const mapData = {};
 	for (const key in reqBody) {
@@ -18,6 +30,12 @@ export const adapterToDB = (mapping, reqBody) => {
 	return mapData;
 };
 
+/**
+ * Adapta un objeto de la base de datos a un objeto de la API.
+ * @param {Object} mapping - El mapeo de la API a la API.
+ * @param {Object} reqBody - El objeto de la base de datos.
+ * @returns {Object} El objeto adaptado.
+ */
 export const adapterToFront = (mapping, reqBody) => {
 	const invMap = invertMapping(mapping);
 	const mapData = {};
@@ -28,6 +46,13 @@ export const adapterToFront = (mapping, reqBody) => {
 	return mapData;
 };
 
+/**
+ * Adapta un objeto de la API a un objeto de la base de datos.
+ * @param {Object} mapBody - El mapeo de la API a la base de datos.
+ * @param {Object} mapDetails - El mapeo de la API a la base de datos.
+ * @param {Object} reqBody - El objeto de la API.
+ * @returns {Object} El objeto adaptado.
+ */
 export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
 	const { detalles, ...body } = reqBody;
 	const adaptedDetails = detalles.map((detalle) =>
@@ -37,6 +62,13 @@ export const adapterToDBWithDetails = (mapBody, mapDetails, reqBody) => {
 	return { adaptedBody, adaptedDetails };
 };
 
+/**
+ * Adapta un objeto de la base de datos a un objeto de la API.
+ * @param {Object} mapBody - El mapeo de la base de datos a la API.
+ * @param {Object} mapDetails - El mapeo de la base de datos a la API.
+ * @param {Object} reqBody - El objeto de la base de datos.
+ * @returns {Object} El objeto adaptado.
+ */
 export const adapterToFrontWithDetails = (mapBody, mapDetails, reqBody) => {
 	const claveDetalle = Object.keys(reqBody).find((key) =>
 		Array.isArray(reqBody[key]),
