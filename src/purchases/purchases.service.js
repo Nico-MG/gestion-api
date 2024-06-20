@@ -35,7 +35,7 @@ export const getAllPurchasesService = async (req) => {
 		...purchase,
 		detalles: purchase.detalles.map(({undefined, ...detalle}) => ({
 			...detalle,
-			cod: detalle.undefined?.code,
+			cod: undefined?.code,
 		})),
 	}));
 
