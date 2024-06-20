@@ -3,6 +3,7 @@ import InvalidRut from "../core/errors/invalidRut.js";
 import moduleRut from "../core/actions/module11.js";
 import { iUser } from "../core/database/tableStructures.js";
 import { adapterToDB, adapterToFront } from "../core/actions/adapter.js";
+import bcrypt from "bcrypt";
 import {
 	getUser,
 	getAllUsers,
@@ -31,7 +32,13 @@ export const createUserService = async (req) => {
 		throw new InvalidRut(req.body.rutu);
 	}
 
-	const createdUsertData = adapterToDB(iUser, req.body);
+    	const createdUsertData = adapterToDB(iUser, req.body);
+
+        const salt = bcrypt.genSaltSync(12);
+	const hash = bcrypt.hashSync(createdUsertData.password, salt);
+	createdUsertData.password = hash;
+
+
 	await createUser(createdUsertData);
 };
 
