@@ -61,7 +61,7 @@ export const getPurchaseService = async (req) => {
 
 export const createPurchaseService = async (req) => {
 	const purchase = await getCodePurchase(req.body.cod);
-	if (purchase > 0) {
+	if (purchase.length > 0) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
