@@ -72,6 +72,7 @@ export const createPurchaseService = async (req) => {
 
 	await createPurchase(adaptedBody, adaptedDetails);
 	await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
+	await priceAjuster(adaptedDetails);
 };
 
 export const updatePurchaseService = async (req) => {
@@ -92,6 +93,7 @@ export const updatePurchaseService = async (req) => {
 	);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
 	await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
+	await priceAjuster(adaptedDetails);
 };
 
 export const deletePurchaseService = async (req) => {

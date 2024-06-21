@@ -17,7 +17,7 @@ export default async function priceAjuster(detalles) {
 		0,
 	);
 	const sumaDetalles = detalles.reduce(
-		(acc, detalle) => acc + detalle.precio,
+		(acc, detalle) => acc + detalle.price,
 		0,
 	);
 
