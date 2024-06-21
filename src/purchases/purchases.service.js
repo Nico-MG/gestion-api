@@ -83,7 +83,7 @@ export const updatePurchaseService = async (req) => {
 	if (!purchase) {
 		throw new NotFound("Compra");
 	}
-	if (purchaseCode.length > 1) {
+	if (purchaseCode.length > 1 && purchaseCode[0] !== req.body.cod) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
