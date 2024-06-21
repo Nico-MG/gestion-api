@@ -14,6 +14,7 @@ import refundsRoute from "./refunds/refunds.controller.js";
 import salesRoute from "./sales/sales.controller.js";
 import usersRoute from "./users/users.controller.js";
 import authRoute from "./auth/auth.controller.js";
+import analyticsRoute from "./analytics/analytics.controller.js";
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -29,6 +30,7 @@ server.use("/purchases", purchasesRoute);
 server.use("/sales", salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
+server.use("/analytics", analyticsRoute);
 
 server.use("/test", verifyToken, (req, res) => {
 	//ruta de prueba protegida
