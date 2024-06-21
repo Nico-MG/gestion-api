@@ -1,34 +1,38 @@
-import db from "../database/connection.js";
+import {
+	getAllProductsService,
+	updateProductService,
+} from "../../products/products.service.js";
 
-const updatePriceProducts = async (newPrice) => {
-	await db.products.updateMany({
-		data: {
-			price: newPrice,
-		},
-	});
-};
-export default async function priceAjuster(original, detalles) {
-	if (!original || !detalles) {
+export default async function priceAjuster(detalles) {
+	if (detalles.length === 0) {
 		return;
 	}
 
-	const largoOriginal = original.length;
+	const productos = await getAllProductsService();
+	const largoProductos = productos.length;
 	const largoDetalles = detalles.length;
-	if (largoOriginal === 0 && largoDetalles === 0) {
-		return;
-	}
 
-	const sumaOriginal = original.reduce(
-		(acc, product) => acc + product.price,
+	const sumaProductos = productos.reduce(
+		(acc, producto) => acc + producto.precio,
 		0,
 	);
 	const sumaDetalles = detalles.reduce(
-		(acc, detalle) => acc + detalle.price,
+		(acc, detalle) => acc + detalle.precio,
 		0,
 	);
-	const newPrice =
-		(sumaOriginal * largoOriginal + sumaDetalles * largoDetalles) /
-		(largoOriginal + largoDetalles);
 
-	await updatePriceProducts(newPrice);
+	const promedio =
+		(sumaDetalles * largoDetalles + sumaProductos * largoProductos) /
+		(largoDetalles + largoProductos);
+
+	for (let idx = 0; idx < largoProductos; idx++) {
+		const producto = productos[idx];
+		producto.precio = promedio;
+		await updateProductService({
+			params: {
+				id: producto.idp,
+			},
+			body: producto,
+		});
+	}
 }
