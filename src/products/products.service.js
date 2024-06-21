@@ -28,6 +28,17 @@ export const getAllProductsService = async (req) => {
 	return adaptedProducts;
 };
 
+export const getProductService = async (req) => {
+	const id = Number.parseInt(req.params.id);
+	const product = await getProduct(id);
+	if (!product) {
+		throw new NotFound("Producto");
+	}
+
+	const adaptedProduct = adapterToFront(iProduct, product);
+	return adaptedProduct;
+};
+
 export const createProductService = async (req) => {
 	const product = await getCodeProduct(req.body.cod);
 	if (product.length === 1) {

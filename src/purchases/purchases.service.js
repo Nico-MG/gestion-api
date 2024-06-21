@@ -17,6 +17,7 @@ import {
 	deletePurchase,
 } from "./purchases.model.js";
 import quantityAdjuster from "../core/actions/quantityAjuster.js";
+import priceAjuster from "../core/actions/priceAjuster.js";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
@@ -70,9 +71,9 @@ export const createPurchaseService = async (req) => {
 		req.body,
 	);
 
-	await priceAjuster(adaptedDetails);
+	//await priceAjuster(adaptedDetails);
 	await createPurchase(adaptedBody, adaptedDetails);
-	await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
+	//await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
 };
 
 export const updatePurchaseService = async (req) => {
@@ -91,9 +92,9 @@ export const updatePurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
-	await priceAjuster(adaptedDetails);
+	//await priceAjuster(adaptedDetails);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
-	await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
+	//await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
 };
 
 export const deletePurchaseService = async (req) => {
@@ -104,5 +105,5 @@ export const deletePurchaseService = async (req) => {
 	}
 
 	await deletePurchase(id);
-	await quantityAdjuster("PUR", "DEL", purchase.detalles, []);
+	//await quantityAdjuster("PUR", "DEL", purchase.detalles, []);
 };
