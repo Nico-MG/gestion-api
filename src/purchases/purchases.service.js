@@ -16,10 +16,7 @@ import {
 	updatePurchase,
 	deletePurchase,
 } from "./purchases.model.js";
-import {
-	getAllProductsService,
-	updateProductService,
-} from "../products/products.service.js";
+import quantityAdjuster from "../core/actions/quantityAjuster.js";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
@@ -74,16 +71,7 @@ export const createPurchaseService = async (req) => {
 	);
 
 	await createPurchase(adaptedBody, adaptedDetails);
-
-	// agregar la cantidad de productos de la compra
-	const productos = await getAllProductsService();
-	for (let idx = 0; idx < adaptedDetails.length; idx++) {
-		const productoValido = productos.find((producto) => producto.code === adaptedDetails[idx].products.code);
-		if (productoValido) {
-			productoValido.quantity += adaptedDetails[idx].quantity;
-			await updateProductService(productoValido.product_id, productoValido);
-		}
-	}
+	await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
 };
 
 export const updatePurchaseService = async (req) => {
@@ -103,17 +91,7 @@ export const updatePurchaseService = async (req) => {
 		req.body,
 	);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
-
-	// actualizar la cantidad de productos de la compra
-	const productos = await getAllProductsService();
-	for (let idx = 0; idx < adaptedDetails.length; idx++) {
-		const productoValido = productos.find((producto) => producto.code === adaptedDetails[idx].products.code);
-		const diferencia = adaptedDetails[idx].quantity - purchase.detalles[idx].quantity;
-		if (productoValido && diferencia > 0) {
-			productoValido.quantity += diferencia;
-			await updateProductService(productoValido.product_id, productoValido);
-		}
-	}
+	await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
 };
 
 export const deletePurchaseService = async (req) => {
@@ -124,13 +102,5 @@ export const deletePurchaseService = async (req) => {
 	}
 
 	await deletePurchase(id);
-	// borrar los productos de la compra
-	const productos = await getAllProductsService();
-	for (let idx = 0; idx < purchase.detalles.length; idx++) {
-		const productoValido = productos.find((producto) => producto.code === purchase.detalles[idx].products.code);
-		if (productoValido) {
-			productoValido.quantity -= purchase.detalles[idx].quantity;
-			await updateProductService(productoValido.product_id, productoValido);
-		}
-	}
+	await quantityAdjuster("PUR", "DEL", purchase.detalles, []);
 };

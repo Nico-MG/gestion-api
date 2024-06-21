@@ -1,9 +1,5 @@
 import db from "../database/connection.js";
 
-/**
- * Extracts the price of a product from the product object.
- * @param {Object} product - The product object.
- */
 const updatePriceProducts = async (newPrice) => {
 	await db.products.updateMany({
 		data: {
@@ -11,14 +7,7 @@ const updatePriceProducts = async (newPrice) => {
 		},
 	});
 };
-
-/**
- * Calculates the price of a product based on the original price and the
- * prices of the products that are included in the product.
- * @param {Object} original - The original product object.
- * @param {Array} detalles - The products that are included in the original product.
- */
-export default async function ppp(original, detalles) {
+export default async function priceAjuster(original, detalles) {
 	if (!original || !detalles) {
 		return;
 	}
