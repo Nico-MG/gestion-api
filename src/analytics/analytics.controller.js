@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getAnalyticData } from "./analytics.service.js";
 
-analyticsRoute = Router();
+const analyticsRoute = Router();
 
 analyticsRoute.get("/", async (_, res) => {
 	try {
