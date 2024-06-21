@@ -70,8 +70,8 @@ export const createPurchaseService = async (req) => {
 		req.body,
 	);
 
-	await createPurchase(adaptedBody, adaptedDetails);
 	await priceAjuster(adaptedDetails);
+	await createPurchase(adaptedBody, adaptedDetails);
 	await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
 };
 
@@ -91,8 +91,8 @@ export const updatePurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
-	await updatePurchase(id, adaptedBody, adaptedDetails);
 	await priceAjuster(adaptedDetails);
+	await updatePurchase(id, adaptedBody, adaptedDetails);
 	await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
 };
 
