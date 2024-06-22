@@ -33,7 +33,7 @@ server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
 
-server.use("/test",validatorData, verifyToken, validatorRole, (req, res) => {
+server.use("/test", validatorData, verifyToken, validatorRole, (req, res) => {
 	//ruta de prueba protegida ADMIN log necesario
 	res.sendStatus(200);
 });

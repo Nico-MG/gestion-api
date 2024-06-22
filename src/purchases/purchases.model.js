@@ -20,13 +20,13 @@ export const getAllPurchases = async ({ limit, offset, dato, orden }) => {
 					purchase_id: true,
 					createdAt: true,
 					updatedAt: true,
-				}
+				},
 			},
 		},
 		omit: {
 			createdAt: true,
 			updatedAt: true,
-		}
+		},
 	});
 };
 
