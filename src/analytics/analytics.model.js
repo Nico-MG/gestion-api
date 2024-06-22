@@ -23,3 +23,12 @@ export const getPriceSales = async () => {
 export const getCountCustomers = async () => {
 	return await db.providers.count();
 };
+
+export const getPriceAndDateSales = async () => {
+	return await db.sales.findMany({
+		select: {
+			total_price: true,
+			date: true,
+		},
+	});
+};
