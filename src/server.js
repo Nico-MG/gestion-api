@@ -5,6 +5,7 @@ import express from "express";
 // middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
 import validatorData from "./core/middlewares/validatorData.js";
+import validatorRole from "./core/middlewares/validatorRole.js";
 
 // routes
 import purchasesRoute from "./purchases/purchases.controller.js";
@@ -32,8 +33,8 @@ server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
 
-server.use("/test", verifyToken, (req, res) => {
-	//ruta de prueba protegida
+server.use("/test",validatorData, verifyToken, validatorRole, (req, res) => {
+	//ruta de prueba protegida ADMIN log necesario
 	res.sendStatus(200);
 });
 
