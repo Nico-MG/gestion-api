@@ -10,6 +10,7 @@ import {
 	updateProvider,
 	deleteProvider,
 } from "./providers.model.js";
+import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllProvidersService = async (req) => {
 	const query = {
@@ -17,6 +18,10 @@ export const getAllProvidersService = async (req) => {
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,
+		desde: req.query.desde || "2000-01-01",
+		hasta: req.query.hasta || "2099-12-31",
+		numero: Number.parseInt(req.query.numero) || 0,
+		texto: req.query.texto || "",
 	};
 
 	const allProviders = await getAllProviders(query);
@@ -25,7 +30,7 @@ export const getAllProvidersService = async (req) => {
 		adapterToFront(iProvider, provider),
 	);
 
-	return adaptedProviders;
+	return filterHelper(iProvider, adaptedProviders, query);
 };
 
 export const createProviderService = async (req) => {

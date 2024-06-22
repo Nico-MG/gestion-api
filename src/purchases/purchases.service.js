@@ -18,6 +18,8 @@ import {
 } from "./purchases.model.js";
 import quantityAdjuster from "../core/actions/quantityAjuster.js";
 import priceAjuster from "../core/actions/priceAjuster.js";
+import filterHelper from "../core/actions/filterHelper.js";
+import formattedDetails from "../core/actions/formattedDetails.js";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
@@ -25,6 +27,10 @@ export const getAllPurchasesService = async (req) => {
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,
+		desde: req.query.desde || "2000-01-01",
+		hasta: req.query.hasta || "2099-12-31",
+		numero: Number.parseInt(req.query.numero) || 0,
+		texto: req.query.texto || "",
 	};
 
 	const allPurchases = await getAllPurchases(query);
@@ -33,15 +39,8 @@ export const getAllPurchasesService = async (req) => {
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 
-	const formattedPurchases = adaptedPurchases.map((purchase) => ({
-		...purchase,
-		detalles: purchase.detalles.map(({ productos, ...detalle }) => ({
-			...detalle,
-			cod: productos?.code,
-		})),
-	}));
-
-	return formattedPurchases;
+	const formattedPurchases = formattedDetails(adaptedPurchases);
+	return filterHelper(iPurchase, formattedPurchases, query);
 };
 
 export const getPurchaseService = async (req) => {

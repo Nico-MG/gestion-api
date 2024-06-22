@@ -15,6 +15,8 @@ import {
 	deleteSale,
 	getCodeSale,
 } from "./sales.model.js";
+import formattedDetails from "../core/actions/formattedDetails.js";
+import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllSalesService = async (req) => {
 	const query = {
@@ -22,6 +24,10 @@ export const getAllSalesService = async (req) => {
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,
+		desde: req.query.desde || "2000-01-01",
+		hasta: req.query.hasta || "2099-12-31",
+		numero: Number.parseInt(req.query.numero) || 0,
+		texto: req.query.texto || "",
 	};
 
 	const allSales = await getAllSales(query);
@@ -30,13 +36,8 @@ export const getAllSalesService = async (req) => {
 		adapterToFrontWithDetails(iSales, iSalesDetails, sale),
 	);
 
-	const formattedSales = adaptedSales.map((sale) => ({
-		...sale,
-		detalles: sale.detalles.map(({ productos, ...detalle }) => ({
-			...detalle,
-			cod: productos?.code,
-		})),
-	}));
+	const formattedSales = formattedDetails(adaptedSales);
+	return filterHelper(iSales, formattedSales, query);
 };
 
 export const getSaleService = async (req) => {
