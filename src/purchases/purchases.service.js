@@ -16,11 +16,13 @@ import {
 	updatePurchase,
 	deletePurchase,
 	getPurchasesCount,
+	getProductsAndProviders,
 } from "./purchases.model.js";
 import quantityAdjuster from "../core/actions/quantityAjuster.js";
 import priceAjuster from "../core/actions/priceAjuster.js";
 import filterHelper from "../core/actions/filterHelper.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
+import e from "cors";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
@@ -61,6 +63,10 @@ export const getPurchaseService = async (req) => {
 
 export const getPurchasesCountService = async () => {
 	return await getPurchasesCount();
+};
+
+export const getProductsAndProvidersService = async () => {
+	return await getProductsAndProviders();
 };
 
 export const createPurchaseService = async (req) => {

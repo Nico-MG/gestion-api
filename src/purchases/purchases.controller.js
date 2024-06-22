@@ -7,6 +7,7 @@ import {
 	updatePurchaseService,
 	deletePurchaseService,
 	getPurchasesCountService,
+	getProductsAndProvidersService,
 } from "./purchases.service.js";
 import { Router } from "express";
 
@@ -19,6 +20,8 @@ purchasesRoute.get("/", async (req, res) => {
 			message: `Compras encontradas: ${await getPurchasesCountService()}`,
 			data: result,
 			largo: await getPurchasesCountService(),
+			products: (await getProductsAndProvidersService()).products,
+			providers: (await getProductsAndProvidersService()).providers,
 		});
 	} catch (error) {
 		console.error(error);

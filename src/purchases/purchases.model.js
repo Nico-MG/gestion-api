@@ -53,6 +53,24 @@ export const getPurchasesCount = async () => {
 	return await db.purchases.count();
 };
 
+export const getProductsAndProviders = async () => {
+	return {
+		products: await db.products.findMany({
+			select: {
+				product_id: true,
+				code: true,
+				name: true,
+			},
+		}),
+		providers: await db.providers.findMany({
+			select: {
+				provider_rut: true,
+				name: true,
+			},
+		}),
+	};
+};
+
 export const createPurchase = async (body, details) => {
 	await db.purchases.create({
 		data: {
