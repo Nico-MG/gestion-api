@@ -37,8 +37,8 @@ const validatorData = (req, res, next) => {
 					}
 				}
 			}
+			continue;
 		}
-		continue;
 
 		if (regular_expression.test(data[key])) {
 			return res.sendStatus(400);
