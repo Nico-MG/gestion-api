@@ -22,6 +22,10 @@ export const getCodeProduct = async (code) => {
 	});
 };
 
+export const getProductsCount = async () => {
+	return await db.products.count();
+};
+
 export const createProduct = async (body) => {
 	await db.products.create({
 		data: body,

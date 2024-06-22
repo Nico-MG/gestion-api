@@ -5,6 +5,7 @@ import {
 	createProductService,
 	updateProductService,
 	deleteProductService,
+	getProductsCountService,
 } from "./products.service.js";
 import { Router } from "express";
 
@@ -14,9 +15,9 @@ productsRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllProductsService(req);
 		return res.status(200).json({
-			message: `Productos encontrados: ${result.length}`,
+			message: `Productos encontrados: ${await getProductsCountService()}`,
 			data: result,
-			largo: result.length,
+			largo: await getProductsCountService(),
 		});
 	} catch (error) {
 		console.error(error);
