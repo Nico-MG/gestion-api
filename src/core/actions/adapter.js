@@ -4,7 +4,7 @@
  * @param {Object} reqBody - El objeto de la API.
  * @returns {Object} El objeto adaptado.
  */
-const invertMapping = (mapping) => {
+export const invertMapping = (mapping) => {
 	const inv = {};
 	for (const key in mapping) {
 		if (mapping[key]) {

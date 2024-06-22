@@ -11,6 +11,7 @@ import {
 	updateUser,
 	deleteUser,
 } from "./users.model.js";
+import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllUsersService = async (req) => {
 	const query = {
@@ -18,13 +19,17 @@ export const getAllUsersService = async (req) => {
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,
+		desde: req.query.desde || "2000-01-01",
+		hasta: req.query.hasta || "2099-12-31",
+		numero: Number.parseInt(req.query.numero) || 0,
+		texto: req.query.texto || "",
 	};
 
 	const allUsers = await getAllUsers(query);
 
 	const adaptedUsers = allUsers.map((user) => adapterToFront(iUser, user));
 
-	return adaptedUsers;
+	return filterHelper(iUser, adaptedUsers, query);
 };
 
 export const createUserService = async (req) => {

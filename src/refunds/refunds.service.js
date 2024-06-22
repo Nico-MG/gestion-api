@@ -13,6 +13,8 @@ import {
 	createRefund,
 	updateRefund,
 } from "./refunds.model.js";
+import formattedDetails from "../core/actions/formattedDetails.js";
+import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllRefundsService = async (req) => {
 	const query = {
@@ -20,6 +22,10 @@ export const getAllRefundsService = async (req) => {
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,
+		desde: req.query.desde || "2000-01-01",
+		hasta: req.query.hasta || "2099-12-31",
+		numero: Number.parseInt(req.query.numero) || 0,
+		texto: req.query.texto || "",
 	};
 
 	const allRefund = await getAllRefunds(query);
@@ -28,15 +34,8 @@ export const getAllRefundsService = async (req) => {
 		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
 	);
 
-	const formattedRefund = adaptedRefund.map((refund) => ({
-		...refund,
-		detalles: refund.detalles.map(({ productos, ...detalle }) => ({
-			...detalle,
-			cod: productos?.code,
-		})),
-	}));
-
-	return formattedRefund;
+	const formattedRefund = formattedDetails(adaptedRefund);
+	return filterHelper(iRefund, formattedRefund, query);
 };
 
 export const getRefundService = async (req) => {
