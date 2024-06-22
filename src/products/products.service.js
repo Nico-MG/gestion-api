@@ -30,7 +30,7 @@ export const getAllProductsService = async (req) => {
 		adapterToFront(iProduct, product),
 	);
 
-	return {products: filterHelper(iProduct, adaptedProducts, query), largo: allProducts.length};
+	return filterHelper(iProduct, adaptedProducts, query);
 };
 
 export const getProductService = async (req) => {

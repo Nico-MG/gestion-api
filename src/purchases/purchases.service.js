@@ -40,7 +40,8 @@ export const getAllPurchasesService = async (req) => {
 	);
 
 	const formattedPurchases = formattedDetails(adaptedPurchases);
-	return {purchases: filterHelper(iPurchase, formattedPurchases, query), largo: allPurchases.length};
+	return filterHelper(iPurchase, formattedPurchases, query)
+
 };
 
 export const getPurchaseService = async (req) => {
@@ -82,7 +83,10 @@ export const updatePurchaseService = async (req) => {
 	if (!purchase) {
 		throw new NotFound("Compra");
 	}
-	if (purchaseCode.length > 0 && purchaseCode[0].purchase_id !== req.body.idpu) {
+	if (
+		purchaseCode.length > 0 &&
+		purchaseCode[0].purchase_id !== req.body.idpu
+	) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
