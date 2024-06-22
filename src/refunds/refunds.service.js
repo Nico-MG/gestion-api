@@ -12,6 +12,7 @@ import {
 	deleteRefund,
 	createRefund,
 	updateRefund,
+	getRefundsCount,
 } from "./refunds.model.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
@@ -51,6 +52,10 @@ export const getRefundService = async (req) => {
 		refund,
 	);
 	return adaptedRefund;
+};
+
+export const getRefundsCountService = async () => {
+	return await getRefundsCount();
 };
 
 export const createRefundService = async (req) => {

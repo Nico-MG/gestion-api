@@ -6,6 +6,7 @@ import {
 	createPurchaseService,
 	updatePurchaseService,
 	deletePurchaseService,
+	getPurchasesCountService,
 } from "./purchases.service.js";
 import { Router } from "express";
 
@@ -15,9 +16,9 @@ purchasesRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllPurchasesService(req);
 		return res.status(200).json({
-			message: `Compras encontradas: ${result.length}`,
+			message: `Compras encontradas: ${await getPurchasesCountService()}`,
 			data: result,
-			largo: result.length,
+			largo: await getPurchasesCountService(),
 		});
 	} catch (error) {
 		console.error(error);

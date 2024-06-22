@@ -5,6 +5,7 @@ import {
 	deleteProviderService,
 	updateProviderService,
 	getAllProvidersService,
+	getProvidersCountService,
 } from "./providers.service.js";
 import { Router } from "express";
 
@@ -14,9 +15,9 @@ providersRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllProvidersService(req);
 		return res.status(200).json({
-			message: `Proveedores encontrados: ${result.length}`,
+			message: `Proveedores encontrados: ${await getProvidersCountService()}`,
 			data: result,
-			largo: result.length,
+			largo: await getProvidersCountService(),
 		});
 	} catch (error) {
 		console.error(error);

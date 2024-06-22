@@ -32,6 +32,10 @@ export const getRefund = async (id) => {
 	});
 };
 
+export const getRefundsCount = async () => {
+	return await db.refunds.count();
+};
+
 export const getCodeRefund = async (code) => {
 	return await db.refunds.findMany({
 		where: {

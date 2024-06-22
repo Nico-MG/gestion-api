@@ -15,6 +15,7 @@ import {
 	createPurchase,
 	updatePurchase,
 	deletePurchase,
+	getPurchasesCount,
 } from "./purchases.model.js";
 import quantityAdjuster from "../core/actions/quantityAjuster.js";
 import priceAjuster from "../core/actions/priceAjuster.js";
@@ -56,6 +57,10 @@ export const getPurchaseService = async (req) => {
 		purchase,
 	);
 	return adaptedPurchase;
+};
+
+export const getPurchasesCountService = async () => {
+	return await getPurchasesCount();
 };
 
 export const createPurchaseService = async (req) => {

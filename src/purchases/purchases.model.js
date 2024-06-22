@@ -49,6 +49,10 @@ export const getCodePurchase = async (code) => {
 	});
 };
 
+export const getPurchasesCount = async () => {
+	return await db.purchases.count();
+};
+
 export const createPurchase = async (body, details) => {
 	await db.purchases.create({
 		data: {

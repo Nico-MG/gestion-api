@@ -10,6 +10,7 @@ import {
 	createUser,
 	updateUser,
 	deleteUser,
+	getUsersCount,
 } from "./users.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -30,6 +31,10 @@ export const getAllUsersService = async (req) => {
 	const adaptedUsers = allUsers.map((user) => adapterToFront(iUser, user));
 
 	return filterHelper(iUser, adaptedUsers, query);
+};
+
+export const getUsersCountService = async () => {
+	return await getUsersCount();
 };
 
 export const createUserService = async (req) => {

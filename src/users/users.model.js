@@ -21,6 +21,10 @@ export const getUser = async (id) => {
 	});
 };
 
+export const getUsersCount = async () => {
+	return await db.users.count();
+};
+
 export const createUser = async (body) => {
 	await db.users.create({
 		data: body,

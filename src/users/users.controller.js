@@ -1,3 +1,4 @@
+import { a } from "vitest/dist/suite-IbNSsUWN.js";
 import InvalidRut from "../core/errors/invalidRut.js";
 import NotFound from "../core/errors/notFound.js";
 import {
@@ -5,6 +6,7 @@ import {
 	deleteUserService,
 	updateUserService,
 	createUserService,
+	getUsersCountService,
 } from "./users.service.js";
 import { Router } from "express";
 
@@ -14,9 +16,9 @@ usersRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllUsersService(req);
 		return res.status(200).json({
-			message: `Usuarios encontrados: ${result.length}`,
+			message: `Usuarios encontrados: ${await getUsersCountService()}`,
 			data: result,
-			largo: result.length,
+			largo: await getUsersCountService(),
 		});
 	} catch (error) {
 		console.error(error);

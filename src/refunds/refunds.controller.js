@@ -6,6 +6,7 @@ import {
 	createRefundService,
 	updateRefundService,
 	deleteRefundService,
+	getRefundsCountService,
 } from "./refunds.service.js";
 import { Router } from "express";
 
@@ -15,9 +16,9 @@ refundsRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllRefundsService(req);
 		return res.status(200).json({
-			message: `Devoluciones encontradas: ${result.length}`,
+			message: `Devoluciones encontradas: ${await getRefundsCountService()}`,
 			data: result,
-			largo: result.length,
+			largo: await getRefundsCountService(),
 		});
 	} catch (error) {
 		console.error(error);

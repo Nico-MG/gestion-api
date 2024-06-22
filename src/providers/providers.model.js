@@ -18,6 +18,10 @@ export const getProvider = async (id) => {
 	});
 };
 
+export const getProvidersCount = async () => {
+	return await db.providers.count();
+};
+
 export const createProvider = async (body) => {
 	return await db.providers.create({
 		data: body,

@@ -14,6 +14,7 @@ import {
 	updateSale,
 	deleteSale,
 	getCodeSale,
+	getSalesCount,
 } from "./sales.model.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
@@ -49,6 +50,10 @@ export const getSaleService = async (req) => {
 
 	const adaptedSale = adapterToFrontWithDetails(iSales, iSalesDetails, sale);
 	return adaptedSale;
+};
+
+export const getSalesCountService = async () => {
+	return await getSalesCount();
 };
 
 export const createSaleService = async (req) => {

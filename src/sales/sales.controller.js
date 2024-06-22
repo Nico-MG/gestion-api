@@ -7,6 +7,7 @@ import {
 	createSaleService,
 	updateSaleService,
 	deleteSaleService,
+	getSalesCountService,
 } from "./sales.service.js";
 import { Router } from "express";
 
@@ -16,9 +17,9 @@ salesRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllSalesService(req);
 		return res.status(200).json({
-			message: `Ventas encontradas: ${result.length}`,
+			message: `Ventas encontradas: ${await getSalesCountService()}`,
 			data: result,
-			largo: result.length,
+			largo: await getSalesCountService(),
 		});
 	} catch (error) {
 		console.error(error);

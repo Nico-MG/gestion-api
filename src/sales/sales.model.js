@@ -40,6 +40,10 @@ export const getCodeSale = async (code) => {
 	});
 };
 
+export const getSalesCount = async () => {
+	return await db.sales.count();
+};
+
 export const createSale = async (body, details) => {
 	await db.sales.create({
 		data: { ...body, sale_details: { create: details } },
