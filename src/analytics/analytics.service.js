@@ -1,30 +1,42 @@
 import {
-	getCountProducts,
+	getCatProducts,
 	getCountSales,
+	getCountRefunds,
+	getCountProviders,
+	getCountPurchases,
 	getPriceSales,
-	getCountCustomers,
 	getPriceAndDateSales,
 } from "./analytics.model.js";
 
 export const getAnalyticData = async () => {
-	const countP = await getCountProducts();
-	const countS = await getCountSales();
-	const rowsSales = await getPriceAndDateSales();
-	const sumaPrice = (await getPriceSales()).reduce(
+	const catProducts = (await getCatProducts()).reduce(
 		(sum, item) => sum + item.quantity,
 		0,
 	);
 
-	const countC = (await getCountCustomers()).reduce(
-		(sum, item) => sum + item.count,
+	// counts
+	const countSales = await getCountSales();
+	const countRefunds = await getCountRefunds();
+	const countProviders = await getCountProviders();
+	const countPurchases = await getCountPurchases();
+
+	const sumTotalSales = (await getPriceSales()).reduce(
+		(sum, item) => sum + item.price,
 		0,
 	);
 
+	const datePriceSales = await getPriceAndDateSales();
+
+
 	return {
-		countP,
-		countS,
-		sumaPrice,
-		countC,
-		rowsSales,
+		catProducts,
+
+		countSales,
+		countRefunds,
+		countProviders,
+		countPurchases,
+
+		sumTotalSales,
+		datePriceSales,
 	};
 };

@@ -1,6 +1,6 @@
 import db from "../core/database/connection.js";
 
-export const getCountProducts = async () => {
+export const getCatProducts = async () => {
 	return await db.products.findMany({
 		select: {
 			quantity: true,
@@ -8,8 +8,21 @@ export const getCountProducts = async () => {
 	});
 };
 
+// counts
 export const getCountSales = async () => {
 	return await db.sales.count();
+};
+
+export const getCountRefunds = async () => {
+	return await db.refunds.count();
+};
+
+export const getCountProviders = async () => {
+	return await db.providers.count();
+};
+
+export const getCountPurchases = async () => {
+	return await db.purchases.count();
 };
 
 export const getPriceSales = async () => {
@@ -18,10 +31,6 @@ export const getPriceSales = async () => {
 			total_price: true,
 		},
 	});
-};
-
-export const getCountCustomers = async () => {
-	return await db.providers.count();
 };
 
 export const getPriceAndDateSales = async () => {
