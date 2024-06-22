@@ -14,9 +14,8 @@ usersRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllUsersService(req);
 		return res.status(200).json({
-			message: `Usuarios encontrados: ${result.length}`,
+			message: `Usuarios encontrados: ${result.largo}`,
 			data: result,
-			largo: result.length,
 		});
 	} catch (error) {
 		console.error(error);

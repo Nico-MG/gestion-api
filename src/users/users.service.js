@@ -29,7 +29,7 @@ export const getAllUsersService = async (req) => {
 
 	const adaptedUsers = allUsers.map((user) => adapterToFront(iUser, user));
 
-	return filterHelper(iUser, adaptedUsers, query);
+	return {users: filterHelper(iUser, adaptedUsers, query), largo: allUsers.length};
 };
 
 export const createUserService = async (req) => {

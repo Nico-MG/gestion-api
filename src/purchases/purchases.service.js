@@ -40,7 +40,7 @@ export const getAllPurchasesService = async (req) => {
 	);
 
 	const formattedPurchases = formattedDetails(adaptedPurchases);
-	return filterHelper(iPurchase, formattedPurchases, query);
+	return {purchases: filterHelper(iPurchase, formattedPurchases, query), largo: allPurchases.length};
 };
 
 export const getPurchaseService = async (req) => {

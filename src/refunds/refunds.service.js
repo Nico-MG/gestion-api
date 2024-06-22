@@ -35,7 +35,7 @@ export const getAllRefundsService = async (req) => {
 	);
 
 	const formattedRefund = formattedDetails(adaptedRefund);
-	return filterHelper(iRefund, formattedRefund, query);
+	return {refunds: filterHelper(iRefund, formattedRefund, query), largo: allRefund.length};
 };
 
 export const getRefundService = async (req) => {

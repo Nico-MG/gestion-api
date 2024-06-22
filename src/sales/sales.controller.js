@@ -16,9 +16,8 @@ salesRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllSalesService(req);
 		return res.status(200).json({
-			message: `Ventas encontradas: ${result.length}`,
+			message: `Ventas encontradas: ${result.largo}`,
 			data: result,
-			largo: result.length,
 		});
 	} catch (error) {
 		console.error(error);

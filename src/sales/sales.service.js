@@ -37,7 +37,7 @@ export const getAllSalesService = async (req) => {
 	);
 
 	const formattedSales = formattedDetails(adaptedSales);
-	return filterHelper(iSales, formattedSales, query);
+	return {sales: filterHelper(iSales, formattedSales, query), largo: allSales.length};
 };
 
 export const getSaleService = async (req) => {

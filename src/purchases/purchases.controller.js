@@ -15,9 +15,8 @@ purchasesRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllPurchasesService(req);
 		return res.status(200).json({
-			message: `Compras encontradas: ${result.length}`,
+			message: `Compras encontradas: ${result.largo}`,
 			data: result,
-			largo: result.length,
 		});
 	} catch (error) {
 		console.error(error);

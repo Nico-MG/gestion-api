@@ -30,7 +30,7 @@ export const getAllProvidersService = async (req) => {
 		adapterToFront(iProvider, provider),
 	);
 
-	return filterHelper(iProvider, adaptedProviders, query);
+	return {providers: filterHelper(iProvider, adaptedProviders, query), largo: allProviders.length};
 };
 
 export const createProviderService = async (req) => {
