@@ -30,7 +30,7 @@ export const getAllProductsService = async (req) => {
 		adapterToFront(iProduct, product),
 	);
 
-	return filterHelper(iProduct, adaptedProducts, query);	
+	return filterHelper(iProduct, adaptedProducts, query);
 };
 
 export const getProductService = async (req) => {
@@ -46,7 +46,7 @@ export const getProductService = async (req) => {
 
 export const createProductService = async (req) => {
 	const product = await getCodeProduct(req.body.cod);
-	if (product.length === 1) {
+	if (product.length > 0) {
 		throw new CodeRepeat("producto", product[0].code);
 	}
 
@@ -61,7 +61,7 @@ export const updateProductService = async (req) => {
 	if (!product) {
 		throw new NotFound("Producto");
 	}
-	if (productCode.length > 1) {
+	if (productCode.length > 1 && productCode[0].product_id !== req.params.id) {
 		throw new CodeRepeat("producto", req.body.cod);
 	}
 

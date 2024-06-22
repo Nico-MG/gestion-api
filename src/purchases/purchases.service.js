@@ -40,7 +40,8 @@ export const getAllPurchasesService = async (req) => {
 	);
 
 	const formattedPurchases = formattedDetails(adaptedPurchases);
-	return filterHelper(iPurchase, formattedPurchases, query);
+	return filterHelper(iPurchase, formattedPurchases, query)
+
 };
 
 export const getPurchaseService = async (req) => {
@@ -60,7 +61,7 @@ export const getPurchaseService = async (req) => {
 
 export const createPurchaseService = async (req) => {
 	const purchase = await getCodePurchase(req.body.cod);
-	if (purchase === 1) {
+	if (purchase.length > 0) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
@@ -82,7 +83,10 @@ export const updatePurchaseService = async (req) => {
 	if (!purchase) {
 		throw new NotFound("Compra");
 	}
-	if (purchaseCode.length > 1 && purchaseCode[0] !== req.body.cod) {
+	if (
+		purchaseCode.length > 0 &&
+		purchaseCode[0].purchase_id !== req.body.idpu
+	) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
