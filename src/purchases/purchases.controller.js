@@ -17,6 +17,7 @@ purchasesRoute.get("/", async (req, res) => {
 		return res.status(200).json({
 			message: `Compras encontradas: ${result.length}`,
 			data: result,
+			largo: result.length,
 		});
 	} catch (error) {
 		console.error(error);

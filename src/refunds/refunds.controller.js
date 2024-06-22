@@ -17,6 +17,7 @@ refundsRoute.get("/", async (req, res) => {
 		return res.status(200).json({
 			message: `Devoluciones encontradas: ${result.length}`,
 			data: result,
+			largo: result.length,
 		});
 	} catch (error) {
 		console.error(error);

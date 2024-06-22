@@ -16,6 +16,7 @@ usersRoute.get("/", async (req, res) => {
 		return res.status(200).json({
 			message: `Usuarios encontrados: ${result.length}`,
 			data: result,
+			largo: result.length,
 		});
 	} catch (error) {
 		console.error(error);
