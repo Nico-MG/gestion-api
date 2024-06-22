@@ -45,7 +45,9 @@ export const getAllPurchasesService = async (req) => {
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 
-	const formattedPurchases = formattedDetails(adaptedPurchases);
+	const formattedPurchases = adaptedPurchases.map((purchase) =>
+		formattedDetails(purchase),
+	);
 	return filterHelper(iPurchase, formattedPurchases, query);
 };
 
