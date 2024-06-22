@@ -1,4 +1,3 @@
-import { a } from "vitest/dist/suite-IbNSsUWN.js";
 import InvalidRut from "../core/errors/invalidRut.js";
 import NotFound from "../core/errors/notFound.js";
 import {
