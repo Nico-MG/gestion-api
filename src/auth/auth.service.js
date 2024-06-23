@@ -13,13 +13,14 @@ const getLoginUser = async (req, res) => {
 	}
 
 	try {
-		const result = await getUser(rutu);
+	       const result = await getUser(rutu);
+	       const role = result.role;
 
 		if (!result || !bcrypt.compareSync(pwd, result.password)) {
 			return { status: 401 };
 		}
 
-		const token = jwt.sign({ rutu }, SECRET_KEY, { expiresIn: "1h" });
+		const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
 
 		const serialized = cookie.serialize("my-token", token, {
 			httpOnly: true,
