@@ -10,6 +10,7 @@ import {
 	updateProduct,
 	getCodeProduct,
 	getProductsCount,
+	getAllTypes,
 } from "./products.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -36,6 +37,11 @@ export const getAllProductsService = async (req) => {
 
 export const getProductsCountService = async () => {
 	return await getProductsCount();
+};
+
+export const getAllTypesService = async () => {
+	const types = await getAllTypes();
+	return types;
 };
 
 export const getProductService = async (req) => {
