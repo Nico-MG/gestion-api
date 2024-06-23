@@ -27,7 +27,7 @@ export const getAllTypes = async () => {
 		select: {
 			type: true,
 		},
-		distinct: true,
+		distinct: ["type"],
 	});
 };
 

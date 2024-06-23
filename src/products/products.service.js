@@ -41,7 +41,8 @@ export const getProductsCountService = async () => {
 
 export const getAllTypesService = async () => {
 	const types = await getAllTypes();
-	return types;
+	const typesValues = types.map((type) => type.type);
+	return typesValues;
 };
 
 export const getProductService = async (req) => {
