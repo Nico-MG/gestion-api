@@ -6,8 +6,7 @@ import {
 	updateProductService,
 	deleteProductService,
 	getProductsCountService,
-	getAllTypesService,
-	getAllTypesService,
+	getAllTypesService
 } from "./products.service.js";
 import { Router } from "express";
 
