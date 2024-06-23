@@ -20,6 +20,7 @@ import {
 	deletePurchase,
 	getPurchasesCount,
 	getProductsAndProviders,
+	getAllPurchasesCodes,
 } from "./purchases.model.js";
 import quantityAdjuster from "../core/actions/quantityAjuster.js";
 import priceAjuster from "../core/actions/priceAjuster.js";
@@ -79,6 +80,11 @@ export const getProductsAndProvidersService = async () => {
 		adapterToFront(iProvider, provider),
 	);
 	return { products, providers };
+};
+
+export const getAllPurchasesCodesService = async () => {
+	const codes = await getAllPurchasesCodes();
+	return codes.map((code) => code.code);
 };
 
 export const createPurchaseService = async (req) => {

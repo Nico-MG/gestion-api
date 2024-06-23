@@ -49,6 +49,15 @@ export const getCodePurchase = async (code) => {
 	});
 };
 
+export const getAllPurchasesCodes = async () => { 
+	return await db.purchases.findMany({
+		select: {
+			code: true,
+		},
+		distinct: ["code"],
+	});
+};
+
 export const getPurchasesCount = async () => {
 	return await db.purchases.count();
 };

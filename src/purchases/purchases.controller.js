@@ -8,6 +8,7 @@ import {
 	deletePurchaseService,
 	getPurchasesCountService,
 	getProductsAndProvidersService,
+	getAllPurchasesCodesService,
 } from "./purchases.service.js";
 import { Router } from "express";
 
@@ -22,6 +23,7 @@ purchasesRoute.get("/", async (req, res) => {
 			largo: await getPurchasesCountService(),
 			products: (await getProductsAndProvidersService()).products,
 			providers: (await getProductsAndProvidersService()).providers,
+			codes: (await getAllPurchasesCodesService()),
 		});
 	} catch (error) {
 		console.error(error);
