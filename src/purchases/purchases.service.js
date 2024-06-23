@@ -3,8 +3,11 @@ import CodeRepeat from "../core/errors/codeRepeat.js";
 import {
 	iPurchase,
 	iPurchaseDetails,
+	iProduct,
+	iProvider,
 } from "../core/database/tableStructures.js";
 import {
+	adapterToFront,
 	adapterToDBWithDetails,
 	adapterToFrontWithDetails,
 } from "../core/actions/adapter.js";
@@ -42,7 +45,9 @@ export const getAllPurchasesService = async (req) => {
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 
-	const formattedPurchases = formattedDetails(adaptedPurchases);
+	const formattedPurchases = adaptedPurchases.map((purchase) =>
+		formattedDetails(purchase),
+	);
 	return filterHelper(iPurchase, formattedPurchases, query);
 };
 
@@ -66,7 +71,14 @@ export const getPurchasesCountService = async () => {
 };
 
 export const getProductsAndProvidersService = async () => {
-	return await getProductsAndProviders();
+	const data = await getProductsAndProviders();
+	const products = data.products.map((product) =>
+		adapterToFront(iProduct, product),
+	);
+	const providers = data.providers.map((provider) =>
+		adapterToFront(iProvider, provider),
+	);
+	return { products, providers };
 };
 
 export const createPurchaseService = async (req) => {
