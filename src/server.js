@@ -27,7 +27,7 @@ server.disable("x-powered-by");
 server.use("/products", validatorData, productsRoute);
 server.use("/users", validatorData, usersRoute);
 server.use("/providers", providersRoute);
-server.use("/purchases", purchasesRoute);
+server.use("/purchases", validatorData,purchasesRoute);
 server.use("/sales", salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
