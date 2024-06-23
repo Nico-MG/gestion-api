@@ -19,7 +19,7 @@ productsRoute.get("/", async (req, res) => {
 			message: `Productos encontrados: ${await getProductsCountService()}`,
 			data: result,
 			largo: await getProductsCountService(),
-			types: await getAllTypesService(),
+			categorias: await getAllTypesService(),
 		});
 	} catch (error) {
 		console.error(error);
