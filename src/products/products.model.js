@@ -22,6 +22,15 @@ export const getCodeProduct = async (code) => {
 	});
 };
 
+export const getAllTypes = async () => {
+	return await db.products.findMany({
+		select: {
+			type: true,
+		},
+		distinct: true,
+	});
+};
+
 export const getProductsCount = async () => {
 	return await db.products.count();
 };
