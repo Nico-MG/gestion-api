@@ -30,7 +30,6 @@ const validatorData = (req, res, next) => {
 
 		if (typeof data[key] === "object") {
 			for (const product in data[key]) {
-				// detalle -> [json, json ]
 				for (const field in data[key][product]) {
 					if (regular_expression.test(data[key][product][field])) {
 					    return res.status(400).json({message: "Caracteres invalidos"});
