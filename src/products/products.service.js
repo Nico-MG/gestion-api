@@ -11,6 +11,7 @@ import {
 	getCodeProduct,
 	getProductsCount,
 	getAllTypes,
+	getAllProductCodes,
 } from "./products.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -43,6 +44,12 @@ export const getAllTypesService = async () => {
 	const types = await getAllTypes();
 	const typesValues = types.map((type) => type.type);
 	return typesValues;
+};
+
+export const getAllProductCodesService = async () => {
+	const codes = await getAllProductCodes();
+	const codesValues = codes.map((code) => code.code);
+	return codesValues;
 };
 
 export const getProductService = async (req) => {

@@ -6,7 +6,8 @@ import {
 	updateProductService,
 	deleteProductService,
 	getProductsCountService,
-	getAllTypesService
+	getAllTypesService,
+	getAllProductCodesService,
 } from "./products.service.js";
 import { Router } from "express";
 
@@ -20,6 +21,7 @@ productsRoute.get("/", async (req, res) => {
 			data: result,
 			largo: await getProductsCountService(),
 			categorias: await getAllTypesService(),
+			codes: await getAllProductCodesService(),
 		});
 	} catch (error) {
 		console.error(error);
