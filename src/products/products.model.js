@@ -7,6 +7,10 @@ export const getAllProducts = async ({ limit, offset, dato, orden }) => {
 		},
 		take: limit,
 		skip: offset,
+		omit: {
+			createdAt: true,
+			updatedAt: true,
+		},
 	});
 };
 

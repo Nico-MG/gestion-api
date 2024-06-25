@@ -18,6 +18,10 @@ export const getAllRefunds = async ({ dato, orden, limit, offset }) => {
 				},
 			},
 		},
+		omit: {
+			createdAt: true,
+			updatedAt: true,
+		},
 	});
 };
 
