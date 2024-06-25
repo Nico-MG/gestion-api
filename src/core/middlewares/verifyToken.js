@@ -5,7 +5,7 @@ import "dotenv/config";
 function verifyToken(req, res, next) {
 	const SECRET_KEY = process.env.SECRET_KEY;
 	const token = req.headers.cookie;
-k
+
 	if (!token) {
 	    return res.status(403).json({message : "No tienes accesos a esta información"});
 	}
