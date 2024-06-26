@@ -3,8 +3,11 @@
  * @param {string} rut - El RUT del producto.
  * @returns {boolean} True si el RUT es válido, false en caso contrario.
  */
+
+// \b\d{1,2}\.\d{3}\.\d{3}\-(\d|(K|k))\b
+
 export default function moduleRut(rut) {
-	const cleanRut = rut.replace("/./g", "").replace("-", "");
+	const cleanRut = rut.replace(/\./g, "").replace("-", "");
 
 	const rutBody = cleanRut.slice(0, -1);
 	const verificador = cleanRut.slice(-1).toUpperCase();
