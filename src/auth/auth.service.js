@@ -23,13 +23,14 @@ const getLoginUser = async (req, res) => {
 	    const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
 	    const serialized = cookie.serialize("my-token", token, {
 			httpOnly: true,
-			sameSite: "strict",
+		        sameSite: "none",
+             		secure : true,
 			maxAge: 1000 * 60 * 60,
 			path: "/",
 		});
 
-	    res.setHeader("Set-Cookie", serialized);
-            return { status: 200 , message: "Bienvenido!"};
+            res.setHeader("Set-Cookie", serialized);
+        return { status: 200 , message: "Bienvenido!"};
 	} catch {
 	    return { status: 500, message : "Error interno del servidor" };
 	}
