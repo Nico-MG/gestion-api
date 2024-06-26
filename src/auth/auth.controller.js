@@ -9,7 +9,7 @@ authRoute.post("/login", async (req, res) => {
 });
 
 // authRoute.post("logout", async (req, res) => {
-// 	// TODO: hacer el cerrar sesion
+// 	// TODO: hacer el cerrar sesión
 // 	// ?: necesitamos una nueva tabla
 // });
 

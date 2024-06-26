@@ -7,7 +7,7 @@ analyticsRoute.get("/", async (_, res) => {
 	try {
 		const result = await getAnalyticData();
 		return res.status(200).json({
-			message: "Datos para analiticas",
+			message: "Datos para analíticas",
 			data: result,
 		});
 	} catch (error) {

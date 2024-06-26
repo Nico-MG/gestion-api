@@ -23,7 +23,7 @@ const validatorData = (req, res, next) => {
 
 		if (key.substring(0, 3) === "rut") {
 			if (!rut_regex.test(data[key])) {
-			    return res.status(400).json({message: "Rut invalidos"});
+			    return res.status(400).json({message: "Rut inválidos"});
 			}
 			continue;
 		}
@@ -32,7 +32,7 @@ const validatorData = (req, res, next) => {
 			for (const product in data[key]) {
 				for (const field in data[key][product]) {
 					if (regular_expression.test(data[key][product][field])) {
-					    return res.status(400).json({message: "Caracteres invalidos"});
+					    return res.status(400).json({message: "Caracteres inválidos"});
 					}
 				}
 			}
@@ -40,7 +40,7 @@ const validatorData = (req, res, next) => {
 		}
 
 		if (regular_expression.test(data[key])) {
-		    return res.status(400).json({message: "Caracteres invalidos"});
+		    return res.status(400).json({message: "Caracteres inválidos"});
 		}
 	}
 

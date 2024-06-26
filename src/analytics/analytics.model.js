@@ -42,8 +42,6 @@ export const getTopProductsSales = async () => {
 	});
 }
 
-console.log(await getTopProductsSales());
-
 export const getPriceSales = async () => {
 	return await db.sales.findMany({
 		select: {
