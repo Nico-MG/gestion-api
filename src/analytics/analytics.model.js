@@ -33,14 +33,14 @@ export const getTopProductsSales = async () => {
 				select: {
 					name: true,
 					code: true,
-				}
-			}
+				},
+			},
 		},
 		orderBy: {
 			quantity: "desc",
-		}
+		},
 	});
-}
+};
 
 export const getPriceSales = async () => {
 	return await db.sales.findMany({

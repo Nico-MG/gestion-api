@@ -27,7 +27,6 @@ export const getAnalyticData = async () => {
 
 	const datePriceSales = await getPriceAndDateSales();
 
-
 	return {
 		catProducts,
 

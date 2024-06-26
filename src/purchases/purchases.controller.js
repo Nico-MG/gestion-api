@@ -23,7 +23,7 @@ purchasesRoute.get("/", async (req, res) => {
 			largo: await getPurchasesCountService(),
 			products: (await getProductsAndProvidersService()).products,
 			providers: (await getProductsAndProvidersService()).providers,
-			codes: (await getAllPurchasesCodesService()),
+			codes: await getAllPurchasesCodesService(),
 		});
 	} catch (error) {
 		console.error(error);

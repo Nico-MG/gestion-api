@@ -60,7 +60,7 @@ model Refunds {
   code           String          @db.VarChar(20)
   date           String          @db.VarChar(10)
   description    String          @db.Text
-  note_refund    String          @db.VarChar(20)
+  note_refund    String          @db.VarChar(50)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   refund_details RefundDetails[]

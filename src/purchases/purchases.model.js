@@ -49,7 +49,7 @@ export const getCodePurchase = async (code) => {
 	});
 };
 
-export const getAllPurchasesCodes = async () => { 
+export const getAllPurchasesCodes = async () => {
 	return await db.purchases.findMany({
 		select: {
 			code: true,

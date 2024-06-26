@@ -35,7 +35,7 @@ export const getAllTypes = async () => {
 	});
 };
 
-export const getAllProductCodes = async () => { 
+export const getAllProductCodes = async () => {
 	return await db.products.findMany({
 		select: {
 			code: true,

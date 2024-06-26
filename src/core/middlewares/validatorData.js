@@ -9,21 +9,21 @@ const validatorData = (req, res, next) => {
 	for (const key in data) {
 		if (key === "fecha") {
 			if (!fecha_regex.test(data[key])) {
-			    return res.status(400).json({message : "Fecha invalida"});
+				return res.status(400).json({ message: "Fecha invalida" });
 			}
 			continue;
 		}
 
 		if (key === "email") {
 			if (!email_regex.test(data[key])) {
-			    return res.status(400).json({message: "Correo invalido"});
+				return res.status(400).json({ message: "Correo invalido" });
 			}
 			continue;
 		}
 
 		if (key.substring(0, 3) === "rut") {
 			if (!rut_regex.test(data[key])) {
-			    return res.status(400).json({message: "Rut inválidos"});
+				return res.status(400).json({ message: "Rut inválidos" });
 			}
 			continue;
 		}
@@ -32,7 +32,7 @@ const validatorData = (req, res, next) => {
 			for (const product in data[key]) {
 				for (const field in data[key][product]) {
 					if (regular_expression.test(data[key][product][field])) {
-					    return res.status(400).json({message: "Caracteres inválidos"});
+						return res.status(400).json({ message: "Caracteres inválidos" });
 					}
 				}
 			}
@@ -40,7 +40,7 @@ const validatorData = (req, res, next) => {
 		}
 
 		if (regular_expression.test(data[key])) {
-		    return res.status(400).json({message: "Caracteres inválidos"});
+			return res.status(400).json({ message: "Caracteres inválidos" });
 		}
 	}
 

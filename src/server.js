@@ -20,18 +20,19 @@ import analyticsRoute from "./analytics/analytics.controller.js";
 const server = express();
 const port = process.env.PORT || 3000;
 
-server.use(cors({
-    origin : 'http://localhost:1420',
-    credentials : true,
-
-}));
+server.use(
+	cors({
+		origin: "http://localhost:1420",
+		credentials: true,
+	}),
+);
 server.use(express.json());
 server.disable("x-powered-by");
 
 server.use("/products", validatorData, verifyToken, productsRoute);
-server.use("/users", validatorData, verifyToken,usersRoute);
-server.use("/providers", validatorData,verifyToken,providersRoute);
-server.use("/purchases", validatorData,purchasesRoute);
+server.use("/users", validatorData, verifyToken, usersRoute);
+server.use("/providers", validatorData, verifyToken, providersRoute);
+server.use("/purchases", validatorData, purchasesRoute);
 server.use("/sales", salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
