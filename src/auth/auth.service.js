@@ -24,7 +24,8 @@ const getLoginUser = async (req, res) => {
 	    const serialized = cookie.serialize("my-token", token, {
 			httpOnly: true,
 		        sameSite: "none",
-			maxAge: 1000 * 60 * 60,
+              		secure: true,
+		        maxAge: 1000 * 60 * 60,
 			path: "/",
 		});
 
