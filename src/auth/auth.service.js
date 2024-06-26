@@ -23,8 +23,7 @@ const getLoginUser = async (req, res) => {
 	    const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
 	    const serialized = cookie.serialize("my-token", token, {
 			httpOnly: true,
-		        sameSite: "none",
-              		secure: true,
+		        sameSite: "strict",
 		        maxAge: 1000 * 60 * 60,
 			path: "/",
 		});
