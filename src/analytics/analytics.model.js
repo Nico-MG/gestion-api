@@ -25,6 +25,25 @@ export const getCountPurchases = async () => {
 	return await db.purchases.count();
 };
 
+export const getTopProductsSales = async () => {
+	return await db.saleDetails.findMany({
+		select: {
+			quantity: true,
+			products: {
+				select: {
+					name: true,
+					code: true,
+				}
+			}
+		},
+		orderBy: {
+			quantity: "desc",
+		}
+	});
+}
+
+console.log(await getTopProductsSales());
+
 export const getPriceSales = async () => {
 	return await db.sales.findMany({
 		select: {

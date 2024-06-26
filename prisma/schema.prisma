@@ -106,6 +106,7 @@ model Products {
   quantity         Int
   min_quantity     Int
   price            Int
+  status           Boolean           @default(true)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   refund_details   RefundDetails[]
