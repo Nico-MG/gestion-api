@@ -34,5 +34,5 @@ export default function moduleRut(rut) {
 				? "K"
 				: expectedVerifier.toString();
 
-	return verificador === expectedVerifierChar;
+	return verificador.toUpperCase() === expectedVerifierChar.toUpperCase();
 }
