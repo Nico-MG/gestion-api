@@ -3,17 +3,28 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+import InvalidRut from "../core/errors/invalidRut.js";
+import moduleRut from "../core/actions/module11.js";
 
 const getLoginUser = async (req, res) => {
 	const SECRET_KEY = process.env.SECRET_KEY;
 	const { rutu, pwd } = req.body;
+      
 
+    
 	if (!rutu || !pwd) {
 		return { status: 401, message: "Campos vacíos" };
 	}
 
 	try {
-		const result = await getUser(rutu);
+
+               if(!moduleRut(rutu)){
+         	     throw new InvalidRut(rutu);
+ 
+                }
+
+	    
+	        const result = await getUser(rutu);
 		const role = result.role;
 
 		if (!result || !bcrypt.compareSync(pwd, result.password)) {

@@ -1,5 +1,5 @@
 const regular_expression = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-const rut_regex = /\b\d{8}-\d\b/;
+const rut_regex = /\b\d{1,2}\.\d{3}\.\d{3}\-(\d|(K|k))\b/;
 const email_regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const fecha_regex = /^\d{4}-\d{2}-\d{2}$/;
 
