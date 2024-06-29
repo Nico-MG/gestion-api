@@ -32,15 +32,16 @@ const getLoginUser = async (req, res) => {
 		}
 
 		const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
-		// const serialized = cookie.serialize("my-token", token, {
-		// 	httpOnly: true,
-      		//     sameSite: "none",
-		//     secure: true,
-		// 	maxAge: 1000 * 60 * 60,
-		// 	path: "/",
-		// });
+		const serialized = cookie.serialize("my-token", token, {
+			httpOnly: true,
+      		        sameSite: 'None',
+		        secure: true,
+			maxAge: 1000 * 60 * 60,
+		        path: '/',
+		        partition : 'By-Site'
+		});
 
-		// res.setHeader("Set-Cookie", serialized);
+		res.setHeader("Set-Cookie", serialized);
 	        
 	        return { status: 200, message: token };
 	} catch {
