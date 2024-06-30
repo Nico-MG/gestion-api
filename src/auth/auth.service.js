@@ -10,17 +10,22 @@ import moduleRut from "../core/actions/module11.js";
 const getLoginUser = async (req, res) => {
 	const SECRET_KEY = process.env.SECRET_KEY;
 	const { rutu, pwd } = req.body;
+      
 
+    
 	if (!rutu || !pwd) {
 		return { status: 401, message: "Campos vacíos" };
 	}
 
 	try {
-		if (!moduleRut(rutu)) {
-			throw new InvalidRut(rutu);
-		}
 
-		const result = await getUser(rutu);
+               if(!moduleRut(rutu)){
+         	     throw new InvalidRut(rutu);
+ 
+                }
+
+	    
+	        const result = await getUser(rutu);
 		const role = result.role;
 
 		if (!result || !bcrypt.compareSync(pwd, result.password)) {
@@ -28,24 +33,16 @@ const getLoginUser = async (req, res) => {
 		}
 
 		const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
-                res.cookie('my-token',token,{
-		httpOnly: true,
-		sameSite: 'None',
-		secure: true,
-		maxAge: 1000 * 60 * 60,
-		partition: 'By-Site'
+                const serialized = cookie.serialize("my-token", token, {
+			httpOnly: true,
+      		        sameSite: 'None',
+		        secure: true,
+			maxAge: 1000 * 60 * 60,
+		        path: '/',
+		        partition : 'By-Site'
+		});
 
-	    })
-	        // const serialized = cookie.serialize("my-token", token, {
-		// 	httpOnly: true,
-      		//         sameSite: 'None',
-		//         secure: true,
-		// 	maxAge: 1000 * 60 * 60,
-		//         path: '/',
-		//         partition : 'By-Site'
-		// });
-
-		// res.setHeader("Set-Cookie", serialized);
+		res.setHeader("Set-Cookie", serialized);
 	        
 	        return { status: 200, message: "Bienvenido!" };
 	} catch {
