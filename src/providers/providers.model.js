@@ -10,6 +10,7 @@ export const getAllProviders = async ({ limit, offset, dato, orden }) => {
 		omit: {
 			createdAt: true,
 			updatedAt: true,
+			status: true,
 		},
 	});
 };

@@ -11,6 +11,7 @@ export const getAllUsers = async ({ limit, offset, dato, orden }) => {
 			password: true,
 			createdAt: true,
 			updatedAt: true,
+			status: true,
 		},
 	});
 };
