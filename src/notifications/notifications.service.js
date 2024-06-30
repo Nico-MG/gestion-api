@@ -1,42 +1,19 @@
-import {
-	getAllNotifications,
-	getNotification,
-	deleteNotification,
-	createNotification,
-	updateNotification,
-} from "./notifications.model.js";
+import NotFound from "../core/errors/notFound.js";
+import { adapterToDB, adapterToFront } from "../core/actions/adapter.js";
+import { getAllNotifications, createNotification, deleteNotification } from "./notifications.model.js";
 
-const getNotificationService = async (id) => {
-	return await getNotification(id);
-};
+export const getAllNotificationsService = async () => {
+	const data = await getAllNotifications();
+	return data;
+}
 
-const getAllNotificationsService = async () => {
-	return await getAllNotifications();
-};
+export const createNotificationService = async (data) => {
+	const dbData = adapterToDB(data);
+	const newNotification = await createNotification(dbData);
+	return adapterToFront(newNotification);
+}
 
-const updateNotificationService = async (
-	id,
-	newId,
-	fecha,
-	idp,
-	titulo,
-	desc,
-) => {
-	return await updateNotification(id, newId, fecha, idp, titulo, desc);
-};
-
-const deleteNotificationService = async (id) => {
-	return await deleteNotification(id);
-};
-
-const createNotificationService = async (id, fecha, idp, titulo, desc) => {
-	return await createNotification(id, fecha, idp, titulo, desc);
-};
-
-export {
-	getAllNotificationsService,
-	getNotificationService,
-	createNotificationService,
-	updateNotificationService,
-	deleteNotificationService,
-};
+export const deleteNotificationService = async (id) => {
+	await deleteNotification(id);
+	return { status: 200, message: "Notificación eliminada correctamente" };
+}

@@ -9,22 +9,17 @@ import moduleRut from "../core/actions/module11.js";
 const getLoginUser = async (req, res) => {
 	const SECRET_KEY = process.env.SECRET_KEY;
 	const { rutu, pwd } = req.body;
-      
 
-    
 	if (!rutu || !pwd) {
 		return { status: 401, message: "Campos vacíos" };
 	}
 
 	try {
+		if (!moduleRut(rutu)) {
+			throw new InvalidRut(rutu);
+		}
 
-               if(!moduleRut(rutu)){
-         	     throw new InvalidRut(rutu);
- 
-                }
-
-	    
-	        const result = await getUser(rutu);
+		const result = await getUser(rutu);
 		const role = result.role;
 
 		if (!result || !bcrypt.compareSync(pwd, result.password)) {
@@ -34,16 +29,16 @@ const getLoginUser = async (req, res) => {
 		const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
 		const serialized = cookie.serialize("my-token", token, {
 			httpOnly: true,
-      		        sameSite: 'None',
-		        secure: true,
+			sameSite: "None",
+			secure: true,
 			maxAge: 1000 * 60 * 60,
-		        path: '/',
-		        partition : 'By-Site'
+			path: "/",
+			partition: "By-Site",
 		});
 
 		res.setHeader("Set-Cookie", serialized);
-	        
-	        return { status: 200, message: token };
+
+		return { status: 200, message: token };
 	} catch {
 		return { status: 500, message: "Error interno del servidor" };
 	}

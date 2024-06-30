@@ -1,56 +1,19 @@
-import db from "../core/db/prisma.js";
+import db from "../core/database/connection.js";
 
-const createNotification = async (id, fecha, idp, titulo, desc) => {
-	return await db.notificacion.create({
-		data: {
-			id_notificacion: id,
-			fecha,
-			id_producto: idp,
-			titulo: titulo,
-			descripcion: desc,
-		},
+export const getAllNotifications = async () => {
+	return await db.notifications.findMany();
+};
+
+export const createNotification = async (data) => {
+	return await db.notifications.create({
+		data,
 	});
 };
 
-const updateNotification = async (id, newId, fecha, idp, titulo, desc) => {
-	return await db.notificacion.update({
+export const deleteNotification = async (id) => {
+	return await db.notifications.delete({
 		where: {
-			id_notificacion: id,
-		},
-		data: {
-			id_notificacion: newId,
-			fecha,
-			id_producto: idp,
-			titulo: titulo,
-			descripcion: desc,
+			id: id,
 		},
 	});
-};
-
-const deleteNotification = async (id) => {
-	return await db.notificacion.delete({
-		where: {
-			id_notificacion: id,
-		},
-	});
-};
-
-const getNotification = async (id) => {
-	return await db.notificacion.findUnique({
-		where: {
-			id_notificacion: id,
-		},
-	});
-};
-
-const getAllNotifications = async () => {
-	return await db.notificacion.findMany();
-};
-
-export {
-	createNotification,
-	updateNotification,
-	deleteNotification,
-	getAllNotifications,
-	getNotification,
 };
