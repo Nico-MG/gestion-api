@@ -4,8 +4,8 @@ import { Router } from "express";
 const authRoute = Router();
 
 authRoute.post("/login", async (req, res) => {
-	const result = await getLoginUser(req, res);
-	res.status(result.status).json({ message: result.message });
+    const result = await getLoginUser(req, res);
+    res.status(result.status).json({ message: result.message , token : result.credentials});
 });
 
 // authRoute.post("logout", async (req, res) => {

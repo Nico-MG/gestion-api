@@ -1,7 +1,6 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-
 // middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
 import validatorData from "./core/middlewares/validatorData.js";
@@ -32,15 +31,15 @@ server.disable("x-powered-by");
 server.use("/products", validatorData, verifyToken, productsRoute);
 server.use("/users", validatorData, verifyToken, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
-server.use("/purchases", validatorData, purchasesRoute);
+server.use("/purchases", validatorData,verifyToken, purchasesRoute);
 server.use("/sales", salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
 
-server.use("/test", validatorData, verifyToken, validatorRole, (req, res) => {
-	//ruta de prueba protegida ADMIN log necesario
-	res.sendStatus(200);
+server.use("/test", validatorData,verifyToken,  (req, res) => {
+    //ruta de prueba protegida ADMIN log necesario
+    res.sendStatus(200);
 });
 
 server
