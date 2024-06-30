@@ -1,6 +1,7 @@
 import { getUser } from "./auth.model.js";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+import cookieParser from "cookie-parser";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import InvalidRut from "../core/errors/invalidRut.js";
@@ -32,18 +33,26 @@ const getLoginUser = async (req, res) => {
 		}
 
 		const token = jwt.sign({ role }, SECRET_KEY, { expiresIn: "1h" });
-		const serialized = cookie.serialize("my-token", token, {
-			httpOnly: true,
-      		        sameSite: 'None',
-		        secure: true,
-			maxAge: 1000 * 60 * 60,
-		        path: '/',
-		        partition : 'By-Site'
-		});
+                res.cookie('my-token',token,{
+		httpOnly: true,
+		sameSite: 'None',
+		secure: true,
+		maxAge: 1000 * 60 * 60,
+		partition: 'By-Site'
 
-		res.setHeader("Set-Cookie", serialized);
+	    })
+	        // const serialized = cookie.serialize("my-token", token, {
+		// 	httpOnly: true,
+      		//         sameSite: 'None',
+		//         secure: true,
+		// 	maxAge: 1000 * 60 * 60,
+		//         path: '/',
+		//         partition : 'By-Site'
+		// });
+
+		// res.setHeader("Set-Cookie", serialized);
 	        
-	        return { status: 200, message: token };
+	        return { status: 200, message: "Bienvenido!" };
 	} catch {
 		return { status: 500, message: "Error interno del servidor" };
 	}
