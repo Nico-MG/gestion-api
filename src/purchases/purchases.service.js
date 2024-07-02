@@ -113,7 +113,7 @@ export const updatePurchaseService = async (req) => {
 	}
 	if (
 		purchaseCode.length > 0 &&
-		purchaseCode[0].purchase_id !== req.body.idpu
+		purchaseCode[0].purchase_id !== id
 	) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
