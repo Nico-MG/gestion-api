@@ -38,7 +38,7 @@ usersRoute.post("/create", async (req, res) => {
 	}
 });
 
-usersRoute.put("/:id/edit", async (req, res) => {
+usersRoute.put("/:rut/edit", async (req, res) => {
 	try {
 		await updateUserService(req);
 		return res.status(200).json({ message: "Usuario editado exitosamente" });
@@ -54,7 +54,7 @@ usersRoute.put("/:id/edit", async (req, res) => {
 	}
 });
 
-usersRoute.delete("/:id/delete", async (req, res) => {
+usersRoute.delete("/:rut/delete", async (req, res) => {
 	try {
 		await deleteUserService(req);
 		return res.status(200).json({ message: "Usuario eliminado exitosamente" });
@@ -62,6 +62,9 @@ usersRoute.delete("/:id/delete", async (req, res) => {
 		console.error(error);
 		if (error instanceof NotFound) {
 			return res.status(404).json({ message: error.message });
+		}
+		if (error instanceof InvalidRut) {
+			return res.status(400).json({ message: error.message });
 		}
 		return res.status(500).json({ message: "Error interno del servidor" });
 	}

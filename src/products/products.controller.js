@@ -1,13 +1,13 @@
 import CodeRepeat from "../core/errors/codeRepeat.js";
 import NotFound from "../core/errors/notFound.js";
 import {
+	getAllProductCodesService,
+	getAllProductTypesService,
 	getAllProductsService,
+	getProductsCountService,
+	deleteProductService,
 	createProductService,
 	updateProductService,
-	deleteProductService,
-	getProductsCountService,
-	getAllTypesService,
-	getAllProductCodesService,
 } from "./products.service.js";
 import { Router } from "express";
 
@@ -20,7 +20,7 @@ productsRoute.get("/", async (req, res) => {
 			message: `Productos encontrados: ${await getProductsCountService()}`,
 			data: result,
 			largo: await getProductsCountService(),
-			categorias: await getAllTypesService(),
+			categorias: await getAllProductTypesService(),
 			codes: await getAllProductCodesService(),
 		});
 	} catch (error) {
@@ -64,11 +64,9 @@ productsRoute.delete("/:id/delete", async (req, res) => {
 		return res.status(200).json({ message: "Producto eliminado exitosamente" });
 	} catch (error) {
 		console.error(error);
-
 		if (error instanceof NotFound) {
 			return res.status(404).json({ message: error.message });
 		}
-
 		return res.status(500).json({ message: "Error interno del servidor" });
 	}
 });

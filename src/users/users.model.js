@@ -1,12 +1,7 @@
 import db from "../core/database/connection.js";
 
-export const getAllUsers = async ({ limit, offset, dato, orden }) => {
+export const getAllUsers = async () => {
 	return await db.users.findMany({
-		orderBy: {
-			[dato]: orden,
-		},
-		take: limit,
-		skip: offset,
 		omit: {
 			password: true,
 			createdAt: true,
@@ -16,10 +11,13 @@ export const getAllUsers = async ({ limit, offset, dato, orden }) => {
 	});
 };
 
-export const getUser = async (id) => {
+export const getUserByRut = async (rut) => {
 	return await db.users.findUnique({
 		where: {
-			user_rut: id,
+			user_rut: rut,
+		},
+		select: {
+			user_rut: true,
 		},
 	});
 };
@@ -34,19 +32,19 @@ export const createUser = async (body) => {
 	});
 };
 
-export const updateUser = async (id, body) => {
+export const updateUser = async (rut, body) => {
 	await db.users.update({
 		where: {
-			user_rut: id,
+			user_rut: rut,
 		},
 		data: body,
 	});
 };
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (rut) => {
 	await db.users.delete({
 		where: {
-			user_rut: id,
+			user_rut: rut,
 		},
 	});
 };

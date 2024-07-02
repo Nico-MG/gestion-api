@@ -3,15 +3,15 @@ import CodeRepeat from "../core/errors/codeRepeat.js";
 import { iProduct } from "../core/database/tableStructures.js";
 import { adapterToDB, adapterToFront } from "../core/actions/adapter.js";
 import {
-	getProduct,
-	getAllProducts,
-	createProduct,
-	deleteProduct,
-	updateProduct,
-	getCodeProduct,
-	getProductsCount,
-	getAllTypes,
+	getProductById,
 	getAllProductCodes,
+	getAllProductTypes,
+	getAllProducts,
+	getProductByCode,
+	getProductsCount,
+	deleteProduct,
+	createProduct,
+	updateProduct,
 } from "./products.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -27,58 +27,43 @@ export const getProductsCountService = async () => {
 	return await getProductsCount();
 };
 
-export const getAllTypesService = async () => {
-	const types = await getAllTypes();
-	const typesValues = types.map((type) => type.type);
-	return typesValues;
+export const getAllProductTypesService = async () => {
+	return (await getAllProductTypes()).map((type) => type.type);
 };
 
 export const getAllProductCodesService = async () => {
-	const codes = await getAllProductCodes();
-	const codesValues = codes.map((code) => code.code);
-	return codesValues;
-};
-
-export const getProductService = async (req) => {
-	const id = Number.parseInt(req.params.id);
-	const product = await getProduct(id);
-	if (!product) {
-		throw new NotFound("Producto");
-	}
-
-	const adaptedProduct = adapterToFront(iProduct, product);
-	return adaptedProduct;
+	return (await getAllProductCodes()).map((code) => code.code);
 };
 
 export const createProductService = async (req) => {
-	const product = await getCodeProduct(req.body.cod);
-	if (product.length > 0) {
-		throw new CodeRepeat("producto", product[0].code);
+	const productCode = await getProductByCode(req.body.cod);
+	if (productCode.length > 0) {
+		throw new CodeRepeat("producto", productCode[0].code);
 	}
 
-	const createdProductData = adapterToDB(iProduct, req.body);
-	await createProduct(createdProductData);
+	const data = adapterToDB(iProduct, req.body);
+	await createProduct(data);
 };
 
 export const updateProductService = async (req) => {
 	const id = Number.parseInt(req.params.id);
-	const product = await getProduct(id);
-	const productCode = await getCodeProduct(req.body.cod);
-	if (!product) {
+	const productId = await getProductById(id);
+	const productCode = await getProductByCode(req.body.cod);
+	if (!productId) {
 		throw new NotFound("Producto");
 	}
 	if (productCode.length > 0 && productCode[0].product_id !== id) {
 		throw new CodeRepeat("producto", req.body.cod);
 	}
 
-	const updatedProductData = adapterToDB(iProduct, req.body);
-	await updateProduct(id, updatedProductData);
+	const data = adapterToDB(iProduct, req.body);
+	await updateProduct(id, data);
 };
 
 export const deleteProductService = async (req) => {
 	const id = Number.parseInt(req.params.id);
-	const product = await getProduct(id);
-	if (!product) {
+	const productId = await getProductById(id);
+	if (!productId) {
 		throw new NotFound("Producto");
 	}
 

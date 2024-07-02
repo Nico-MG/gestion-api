@@ -38,7 +38,7 @@ providersRoute.post("/create", async (req, res) => {
 	}
 });
 
-providersRoute.put("/:id/edit", async (req, res) => {
+providersRoute.put("/:rut/edit", async (req, res) => {
 	try {
 		await updateProviderService(req);
 		return res.status(200).json({ message: "Proveedor editado exitosamente" });
@@ -54,7 +54,7 @@ providersRoute.put("/:id/edit", async (req, res) => {
 	}
 });
 
-providersRoute.delete("/:id/delete", async (req, res) => {
+providersRoute.delete("/:rut/delete", async (req, res) => {
 	try {
 		await deleteProviderService(req);
 		return res
@@ -62,6 +62,9 @@ providersRoute.delete("/:id/delete", async (req, res) => {
 			.json({ message: "Proveedor eliminado exitosamente" });
 	} catch (error) {
 		console.error(error);
+		if (error instanceof InvalidRut) {
+			return res.status(400).json({ message: error.message });
+		}
 		if (error instanceof NotFound) {
 			return res.status(404).json({ message: error.message });
 		}

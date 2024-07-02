@@ -1,16 +1,7 @@
 import db from "../core/database/connection.js";
 
-export const getAllProducts = async () => {
-	return await db.products.findMany({
-		omit: {
-			createdAt: true,
-			updatedAt: true,
-			status: true,
-		},
-	});
-};
-
-export const getProduct = async (id) => {
+// GETTERS
+export const getProductById = async (id) => {
 	return db.products.findUnique({
 		select: {
 			product_id: true,
@@ -19,7 +10,7 @@ export const getProduct = async (id) => {
 	});
 };
 
-export const getCodeProduct = async (code) => {
+export const getProductByCode = async (code) => {
 	return db.products.findMany({
 		select: {
 			code: true,
@@ -29,7 +20,7 @@ export const getCodeProduct = async (code) => {
 	});
 };
 
-export const getAllTypes = async () => {
+export const getAllProductTypes = async () => {
 	return await db.products.findMany({
 		select: {
 			type: true,
@@ -49,6 +40,18 @@ export const getAllProductCodes = async () => {
 
 export const getProductsCount = async () => {
 	return await db.products.count();
+};
+
+// CRUD PRODUCTS
+
+export const getAllProducts = async () => {
+	return await db.products.findMany({
+		omit: {
+			createdAt: true,
+			updatedAt: true,
+			status: true,
+		},
+	});
 };
 
 export const createProduct = async (body) => {

@@ -1,18 +1,12 @@
 /**
- * Adapta un objeto de la API a un objeto de la base de datos.
- * @param {Object} mapping - El mapeo de la API a la base de datos.
- * @param {Object} reqBody - El objeto de la API.
- * @returns {Object} El objeto adaptado.
+ *
+ * @param {object} mapping
+ * @returns {object}
  */
 export const invertMapping = (mapping) => {
-	const inv = {};
-	for (const key in mapping) {
-		if (mapping[key]) {
-			const value = mapping[key];
-			inv[value] = key;
-		}
-	}
-	return inv;
+	return Object.fromEntries(
+		Object.entries(mapping).map(([key, value]) => [value, key]),
+	);
 };
 
 /**

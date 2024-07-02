@@ -5,7 +5,7 @@ import { iProvider } from "../core/database/tableStructures.js";
 import { adapterToDB, adapterToFront } from "../core/actions/adapter.js";
 import {
 	getAllProviders,
-	getProvider,
+	getProviderByRut,
 	createProvider,
 	updateProvider,
 	deleteProvider,
@@ -14,24 +14,11 @@ import {
 import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllProvidersService = async (req) => {
-	const query = {
-		dato: iProvider[req.query.dato] || "provider_rut",
-		orden: req.query.orden || "asc",
-		limit: Number.parseInt(req.query.limit) || 10,
-		offset: Number.parseInt(req.query.offset) || 0,
-		desde: req.query.desde || "2000-01-01",
-		hasta: req.query.hasta || "2099-12-31",
-		numero: Number.parseInt(req.query.numero) || 0,
-		texto: req.query.texto || "",
-	};
+	let content = await getAllProviders();
+	content = filterHelper(iProvider, content, req.query);
+	content = content.map((provider) => adapterToFront(iProvider, provider));
 
-	const allProviders = await getAllProviders(query);
-
-	const adaptedProviders = allProviders.map((provider) =>
-		adapterToFront(iProvider, provider),
-	);
-
-	return filterHelper(iProvider, adaptedProviders, query);
+	return content;
 };
 
 export const getProvidersCountService = async () => {
@@ -43,28 +30,34 @@ export const createProviderService = async (req) => {
 		throw new InvalidRut(req.body.rutp);
 	}
 
-	const createdProviderData = adapterToDB(iProvider, req.body);
-	await createProvider(createdProviderData);
+	const data = adapterToDB(iProvider, req.body);
+	await createProvider(data);
 };
 
 export const updateProviderService = async (req) => {
-	const provider = await getProvider(req.params.id);
+	if (!moduleRut(req.params.rut)) {
+		throw new InvalidRut(req.params.rut);
+	}
+	if (!moduleRut(req.body.rutp)) {
+		throw new InvalidRut(req.body.rutp);
+	}
+	const provider = await getProviderByRut(req.params.rut);
 	if (!provider) {
 		throw new NotFound("Proveedor");
 	}
-	if (!moduleRut(req.params.id)) {
-		throw new InvalidRut(req.params.id);
-	}
 
-	const updatedProviderData = adapterToDB(iProvider, req.body);
-	await updateProvider(req.params.id, updatedProviderData);
+	const data = adapterToDB(iProvider, req.body);
+	await updateProvider(req.params.rut, data);
 };
 
 export const deleteProviderService = async (req) => {
-	const product = await getProvider(req.params.id);
-	if (!product) {
+	if (!moduleRut(req.params.rut)) {
+		throw new InvalidRut(req.params.rut);
+	}
+	const provider = await getProviderByRut(req.params.rut);
+	if (!provider) {
 		throw new NotFound("Proveedor");
 	}
-	
-	await deleteProvider(req.params.id);
+
+	await deleteProvider(req.params.rut);
 };
