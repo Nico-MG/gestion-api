@@ -22,11 +22,10 @@ import {
 	getProductsAndProviders,
 	getAllPurchasesCodes,
 } from "./purchases.model.js";
-import quantityAdjuster from "../core/actions/quantityAjuster.js";
-import priceAjuster from "../core/actions/priceAjuster.js";
+import quantityAdjuster from "../core/actions/quantityAdjuster.js";
+import priceAdjuster from "../core/actions/priceAdjuster.js";
 import filterHelper from "../core/actions/filterHelper.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
-import e from "cors";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
@@ -40,7 +39,7 @@ export const getAllPurchasesService = async (req) => {
 		texto: req.query.texto || "",
 	};
 
-	const allPurchases = await getAllPurchases(query);
+	const allPurchases = await getAllPurchases();
 
 	const adaptedPurchases = allPurchases.map((purchase) =>
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
@@ -99,9 +98,7 @@ export const createPurchaseService = async (req) => {
 		req.body,
 	);
 
-	//await priceAjuster(adaptedDetails);
 	await createPurchase(adaptedBody, adaptedDetails);
-	//await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
 };
 
 export const updatePurchaseService = async (req) => {
@@ -111,10 +108,7 @@ export const updatePurchaseService = async (req) => {
 	if (!purchase) {
 		throw new NotFound("Compra");
 	}
-	if (
-		purchaseCode.length > 0 &&
-		purchaseCode[0].purchase_id !== id
-	) {
+	if (purchaseCode.length > 0 && purchaseCode[0].purchase_id !== id) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
@@ -123,9 +117,7 @@ export const updatePurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
-	//await priceAjuster(adaptedDetails);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
-	//await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
 };
 
 export const deletePurchaseService = async (req) => {
@@ -136,5 +128,4 @@ export const deletePurchaseService = async (req) => {
 	}
 
 	await deletePurchase(id);
-	//await quantityAdjuster("PUR", "DEL", purchase.detalles, []);
 };

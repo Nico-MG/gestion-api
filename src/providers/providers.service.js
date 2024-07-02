@@ -43,8 +43,8 @@ export const createProviderService = async (req) => {
 		throw new InvalidRut(req.body.rutp);
 	}
 
-	const createdProvidertData = adapterToDB(iProvider, req.body);
-	await createProvider(createdProvidertData);
+	const createdProviderData = adapterToDB(iProvider, req.body);
+	await createProvider(createdProviderData);
 };
 
 export const updateProviderService = async (req) => {
@@ -65,6 +65,6 @@ export const deleteProviderService = async (req) => {
 	if (!product) {
 		throw new NotFound("Proveedor");
 	}
-
+	
 	await deleteProvider(req.params.id);
 };

@@ -1,12 +1,7 @@
 import db from "../core/database/connection.js";
 
-export const getAllProducts = async ({ limit, offset, dato, orden }) => {
+export const getAllProducts = async () => {
 	return await db.products.findMany({
-		orderBy: {
-			[dato]: orden,
-		},
-		take: limit,
-		skip: offset,
 		omit: {
 			createdAt: true,
 			updatedAt: true,
@@ -17,12 +12,19 @@ export const getAllProducts = async ({ limit, offset, dato, orden }) => {
 
 export const getProduct = async (id) => {
 	return db.products.findUnique({
+		select: {
+			product_id: true,
+		},
 		where: { product_id: id },
 	});
 };
 
 export const getCodeProduct = async (code) => {
 	return db.products.findMany({
+		select: {
+			code: true,
+			product_id: true,
+		},
 		where: { code: code },
 	});
 };

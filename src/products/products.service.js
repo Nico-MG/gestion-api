@@ -16,24 +16,11 @@ import {
 import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllProductsService = async (req) => {
-	const query = {
-		dato: iProduct[req.query.dato] || "product_id",
-		orden: req.query.orden || "asc",
-		limit: Number.parseInt(req.query.limit) || 10,
-		offset: Number.parseInt(req.query.offset) || 0,
-		desde: req.query.desde || "2000-01-01",
-		hasta: req.query.hasta || "2099-12-31",
-		numero: Number.parseInt(req.query.numero) || 0,
-		texto: req.query.texto || "",
-	};
+	let content = await getAllProducts();
+	content = filterHelper(iProduct, content, req.query);
+	content = content.map((product) => adapterToFront(iProduct, product));
 
-	const allProducts = await getAllProducts(query);
-
-	const adaptedProducts = allProducts.map((product) =>
-		adapterToFront(iProduct, product),
-	);
-
-	return filterHelper(iProduct, adaptedProducts, query);
+	return content;
 };
 
 export const getProductsCountService = async () => {

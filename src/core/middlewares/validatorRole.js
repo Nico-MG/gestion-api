@@ -1,6 +1,6 @@
 const validatorRole = (req, res, next) => {
 	const role = req.body.info_token.role;
-	delete req.body["info_token"];
+	req.body.info_token = undefined;
 	if (role !== "ADMIN") {
 		return res.sendStatus(403);
 	}

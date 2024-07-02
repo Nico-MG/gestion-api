@@ -5,7 +5,7 @@ import {
 
 export default async function quantityAdjuster(
 	tabla,
-	accion,
+	action,
 	detalles,
 	detallesOriginal,
 ) {
@@ -21,20 +21,20 @@ export default async function quantityAdjuster(
 
 		if (!productoValido) continue;
 
-		if (accion === "UPD") {
+		if (action === "UPD") {
 			const catDiferencia = detalles[idx].quantity - catOriginal;
 			productoValido.cit += catDiferencia;
 		}
 
 		if (
-			(tabla !== "SAL" && accion === "ADD") ||
-			(tabla === "SAL" && accion === "DEL")
+			(tabla !== "SAL" && action === "ADD") ||
+			(tabla === "SAL" && action === "DEL")
 		) {
 			productoValido.cit += detalles[idx].quantity;
 		}
 		if (
-			(tabla !== "SAL" && accion === "DEL") ||
-			(tabla === "SAL" && accion === "ADD")
+			(tabla !== "SAL" && action === "DEL") ||
+			(tabla === "SAL" && action === "ADD")
 		) {
 			productoValido.cit -= detalles[idx].quantity;
 		}

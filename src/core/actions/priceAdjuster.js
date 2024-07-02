@@ -3,7 +3,7 @@ import {
 	updateProductService,
 } from "../../products/products.service.js";
 
-export default async function priceAjuster(detalles) {
+export default async function priceAdjuster(detalles) {
 	for (let idx = 0; idx < detalles.length; idx++) {
 		const detalle = detalles[idx];
 		const producto = await getProductService({
