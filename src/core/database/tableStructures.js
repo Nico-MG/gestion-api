@@ -50,14 +50,14 @@ export const iSales = {
 	rutc: "client_rut",
 	rutu: "user_rut",
 	fecha: "date",
-	precio: "total_price",
+	total: "total_price",
 };
 
 export const iSalesDetails = {
 	idp: "product_id",
 	cit: "quantity",
 	precio: "unit_price",
-	total: "line_total",
+	suma: "line_total",
 	productos: "products",
 };
 
