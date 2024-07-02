@@ -28,7 +28,11 @@ export const getUser = async (id) => {
 };
 
 export const getUsersCount = async () => {
-	return await db.users.count();
+	return await db.users.count({
+		where: {
+			status: true,
+		}
+	});
 };
 
 export const createUser = async (body) => {

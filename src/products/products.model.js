@@ -49,7 +49,11 @@ export const getAllProductCodes = async () => {
 };
 
 export const getProductsCount = async () => {
-	return await db.products.count();
+	return await db.products.count({
+		where: {
+			status: true,
+		}
+	});
 };
 
 export const createProduct = async (body) => {

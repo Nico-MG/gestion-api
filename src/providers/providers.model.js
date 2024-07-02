@@ -27,7 +27,11 @@ export const getProvider = async (id) => {
 };
 
 export const getProvidersCount = async () => {
-	return await db.providers.count();
+	return await db.providers.count({
+		where: {
+			status: true,
+		}
+	});
 };
 
 export const createProvider = async (body) => {
