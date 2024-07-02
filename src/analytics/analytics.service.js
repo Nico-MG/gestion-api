@@ -25,7 +25,9 @@ export const getAnalyticData = async () => {
 		0,
 	);
 
-	const datePriceSales = await getPriceAndDateSales();
+	const datePriceSales = await getPriceAndDateSales(
+		startDate, endDate, minPrice, maxPrice
+	);
 
 	return {
 		catProducts,

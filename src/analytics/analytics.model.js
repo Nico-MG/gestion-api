@@ -50,11 +50,21 @@ export const getPriceSales = async () => {
 	});
 };
 
-export const getPriceAndDateSales = async () => {
-	return await db.sales.findMany({
-		select: {
-			total_price: true,
-			date: true,
-		},
-	});
+export const getPriceAndDateSales = async (startDate, endDate, minPrice, maxPrice) => {
+    return await db.sales.findMany({
+        where: {
+            date: {
+                gte: startDate,
+                lte: endDate
+            },
+            total_price: {
+                gte: minPrice,
+                lte: maxPrice
+            }
+        },
+        select: {
+            date: true,
+            total_price: true,
+        }
+    });
 };
