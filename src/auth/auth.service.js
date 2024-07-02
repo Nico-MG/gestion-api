@@ -5,6 +5,7 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 import InvalidRut from "../core/errors/invalidRut.js";
 import moduleRut from "../core/actions/module11.js";
+import capitalize from "../core/actions/capitalizeFirstLetter.js";
 
 class HttpError extends Error {
   constructor(statusCode, message) {
@@ -32,16 +33,18 @@ const getLoginUser = async (req, res) => {
       throw new HttpError(401, "Usuario no existe");
     }
 
-		const rut = result.user_rut;
+    const rut = result.user_rut;
     const role = result.role;
-		const name = result.name;
-		const lastname = result.lastname;
+    const name = result.name;
+    const lastname = result.lastname;
 
     if (!result || !bcrypt.compareSync(pwd, result.password)) {
       throw new HttpError(401, "Credenciales incorrectas");
     }
 
-    const token = jwt.sign({ rut, role, name, lastname }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ rut, role, name, lastname }, SECRET_KEY, {
+      expiresIn: "1h",
+    });
     const serialized = cookie.serialize("my-token", token, {
       httpOnly: true,
       sameSite: "None",
@@ -52,7 +55,11 @@ const getLoginUser = async (req, res) => {
     });
 
     //res.setHeader("Set-Cookie", serialized);
-    return { status: 200, message: "Bienvenido!", credentials: token };
+    return {
+      status: 200,
+      message: `Bienvenido/a, ${capitalize(name)}`,
+      credentials: token,
+    };
   } catch (HttpError) {
     res.setHeader("Set-Cookie", "NULL");
     return {
