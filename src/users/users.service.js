@@ -61,6 +61,10 @@ export const updateUserService = async (req) => {
 	}
 
 	const updatedUserData = adapterToDB(iUser, req.body);
+	const salt = bcrypt.genSaltSync(12);
+	const hash = bcrypt.hashSync(updatedUserData.password, salt);
+	updatedUserData.password = hash;
+
 	await updateUser(req.params.id, updatedUserData);
 };
 
