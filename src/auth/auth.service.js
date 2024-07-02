@@ -32,7 +32,7 @@ const getLoginUser = async (req, res) => {
       throw new HttpError(401, "Usuario no existe");
     }
 
-		const rut = result.rut;
+		const rut = result.user_rut;
     const role = result.role;
 		const name = result.name;
 		const lastname = result.lastname;
