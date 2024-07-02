@@ -2,6 +2,9 @@ import db from "../core/database/connection.js";
 
 export const getAllProviders = async ({ limit, offset, dato, orden }) => {
 	return await db.providers.findMany({
+		where: {
+			status: true,
+		},
 		orderBy: {
 			[dato]: orden,
 		},
@@ -41,9 +44,12 @@ export const updateProvider = async (id, body) => {
 };
 
 export const deleteProvider = async (id) => {
-	return await db.providers.delete({
+	return await db.providers.update({
 		where: {
 			provider_rut: id,
 		},
+		data: {
+			status: false,
+		}
 	});
 };

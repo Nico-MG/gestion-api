@@ -2,6 +2,9 @@ import db from "../core/database/connection.js";
 
 export const getAllUsers = async ({ limit, offset, dato, orden }) => {
 	return await db.users.findMany({
+		where: {
+			status: true,
+		},
 		orderBy: {
 			[dato]: orden,
 		},
@@ -44,9 +47,12 @@ export const updateUser = async (id, body) => {
 };
 
 export const deleteUser = async (id) => {
-	await db.users.delete({
+	await db.users.update({
 		where: {
 			user_rut: id,
 		},
+		data: {
+			status: false,
+		}
 	});
 };

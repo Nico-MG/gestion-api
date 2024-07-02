@@ -2,6 +2,9 @@ import db from "../core/database/connection.js";
 
 export const getAllProducts = async ({ limit, offset, dato, orden }) => {
 	return await db.products.findMany({
+		where: {
+			status: true,
+		},
 		orderBy: {
 			[dato]: orden,
 		},
@@ -63,9 +66,12 @@ export const updateProduct = async (id, body) => {
 };
 
 export const deleteProduct = async (id) => {
-	await db.products.delete({
+	await db.products.update({
 		where: {
 			product_id: id,
 		},
+		data: {
+			status: false,
+		}
 	});
 };
