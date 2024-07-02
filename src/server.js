@@ -20,10 +20,10 @@ const server = express();
 const port = process.env.PORT || 3000;
 
 server.use(
-	cors({
-		origin: "http://localhost:1420",
-		credentials: true,
-	}),
+  cors({
+    origin: "http://localhost:1420",
+    credentials: true,
+  })
 );
 server.use(express.json());
 server.disable("x-powered-by");
@@ -31,29 +31,29 @@ server.disable("x-powered-by");
 server.use("/products", validatorData, verifyToken, productsRoute);
 server.use("/users", validatorData, verifyToken, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
-server.use("/purchases", validatorData,verifyToken, purchasesRoute);
-server.use("/sales", salesRoute);
+server.use("/purchases", validatorData, verifyToken, purchasesRoute);
+server.use("/sales", validatorData, verifyToken, salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
 
-server.use("/test", validatorData,verifyToken,  (req, res) => {
-    //ruta de prueba protegida ADMIN log necesario
-    res.sendStatus(200);
+server.use("/test", validatorData, verifyToken, (req, res) => {
+  //ruta de prueba protegida ADMIN log necesario
+  res.sendStatus(200);
 });
 
 server
-	.listen(port, () => {
-		console.log(`Server ready to listen on port: ${port}`);
-	})
-	.on("error", (err) => {
-		if (err.code === "EADDRINUSE") {
-			console.error(
-				`Port ${port} is already in use. Please use a different port.`,
-			);
-		} else {
-			console.error(`Server error: ${err}`);
-		}
-	});
+  .listen(port, () => {
+    console.log(`Server ready to listen on port: ${port}`);
+  })
+  .on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(
+        `Port ${port} is already in use. Please use a different port.`
+      );
+    } else {
+      console.error(`Server error: ${err}`);
+    }
+  });
 
 export default server;
