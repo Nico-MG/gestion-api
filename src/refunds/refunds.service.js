@@ -19,7 +19,7 @@ import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllRefundsService = async (req) => {
 	const query = {
-		dato: iRefund[req.query.dato] || "refund_id",
+		dato: iRefund[req.query.dato] || "code",
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,

@@ -30,7 +30,7 @@ import e from "cors";
 
 export const getAllPurchasesService = async (req) => {
 	const query = {
-		dato: iPurchase[req.query.dato] || "purchase_id",
+		dato: iPurchase[req.query.dato] || "code",
 		orden: req.query.orden || "asc",
 		limit: Number.parseInt(req.query.limit) || 10,
 		offset: Number.parseInt(req.query.offset) || 0,

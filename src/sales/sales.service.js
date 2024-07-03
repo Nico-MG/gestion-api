@@ -28,7 +28,7 @@ import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllSalesService = async (req) => {
   const query = {
-    dato: iSales[req.query.dato] || "sale_id",
+    dato: iSales[req.query.dato] || "code",
     orden: req.query.orden || "asc",
     limit: Number.parseInt(req.query.limit) || 10,
     offset: Number.parseInt(req.query.offset) || 0,
