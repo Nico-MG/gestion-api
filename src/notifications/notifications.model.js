@@ -4,16 +4,29 @@ export const getAllNotifications = async () => {
 	return await db.notifications.findMany();
 };
 
-export const createNotification = async (data) => {
+export const getNotification = async (id,idp) => {
+	return db.notifications.findUnique({
+	    where: {
+		notification_id: id,
+	    },
+	    include: {
+		products: true,
+	    }
+	});
+};
+
+export const createNotifications = async (data) => {
 	return await db.notifications.create({
 		data,
 	});
 };
 
-export const deleteNotification = async (id) => {
+export const deleteNotifications = async (id) => {
 	return await db.notifications.delete({
 		where: {
-			id: id,
-		},
+			notification_id: id,
+		}
 	});
 };
+
+

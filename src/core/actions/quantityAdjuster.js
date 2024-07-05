@@ -2,6 +2,8 @@ import {
 	getProductService,
 	updateProductService,
 } from "../../products/products.service.js";
+import { wss } from "../../server.js";
+import { createNotificationService } from "../../notifications/notifications.service.js";
 
 export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
@@ -19,7 +21,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	if (action === "ADD" && tipo === "RES") {
 		product.cit -= nuevo.quantity;
 	}
-	if (action === "DEL" && tipo === "SUM") {
+	if (action === "DEL" && tipo === "SUM") {  
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "RES") {
@@ -33,6 +35,12 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		body: product,
 	});
 	if (product.cit <= product.mCit) {
-		console.log(`Poco Stock de ${product.nombre}`);
+    	    wss.clients.forEach((client) => {
+		client.send(`El producto ${product.name} superó el mínimo establecido`);
+	    });
+
+
+	    await createNotification({ product_id: idp, title: 'Aviso de inventario', description:`El producto ${idp} de nombre ${product.nombre} superó el mínimo establecido` })
+	    
 	}
 }

@@ -75,3 +75,11 @@ export const iRefundDetails = {
 	cit: "quantity",
 	productos: "products",
 };
+
+export const iNotifications = {
+        idn : "notifications_id",
+        idp:  "product_id",    
+        titulo: "title" ,   
+        desc: "description",
+        producto: "products",
+};

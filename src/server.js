@@ -17,6 +17,7 @@ import salesRoute from "./sales/sales.controller.js";
 import usersRoute from "./users/users.controller.js";
 import authRoute from "./auth/auth.controller.js";
 import analyticsRoute from "./analytics/analytics.controller.js";
+import notificationsRoute from "./notifications/notifications.controller.js"
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +40,7 @@ server.use("/sales", validatorData, verifyToken, salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
+server.use("/notifications", validatorData, verifyToken, notificationsRoute);
 
 server.use("/test", validatorData, verifyToken, validatorRole, (req, res) => {
 	wss.clients.forEach((client) => {
@@ -73,4 +75,4 @@ wss.on("connection", (ws, req) => {
 	});
 });
 
-export default server;
+export default  server;
