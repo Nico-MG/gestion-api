@@ -13,7 +13,7 @@ function verifyToken(req, res, next) {
   try {
     const key = token.split(" ")[1];
     const payload = jwt.verify(key, SECRET_KEY);
-    //req.body["info_token"] = payload;
+    req.headers['data-token'] = payload;
     next();
   } catch (error){
 

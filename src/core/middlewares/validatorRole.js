@@ -1,8 +1,8 @@
 const validatorRole = (req, res, next) => {
-	const role = req.body.info_token.role;
-	delete req.body["info_token"];
-	if (role !== "ADMIN") {
-		return res.status(403).json({ message: "No autorizado" });
+	const role = req.headers.data-token.role;
+	delete req.headers['data-token'];
+	if (role !== 'ADMIN') {
+		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
 	next();
