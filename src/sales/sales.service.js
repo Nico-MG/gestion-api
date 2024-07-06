@@ -27,25 +27,11 @@ import formattedDetails from "../core/actions/formattedDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllSalesService = async (req) => {
-  const query = {
-    dato: iSales[req.query.dato] || "code",
-    orden: req.query.orden || "asc",
-    limit: Number.parseInt(req.query.limit) || 10,
-    offset: Number.parseInt(req.query.offset) || 0,
-    desde: req.query.desde || "2000-01-01",
-    hasta: req.query.hasta || "2099-12-31",
-    numero: Number.parseInt(req.query.numero) || 0,
-    texto: req.query.texto || "",
-  };
-
-  const allSales = await getAllSales(query);
-
-  const adaptedSales = allSales.map((sale) =>
-    adapterToFrontWithDetails(iSales, iSalesDetails, sale)
-  );
-
-  const formattedSales = adaptedSales.map((sale) => formattedDetails(sale));
-  return filterHelper(iSales, formattedSales, query);
+  let content = await getAllSales();
+  content = filterHelper(iSales, content, req.query);
+  content = content.map((sale) => adapterToFrontWithDetails(iSales, iSalesDetails, sale));
+  content = content.map((sale) => formattedDetails(sale));
+  return content;
 };
 
 export const getSaleService = async (req) => {

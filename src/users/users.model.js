@@ -5,11 +5,6 @@ export const getAllUsers = async ({ limit, offset, dato, orden }) => {
 		where: {
 			status: true,
 		},
-		orderBy: {
-			[dato]: orden,
-		},
-		take: limit,
-		skip: offset,
 		omit: {
 			password: true,
 			createdAt: true,

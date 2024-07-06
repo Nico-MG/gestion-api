@@ -15,22 +15,10 @@ import {
 import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllUsersService = async (req) => {
-	const query = {
-		dato: iUser[req.query.dato] || "user_rut",
-		orden: req.query.orden || "asc",
-		limit: Number.parseInt(req.query.limit) || 10,
-		offset: Number.parseInt(req.query.offset) || 0,
-		desde: req.query.desde || "2000-01-01",
-		hasta: req.query.hasta || "2099-12-31",
-		numero: Number.parseInt(req.query.numero) || 0,
-		texto: req.query.texto || "",
-	};
-
-	const allUsers = await getAllUsers(query);
-
-	const adaptedUsers = allUsers.map((user) => adapterToFront(iUser, user));
-
-	return filterHelper(iUser, adaptedUsers, query);
+	let content = await getAllUsers();
+	content = filterHelper(iUser, content, req.query);
+	content = content.map((user) => adapterToFront(iUser, user));
+	return content;
 };
 
 export const getUsersCountService = async () => {
@@ -42,13 +30,13 @@ export const createUserService = async (req) => {
 		throw new InvalidRut(req.body.rutu);
 	}
 
-	const createdUsertData = adapterToDB(iUser, req.body);
+	const createdUserData = adapterToDB(iUser, req.body);
 
 	const salt = bcrypt.genSaltSync(12);
-	const hash = bcrypt.hashSync(createdUsertData.password, salt);
-	createdUsertData.password = hash;
+	const hash = bcrypt.hashSync(createdUserData.password, salt);
+	createdUserData.password = hash;
 
-	await createUser(createdUsertData);
+	await createUser(createdUserData);
 };
 
 export const updateUserService = async (req) => {

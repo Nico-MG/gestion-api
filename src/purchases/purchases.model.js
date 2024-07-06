@@ -1,12 +1,7 @@
 import db from "../core/database/connection.js";
 
-export const getAllPurchases = async ({ limit, offset, dato, orden }) => {
+export const getAllPurchases = async () => {
 	return await db.purchases.findMany({
-		orderBy: {
-			[dato]: orden,
-		},
-		take: limit,
-		skip: offset,
 		include: {
 			purchase_details: {
 				include: {

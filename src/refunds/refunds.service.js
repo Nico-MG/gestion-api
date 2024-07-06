@@ -18,32 +18,18 @@ import formattedDetails from "../core/actions/formattedDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllRefundsService = async (req) => {
-	const query = {
-		dato: iRefund[req.query.dato] || "code",
-		orden: req.query.orden || "asc",
-		limit: Number.parseInt(req.query.limit) || 10,
-		offset: Number.parseInt(req.query.offset) || 0,
-		desde: req.query.desde || "2000-01-01",
-		hasta: req.query.hasta || "2099-12-31",
-		numero: Number.parseInt(req.query.numero) || 0,
-		texto: req.query.texto || "",
-	};
-
-	const allRefund = await getAllRefunds(query);
-
-	const adaptedRefund = allRefund.map((refund) =>
-		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
-	);
-
-	const formattedRefund = formattedDetails(adaptedRefund);
-	return filterHelper(iRefund, formattedRefund, query);
+	let content = await getAllRefunds();
+	content = filterHelper(iRefund, content, req.query);
+	content = content.map((refund) => adapterToFrontWithDetails(iRefund, iRefundDetails, refund));
+	content = content.map((refund) => formattedDetails(refund));
+	return content;
 };
 
 export const getRefundService = async (req) => {
 	const id = Number.parseInt(req.params.id);
 	const refund = await getRefund(id);
 	if (!refund) {
-		throw new NotFound("Devolucion");
+		throw new NotFound("Devolución");
 	}
 
 	const adaptedRefund = adapterToFrontWithDetails(

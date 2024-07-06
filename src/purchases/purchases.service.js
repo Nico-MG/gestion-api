@@ -22,34 +22,15 @@ import {
 	getProductsAndProviders,
 	getAllPurchasesCodes,
 } from "./purchases.model.js";
-import quantityAdjuster from "../core/actions/quantityAjuster.js";
-import priceAjuster from "../core/actions/priceAjuster.js";
 import filterHelper from "../core/actions/filterHelper.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
-import e from "cors";
 
 export const getAllPurchasesService = async (req) => {
-	const query = {
-		dato: iPurchase[req.query.dato] || "code",
-		orden: req.query.orden || "asc",
-		limit: Number.parseInt(req.query.limit) || 10,
-		offset: Number.parseInt(req.query.offset) || 0,
-		desde: req.query.desde || "2000-01-01",
-		hasta: req.query.hasta || "2099-12-31",
-		numero: Number.parseInt(req.query.numero) || 0,
-		texto: req.query.texto || "",
-	};
-
-	const allPurchases = await getAllPurchases(query);
-
-	const adaptedPurchases = allPurchases.map((purchase) =>
-		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
-	);
-
-	const formattedPurchases = adaptedPurchases.map((purchase) =>
-		formattedDetails(purchase),
-	);
-	return filterHelper(iPurchase, formattedPurchases, query);
+	let content = await getAllPurchases();
+	content = filterHelper(iPurchase, content, req.query);
+	content = content.map((purchase) => adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase));
+	content = content.map((purchase) => formattedDetails(purchase));
+	return content;
 };
 
 export const getPurchaseService = async (req) => {
@@ -99,7 +80,7 @@ export const createPurchaseService = async (req) => {
 		req.body,
 	);
 
-	//await priceAjuster(adaptedDetails);
+	//await priceAdjuster(adaptedDetails);
 	await createPurchase(adaptedBody, adaptedDetails);
 	//await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
 };
@@ -123,7 +104,7 @@ export const updatePurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
-	//await priceAjuster(adaptedDetails);
+	//await priceAdjuster(adaptedDetails);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
 	//await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
 };
