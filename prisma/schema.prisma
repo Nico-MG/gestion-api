@@ -58,7 +58,7 @@ model Refunds {
   refund_id      Int             @id @default(autoincrement())
   sale_id        Int
   code           String          @db.VarChar(20)
-  date           String          @db.VarChar(10)
+  date           DateTime        @db.Date
   description    String          @db.Text
   note_refund    String          @db.VarChar(50)
   createdAt      DateTime        @default(now())
@@ -86,7 +86,7 @@ model Purchases {
   code             String            @db.VarChar(20)
   provider_rut     String
   user_rut         String
-  date             String            @db.VarChar(10)
+  date             DateTime          @db.Date
   total_price      Int
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
@@ -152,7 +152,7 @@ model Sales {
   code         String        @db.VarChar(20)
   client_rut   String        @db.VarChar(15)
   user_rut     String
-  date         String        @db.VarChar(10)
+  date         DateTime      @db.Date
   total_price  Int
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
