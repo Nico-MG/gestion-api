@@ -14,10 +14,9 @@ export default function filterHelper(
 		Number.isNaN(valor) || !valor || valor[0] === "0"
 			? valor || ""
 			: Number.parseInt(valor);
-	mayor = Number.parseInt(mayor) || 1000000;
-	menor = Number.parseInt(menor) || 0;
+	mayor = mayor ? Number.parseInt(mayor) : 0;
+	menor =  menor ? Number.parseInt(menor) : 1000000;
 
-	console.log(dato, orden, limit, offset, desde, hasta, valor, mayor, menor);
 	// Filtro de fecha
 	let result = data.date
 		? data.filter((item) => item.date >= desde && item.date <= hasta)
@@ -41,6 +40,5 @@ export default function filterHelper(
 	result = result.filter((item) => item[dato] <= menor);
 	// Paginación
 	result = result.slice(offset, offset + limit);
-	console.log(result);
 	return result;
 }
