@@ -25,6 +25,10 @@ export const getCountPurchases = async () => {
 	return await db.purchases.count();
 };
 
+export const getcountNotifications = async () => {
+	return await db.notifications.count();
+};
+
 export const getTopProductsSales = async () => {
 	return await db.saleDetails.findMany({
 		select: {

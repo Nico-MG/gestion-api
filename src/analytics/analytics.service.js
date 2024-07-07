@@ -4,6 +4,7 @@ import {
 	getCountRefunds,
 	getCountProviders,
 	getCountPurchases,
+	getCountNotifications,
 	getPriceSales,
 	getPriceAndDateSales,
 	getAllProducts,
@@ -20,6 +21,7 @@ export const getAnalyticData = async () => {
 	const countRefunds = await getCountRefunds();
 	const countProviders = await getCountProviders();
 	const countPurchases = await getCountPurchases();
+	const countNotifications = await getcountNotifications();
 
 	const sumTotalSales = (await getPriceSales()).reduce(
 		(sum, item) => sum + item.price,
@@ -36,6 +38,7 @@ export const getAnalyticData = async () => {
 		countRefunds,
 		countProviders,
 		countPurchases,
+		countNotifications,
 
 		sumTotalSales,
 		datePriceSales,
