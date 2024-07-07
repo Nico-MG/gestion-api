@@ -1,4 +1,12 @@
-export default async function quantityAdjuster(tipo, action, original, nuevo, anterior) {
+import {
+	getProductService,
+	updateProductService,
+} from "../../products/products.service.js";
+
+export default async function quantityAdjuster(tipo, action, nuevo) {
+	const product = await getProductService({
+		req: { params: { id: nuevo.product_id } },
+	});
 	if (action === "UPD" && tipo === "SUM") {
 	}
 	if (action === "UPD" && tipo === "RES") {
@@ -11,5 +19,7 @@ export default async function quantityAdjuster(tipo, action, original, nuevo, an
 	}
 	if (action === "DEL" && tipo === "RES") {
 	}
-	return original;
+	await updateProductService({
+		req: { params: { id: product.product_id }, body: product },
+	});
 }

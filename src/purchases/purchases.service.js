@@ -80,7 +80,6 @@ export const createPurchaseService = async (req) => {
 		req.body,
 	);
 
-	//await priceAdjuster(adaptedDetails);
 	await createPurchase(adaptedBody, adaptedDetails);
 	//await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
 };
