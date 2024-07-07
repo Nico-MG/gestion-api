@@ -28,7 +28,9 @@ import formattedDetails from "../core/actions/formattedDetails.js";
 export const getAllPurchasesService = async (req) => {
 	let content = await getAllPurchases();
 	content = filterHelper(iPurchase, content, req.query);
-	content = content.map((purchase) => adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase));
+	content = content.map((purchase) =>
+		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
+	);
 	content = content.map((purchase) => formattedDetails(purchase));
 	return content;
 };
@@ -81,7 +83,10 @@ export const createPurchaseService = async (req) => {
 	);
 
 	await createPurchase(adaptedBody, adaptedDetails);
-	//await quantityAdjuster("PUR", "ADD", adaptedDetails, []);
+	adaptedDetails.map(
+		async (detail) =>
+			await quantityAdjuster("SUM", "ADD", detail, {}),
+	);
 };
 
 export const updatePurchaseService = async (req) => {
@@ -91,10 +96,7 @@ export const updatePurchaseService = async (req) => {
 	if (!purchase) {
 		throw new NotFound("Compra");
 	}
-	if (
-		purchaseCode.length > 0 &&
-		purchaseCode[0].purchase_id !== id
-	) {
+	if (purchaseCode.length > 0 && purchaseCode[0].purchase_id !== id) {
 		throw new CodeRepeat("compra", req.body.cod);
 	}
 
@@ -105,7 +107,10 @@ export const updatePurchaseService = async (req) => {
 	);
 	//await priceAdjuster(adaptedDetails);
 	await updatePurchase(id, adaptedBody, adaptedDetails);
-	//await quantityAdjuster("PUR", "UPD", adaptedDetails, purchase.detalles);
+	purchase.purchase_details.map(
+		async (detail) =>
+			await quantityAdjuster("SUM", "UPD", detail, purchase.detalles),
+	);
 };
 
 export const deletePurchaseService = async (req) => {
@@ -116,5 +121,8 @@ export const deletePurchaseService = async (req) => {
 	}
 
 	await deletePurchase(id);
-	//await quantityAdjuster("PUR", "DEL", purchase.detalles, []);
+	purchase.purchase_details.map(
+		async (detail) =>
+			await quantityAdjuster("SUM", "DEL", detail, {}),
+	);
 };

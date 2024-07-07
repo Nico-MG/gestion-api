@@ -3,23 +3,29 @@ import {
 	updateProductService,
 } from "../../products/products.service.js";
 
-export default async function quantityAdjuster(tipo, action, nuevo) {
+export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
-		req: { params: { id: nuevo.product_id } },
+		 params: { id: nuevo.product_id } ,
 	});
 	if (action === "UPD" && tipo === "SUM") {
+		product.cit = product.cit + nuevo.cit - anterior.quantity;
 	}
 	if (action === "UPD" && tipo === "RES") {
+		product.cit = product.cit - nuevo.cit + anterior.quantity;
 	}
 	if (action === "ADD" && tipo === "SUM") {
+		product.cit = product.cit + nuevo.cit;
 	}
 	if (action === "ADD" && tipo === "RES") {
+		product.cit = product.cit + nuevo.cit;
 	}
 	if (action === "DEL" && tipo === "SUM") {
+		product.cit = product.cit - nuevo.cit;
 	}
 	if (action === "DEL" && tipo === "RES") {
+		product.cit = product.cit - nuevo.cit;
 	}
 	await updateProductService({
-		req: { params: { id: product.product_id }, body: product },
+		 params: { id: product.id }, body: product 
 	});
 }

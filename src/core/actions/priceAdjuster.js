@@ -1,19 +1,17 @@
 import {
-  getProductService,
-  updateProductService,
+	getProductService,
+	updateProductService,
 } from "../../products/products.service.js";
 
-export default async function priceAdjuster(detalles) {
-  const product = await getProductService({
-    req: { params: { id: detalles.product_id } },
-  });
-  if (detalles.tipo === "RES") {
-    product.precio = product.precio - detalles.cantidad * detalles.precio;
-  }
-  if (detalles.tipo === "SUM") {
-    product.precio = product.precio + detalles.cantidad * detalles.precio;
-  }
-  await updateProductService({
-    req: { params: { id: product.product_id }, body: product },
-  });
+export default async function priceAdjuster(nuevo) {
+	const product = await getProductService({
+		 params: { id: nuevo.product_id } ,
+	});
+	const promedio =
+		(product.cit * product.precio + nuevo.quantity * nuevo.price) /
+		(product.cit + nuevo.quantity);
+	product.precio = promedio;
+	await updateProductService({
+		params: { id: product.product_id }, body: product ,
+	});
 }

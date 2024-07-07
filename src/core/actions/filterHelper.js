@@ -1,7 +1,7 @@
 export default function filterHelper(
 	iMap,
 	data,
-	{ desde, hasta, dato, valor, limit, offset, orden },
+	{ desde, hasta, dato, valor, limit, offset, orden, mayor, menor },
 ) {
 	// Validación de parámetros
 	dato = iMap[dato] || iMap[0];
@@ -23,13 +23,20 @@ export default function filterHelper(
 			? result.sort((a, b) => b[dato] - a[dato])
 			: result.sort((a, b) => a[dato] - b[dato]);
 	// Filtro de numero
-	if (Number.isNaN(valor) === false) {
+	if (!Number.isNaN(valor)) {
 		result = result.filter((item) => item[dato] === valor);
 	} else {
 		result = result.filter((item) =>
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);
 	}
+	// Filtro de rango de valores
+	result = mayor
+		? result.filter((item) => item[dato] >= Number.parseInt(mayor))
+		: result;
+	result = menor
+		? result.filter((item) => item[dato] <= Number.parseInt(menor))
+		: result;
 	// Paginación
 	result = result.slice(offset, offset + limit);
 	return result;
