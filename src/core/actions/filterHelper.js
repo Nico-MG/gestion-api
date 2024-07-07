@@ -4,7 +4,7 @@ export default function filterHelper(
 	{ desde, hasta, dato, valor, limit, offset, orden, mayor, menor },
 ) {
 	// Validación de parámetros
-	dato = iMap[dato] || iMap.idp;
+	dato = dato ? iMap[dato] : Object.values(iMap)[0];
 	orden ??= "asc";
 	limit = Number.parseInt(limit) || 10;
 	offset = Number.parseInt(offset) || 0;
