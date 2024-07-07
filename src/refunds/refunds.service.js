@@ -80,7 +80,14 @@ export const updateRefundService = async (req) => {
 	);
 	await updateRefund(id, adaptedBody, adaptedDetails);
 	adaptedDetails.map(async (detail) => {
-		await quantityAdjuster("SUM", "UPD", detail, refund);
+		await quantityAdjuster(
+			"SUM",
+			"UPD",
+			detail,
+			refund.refund_details.filter(
+				(elm) => elm.product_id === detail.product_id,
+			)[0],
+		);
 	});
 };
 

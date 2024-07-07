@@ -106,7 +106,14 @@ export const updateSaleService = async (req) => {
 	);
 	await updateSale(id, adaptedBody, adaptedDetails);
 	adaptedDetails.map(async (detail) => {
-		await quantityAdjuster("RES", "UPD", detail, sale);
+		await quantityAdjuster(
+			"RES",
+			"UPD",
+			detail,
+			sale.sale_details.filter(
+				(elm) => elm.product_id === detail.product_id,
+			)[0],
+		);
 	});
 };
 
