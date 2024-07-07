@@ -31,10 +31,10 @@ server.use(
 server.use(express.json());
 server.disable("x-powered-by");
 
-server.use("/products", validatorData, productsRoute);
+server.use("/products", validatorData, verifyToken, productsRoute);
 server.use("/users", validatorData, verifyToken, validatorRole, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
-server.use("/purchases", validatorData, purchasesRoute);
+server.use("/purchases", validatorData, verifyToken , purchasesRoute);
 server.use("/sales", validatorData, verifyToken, salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
@@ -42,7 +42,6 @@ server.use("/analytics", analyticsRoute);
 
 server.use("/test", validatorData, verifyToken, validatorRole, (req, res) => {
 	wss.clients.forEach((client) => {
-		const date = new Date();
 		client.send("Testeado");
 	});
 

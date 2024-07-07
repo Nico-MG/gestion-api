@@ -17,13 +17,13 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		product.cit += nuevo.quantity;
 	}
 	if (action === "ADD" && tipo === "RES") {
-		product.cit += nuevo.quantity;
+		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "SUM") {
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "RES") {
-		product.cit -= nuevo.quantity;
+		product.cit += nuevo.quantity;
 	}
 	const idp = product.idp;
 	product.idp = undefined;
