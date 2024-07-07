@@ -7,8 +7,6 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
 		params: { id: nuevo.product_id },
 	});
-	console.log(product.cit);
-	console.log(nuevo, anterior);
 	if (action === "UPD" && tipo === "SUM") {
 		product.cit += nuevo.quantity - anterior.quantity;
 	}
@@ -30,7 +28,6 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const idp = product.idp;
 	product.idp = undefined;
 	product.undefined = undefined;
-	console.log(product.cit);
 	await updateProductService({
 		params: { id: idp },
 		body: product,

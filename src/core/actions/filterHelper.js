@@ -15,12 +15,16 @@ export default function filterHelper(
 			? valor || ""
 			: Number.parseInt(valor);
 	mayor = mayor ? Number.parseInt(mayor) : 0;
-	menor =  menor ? Number.parseInt(menor) : 1000000;
+	menor = menor ? Number.parseInt(menor) : 1000000;
 
 	// Filtro de fecha
 	let result = data.date
 		? data.filter((item) => item.date >= desde && item.date <= hasta)
-		: data.filter((item) => item.createdAt >= new Date(desde) && item.createdAt <= new Date(hasta));
+		: data.filter(
+				(item) =>
+					item.createdAt >= new Date(desde) &&
+					item.createdAt <= new Date(hasta),
+			);
 
 	// Ordenación
 	result =
