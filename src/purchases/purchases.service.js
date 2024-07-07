@@ -25,6 +25,7 @@ import {
 import filterHelper from "../core/actions/filterHelper.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
 import quantityAdjuster from "../core/actions/quantityAdjuster.js";
+import priceAdjuster from "../core/actions/priceAdjuster.js";
 
 export const getAllPurchasesService = async (req) => {
 	let content = await getAllPurchases();
@@ -84,6 +85,7 @@ export const createPurchaseService = async (req) => {
 	);
 
 	await createPurchase(adaptedBody, adaptedDetails);
+	adaptedDetails.map(async (detail) => await priceAdjuster("ADD", detail, {}));
 	adaptedDetails.map(
 		async (detail) => await quantityAdjuster("SUM", "ADD", detail, {}),
 	);
@@ -105,8 +107,18 @@ export const updatePurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
-	//await priceAdjuster(adaptedDetails);
+
 	await updatePurchase(id, adaptedBody, adaptedDetails);
+	adaptedDetails.map(
+		async (detail) =>
+			await priceAdjuster(
+				"UPD",
+				detail,
+				purchase.purchase_details.filter(
+					(elm) => elm.product_id === detail.product_id,
+				)[0],
+			),
+	);
 	adaptedDetails.map(
 		async (detail) =>
 			await quantityAdjuster(
