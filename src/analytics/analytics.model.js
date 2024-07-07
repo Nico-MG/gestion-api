@@ -51,10 +51,14 @@ export const getPriceSales = async () => {
 };
 
 export const getPriceAndDateSales = async () => {
-	return await db.purchases.findMany({
+	return await db.sales.findMany({
 		select: {
 			total_price: true,
 			date: true,
 		},
 	});
+};
+
+export const getAllProducts = async () => {
+	return await db.products.findMany();
 };

@@ -6,6 +6,7 @@ import {
 	getCountPurchases,
 	getPriceSales,
 	getPriceAndDateSales,
+	getAllProducts,
 } from "./analytics.model.js";
 
 export const getAnalyticData = async () => {
@@ -38,4 +39,9 @@ export const getAnalyticData = async () => {
 		sumTotalSales,
 		datePriceSales,
 	};
+};
+
+export const getAllProductsPure = async () => {
+	const data = await getAllProducts();
+	return data;
 };
