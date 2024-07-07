@@ -1,7 +1,7 @@
 export default function filterHelper(
 	iMap,
 	data,
-	{ desde, hasta, dato, valor, limit, offset, orden, mayor, menor },
+	{ desde, hasta, dato, valor, limit, offset, orden, mayor, menor, reciente },
 ) {
 	// Validación de parámetros
 	dato = dato ? iMap[dato] : Object.values(iMap)[0];
@@ -11,11 +11,12 @@ export default function filterHelper(
 	desde ??= "2000-01-01";
 	hasta ??= "2099-12-31";
 	valor =
-		Number.isNaN(valor) || !valor || valor[0] === "0"
+		Number.isNaN(valor) || !valor || dato === "code"
 			? valor || ""
 			: Number.parseInt(valor);
 	mayor = mayor ? Number.parseInt(mayor) : 0;
 	menor = menor ? Number.parseInt(menor) : 1000000;
+	reciente ??= "";
 
 	// Filtro de fecha
 	let result = data.date
@@ -26,9 +27,14 @@ export default function filterHelper(
 					item.createdAt <= new Date(hasta),
 			);
 
+	// Ordenar por fecha
+	result = orden === "desc" ? result.sort((a, b) => b.createdAt - a.createdAt) : result;
+	result = orden === "asc"  ? result.sort((a, b) => a.createdAt - b.createdAt) : result;
+			
 	// Ordenación
 	result = orden === "desc" ? result.sort((a, b) => b[dato] - a[dato]) : result;
 	result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
+	
 	// Filtro de numero
 	if (!Number.isNaN(valor) && valor) {
 		result = result.filter((item) => item[dato] === valor);
@@ -37,10 +43,11 @@ export default function filterHelper(
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);
 	}
+
 	// Filtro de rango de valores
 	result = valor ? result.filter((item) => item[dato] >= mayor) : result;
 	result = valor ? result.filter((item) => item[dato] <= menor) : result;
-	console.log(result);
+
 	// Paginación
 	result = result.slice(offset, offset + limit);
 	return result;
