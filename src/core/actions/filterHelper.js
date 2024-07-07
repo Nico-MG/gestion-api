@@ -1,3 +1,15 @@
+const isNumberValor = (field) => {
+	return (
+		field === "price" ||
+		field === "quantity" ||
+		field === "min_quantity" ||
+		field === "price" ||
+		field === "line_total" ||
+		field === "unit_price" ||
+		field === "total_price"
+	);
+};
+
 export default function filterHelper(
 	iMap,
 	data,
@@ -10,10 +22,7 @@ export default function filterHelper(
 	offset = Number.parseInt(offset) || 0;
 	desde ??= "2000-01-01";
 	hasta ??= "2099-12-31";
-	valor =
-		Number.isNaN(valor) || !valor || dato === "code"
-			? valor || ""
-			: Number.parseInt(valor);
+	valor = isNumberValor(dato) || !valor ? valor || "" : Number.parseInt(valor);
 	mayor = mayor ? Number.parseInt(mayor) : 0;
 	menor = menor ? Number.parseInt(menor) : 1000000;
 	reciente ??= "";
@@ -28,13 +37,17 @@ export default function filterHelper(
 			);
 
 	// Ordenar por fecha
-	result = orden === "desc" ? result.sort((a, b) => b.createdAt - a.createdAt) : result;
-	result = orden === "asc"  ? result.sort((a, b) => a.createdAt - b.createdAt) : result;
-			
+	result =
+		orden === "desc"
+			? result.sort((a, b) => b.createdAt - a.createdAt)
+			: result;
+	result =
+		orden === "asc" ? result.sort((a, b) => a.createdAt - b.createdAt) : result;
+
 	// Ordenación
 	result = orden === "desc" ? result.sort((a, b) => b[dato] - a[dato]) : result;
 	result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
-	
+
 	// Filtro de numero
 	if (!Number.isNaN(valor) && valor) {
 		result = result.filter((item) => item[dato] === valor);
