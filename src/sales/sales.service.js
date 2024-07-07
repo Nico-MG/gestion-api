@@ -25,6 +25,7 @@ import {
 } from "./sales.model.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
+import quantityAdjuster from "../core/actions/quantityAdjuster.js";
 
 export const getAllSalesService = async (req) => {
   let content = await getAllSales();
@@ -77,6 +78,9 @@ export const createSaleService = async (req) => {
     req.body
   );
   await createSale(adaptedBody, adaptedDetails);
+  adaptedDetails.map(async (detail) => {
+    await quantityAdjuster("RES", "ADD", detail, {});
+  });
 };
 
 export const updateSaleService = async (req) => {
@@ -99,6 +103,9 @@ export const updateSaleService = async (req) => {
     req.body
   );
   await updateSale(id, adaptedBody, adaptedDetails);
+  adaptedDetails.map(async (detail) => {
+    await quantityAdjuster("RES", "UPD", detail, sale);
+  });
 };
 
 export const deleteSaleService = async (req) => {
@@ -109,4 +116,7 @@ export const deleteSaleService = async (req) => {
   }
 
   await deleteSale(id);
+  sale.details.map(async (detail) => {
+    await quantityAdjuster("RES", "DEL", detail, {});
+  });
 };

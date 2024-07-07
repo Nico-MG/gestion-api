@@ -25,7 +25,7 @@ export default function filterHelper(
 	// Filtro de numero
 	if (!Number.isNaN(valor)) {
 		result = result.filter((item) => item[dato] === valor);
-	} else {
+	} else if (valor) {
 		result = result.filter((item) =>
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);

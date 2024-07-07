@@ -47,7 +47,7 @@ export const getRefundsCountService = async () => {
 export const createRefundService = async (req) => {
 	const refund = await getCodeRefund(req.body.cod);
 	if (refund === 1) {
-		throw new CodeRepeat("devolucion", req.body.cod);
+		throw new CodeRepeat("devolución", req.body.cod);
 	}
 	const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
 		iRefund,
@@ -55,6 +55,9 @@ export const createRefundService = async (req) => {
 		req.body,
 	);
 	await createRefund(adaptedBody, adaptedDetails);
+	adaptedDetails.map(async (detail) => {
+		await quantityAdjuster("SUM", "ADD", detail, {});
+	});
 };
 
 export const updateRefundService = async (req) => {
@@ -62,10 +65,10 @@ export const updateRefundService = async (req) => {
 	const refund = await getRefund(id);
 	const refundCode = await getCodeRefund(req.body.cod);
 	if (!refund) {
-		throw new NotFound("Devolucion");
+		throw new NotFound("Devolución");
 	}
 	if (refundCode.length > 1) {
-		throw new CodeRepeat("devolucion", req.body.cod);
+		throw new CodeRepeat("devolución", req.body.cod);
 	}
 
 	const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
@@ -74,14 +77,20 @@ export const updateRefundService = async (req) => {
 		req.body,
 	);
 	await updateRefund(id, adaptedBody, adaptedDetails);
+	adaptedDetails.map(async (detail) => {
+		await quantityAdjuster("SUM", "UPD", detail, refund);
+	});
 };
 
 export const deleteRefundService = async (req) => {
 	const id = Number.parseInt(req.params.id);
 	const refund = await getRefund(id);
 	if (!refund) {
-		throw new NotFound("Devolcion");
+		throw new NotFound("Devoción");
 	}
 
 	await deleteRefund(id);
+	refund.details.map(async (detail) => {
+		await quantityAdjuster("SUM", "DEL", detail, {});
+	});
 };

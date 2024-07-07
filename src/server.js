@@ -28,10 +28,10 @@ server.use(
 server.use(express.json());
 server.disable("x-powered-by");
 
-server.use("/products", validatorData, verifyToken, productsRoute);
+server.use("/products", validatorData, productsRoute);
 server.use("/users", validatorData, verifyToken, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
-server.use("/purchases", validatorData, verifyToken, purchasesRoute);
+server.use("/purchases", validatorData, purchasesRoute);
 server.use("/sales", validatorData, verifyToken, salesRoute);
 server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
