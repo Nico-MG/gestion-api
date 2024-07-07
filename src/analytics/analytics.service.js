@@ -27,6 +27,7 @@ export const getAnalyticData = async () => {
 	);
 
 	const datePriceSales = await getPriceAndDateSales();
+	const allProducts = await getAllProducts();
 
 	return {
 		catProducts,
@@ -38,10 +39,6 @@ export const getAnalyticData = async () => {
 
 		sumTotalSales,
 		datePriceSales,
+		allProducts,
 	};
-};
-
-export const getAllProductsPure = async () => {
-	const data = await getAllProducts();
-	return data;
 };
