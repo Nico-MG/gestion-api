@@ -5,7 +5,7 @@ export default function filterHelper(
 ) {
 	// Validación de parámetros
 	dato = dato ? iMap[dato] : Object.values(iMap)[0];
-	orden ??= "asc";
+	orden ??= "";
 	limit = Number.parseInt(limit) || 10;
 	offset = Number.parseInt(offset) || 0;
 	desde ??= "2000-01-01";
@@ -27,10 +27,8 @@ export default function filterHelper(
 			);
 
 	// Ordenación
-	result =
-		orden === "desc"
-			? result.sort((a, b) => b[dato] - a[dato])
-			: result.sort((a, b) => a[dato] - b[dato]);
+	result = orden === "desc" ? result.sort((a, b) => b[dato] - a[dato]) : result;
+	result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
 	// Filtro de numero
 	if (!Number.isNaN(valor) && valor) {
 		result = result.filter((item) => item[dato] === valor);
@@ -40,8 +38,9 @@ export default function filterHelper(
 		);
 	}
 	// Filtro de rango de valores
-	result = result.filter((item) => item[dato] >= mayor);
-	result = result.filter((item) => item[dato] <= menor);
+	result = valor ? result.filter((item) => item[dato] >= mayor) : result;
+	result = valor ? result.filter((item) => item[dato] <= menor) : result;
+	console.log(result);
 	// Paginación
 	result = result.slice(offset, offset + limit);
 	return result;
