@@ -85,8 +85,7 @@ export const createPurchaseService = async (req) => {
 
 	await createPurchase(adaptedBody, adaptedDetails);
 	adaptedDetails.map(
-		async (detail) =>
-			await quantityAdjuster("SUM", "ADD", detail, {}),
+		async (detail) => await quantityAdjuster("SUM", "ADD", detail, {}),
 	);
 };
 
@@ -110,7 +109,14 @@ export const updatePurchaseService = async (req) => {
 	await updatePurchase(id, adaptedBody, adaptedDetails);
 	adaptedDetails.map(
 		async (detail) =>
-			await quantityAdjuster("SUM", "UPD", detail, purchase.purchase_details.filter((elm) => elm.product_id === detail.product_id)[0]),
+			await quantityAdjuster(
+				"SUM",
+				"UPD",
+				detail,
+				purchase.purchase_details.filter(
+					(elm) => elm.product_id === detail.product_id,
+				)[0],
+			),
 	);
 };
 
@@ -123,7 +129,6 @@ export const deletePurchaseService = async (req) => {
 
 	await deletePurchase(id);
 	purchase.purchase_details.map(
-		async (detail) =>
-			await quantityAdjuster("SUM", "DEL", detail, {}),
+		async (detail) => await quantityAdjuster("SUM", "DEL", detail, {}),
 	);
 };

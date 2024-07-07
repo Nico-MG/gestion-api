@@ -47,7 +47,7 @@ export const getProductsCount = async () => {
 	return await db.products.count({
 		where: {
 			status: true,
-		}
+		},
 	});
 };
 
@@ -71,6 +71,6 @@ export const deleteProduct = async (id) => {
 		},
 		data: {
 			status: false,
-		}
+		},
 	});
 };

@@ -20,7 +20,9 @@ import filterHelper from "../core/actions/filterHelper.js";
 export const getAllRefundsService = async (req) => {
 	let content = await getAllRefunds();
 	content = filterHelper(iRefund, content, req.query);
-	content = content.map((refund) => adapterToFrontWithDetails(iRefund, iRefundDetails, refund));
+	content = content.map((refund) =>
+		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
+	);
 	content = content.map((refund) => formattedDetails(refund));
 	return content;
 };

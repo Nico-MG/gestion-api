@@ -26,7 +26,7 @@ export const getUsersCount = async () => {
 	return await db.users.count({
 		where: {
 			status: true,
-		}
+		},
 	});
 };
 
@@ -52,6 +52,6 @@ export const deleteUser = async (id) => {
 		},
 		data: {
 			status: false,
-		}
+		},
 	});
 };

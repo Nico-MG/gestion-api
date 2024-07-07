@@ -25,7 +25,7 @@ export const getProvidersCount = async () => {
 	return await db.providers.count({
 		where: {
 			status: true,
-		}
+		},
 	});
 };
 
@@ -49,6 +49,6 @@ export const deleteProvider = async (id) => {
 		},
 		data: {
 			status: false,
-		}
+		},
 	});
 };

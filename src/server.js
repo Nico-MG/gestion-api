@@ -1,8 +1,7 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-import { WebSocketServer, WebSocket } from 'ws';
-
+import { WebSocketServer, WebSocket } from "ws";
 
 // middlewares
 import verifyToken from "./core/middlewares/verifyToken.js";
@@ -24,21 +23,16 @@ const port = process.env.PORT || 3000;
 export const wss = new WebSocketServer({ server });
 
 server.use(
-  cors({
-    origin: "http://localhost:1420",
-    credentials: true,
-  })
+	cors({
+		origin: "http://localhost:1420",
+		credentials: true,
+	}),
 );
 server.use(express.json());
 server.disable("x-powered-by");
 
-<<<<<<< HEAD
-server.use("/products", validatorData, productsRoute);
-server.use("/users", validatorData, verifyToken, usersRoute);
-=======
 server.use("/products", validatorData, verifyToken, productsRoute);
-server.use("/users", validatorData, verifyToken, validatorRole,usersRoute);
->>>>>>> ad9166553847a3666ec06b01564e2fa143066535
+server.use("/users", validatorData, verifyToken, validatorRole, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
 server.use("/purchases", validatorData, purchasesRoute);
 server.use("/sales", validatorData, verifyToken, salesRoute);
@@ -46,44 +40,38 @@ server.use("/refund", refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
 
-server.use("/test", validatorData,verifyToken, validatorRole,(req, res) => {
+server.use("/test", validatorData, verifyToken, validatorRole, (req, res) => {
+	wss.clients.forEach((client) => {
+		const date = new Date();
+		client.send("Testeado");
+	});
 
-    wss.clients.forEach((client) => {
-	var date = new Date()
-	client.send(`Testeado`);
-    })
-    
-    res.status(200).json({message : 'Hello world!'});
+	res.status(200).json({ message: "Hello world!" });
 });
 
 server
-  .listen(port, () => {
-    console.log(`Server ready to listen on port: ${port}`);
-  })
-  .on("error", (err) => {
-    if (err.code === "EADDRINUSE") {
-      console.error(
-        `Port ${port} is already in use. Please use a different port.`
-      );
-    } else {
-      console.error(`Server error: ${err}`);
-    }
-  })
- .on("upgrade", (req,socket,head) => {
-     wss.handleUpgrade(req,socket,head, (ws) => {
-	 wss.emit('connection',ws,req);
-     })
+	.listen(port, () => {
+		console.log(`Server ready to listen on port: ${port}`);
+	})
+	.on("error", (err) => {
+		if (err.code === "EADDRINUSE") {
+			console.error(
+				`Port ${port} is already in use. Please use a different port.`,
+			);
+		} else {
+			console.error(`Server error: ${err}`);
+		}
+	})
+	.on("upgrade", (req, socket, head) => {
+		wss.handleUpgrade(req, socket, head, (ws) => {
+			wss.emit("connection", ws, req);
+		});
+	});
 
- });
-
-wss.on('connection', (ws,req) => {
-    ws.on('open', () => {
-	console.log('User connected');
-
-    })
-
-    
+wss.on("connection", (ws, req) => {
+	ws.on("open", () => {
+		console.log("User connected");
+	});
 });
-
 
 export default server;
