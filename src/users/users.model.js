@@ -1,13 +1,12 @@
 import db from "../core/database/connection.js";
 
-export const getAllUsers = async ({ limit, offset, dato, orden }) => {
+export const getAllUsers = async () => {
 	return await db.users.findMany({
 		where: {
 			status: true,
 		},
 		omit: {
 			password: true,
-			createdAt: true,
 			updatedAt: true,
 			status: true,
 		},

@@ -6,7 +6,6 @@ export const getAllProducts = async () => {
 			status: true,
 		},
 		omit: {
-			createdAt: true,
 			updatedAt: true,
 			status: true,
 		},

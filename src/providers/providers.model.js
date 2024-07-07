@@ -6,7 +6,6 @@ export const getAllProviders = async () => {
 			status: true,
 		},
 		omit: {
-			createdAt: true,
 			updatedAt: true,
 			status: true,
 		},
