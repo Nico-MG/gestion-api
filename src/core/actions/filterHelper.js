@@ -58,8 +58,8 @@ export default function filterHelper(
 	}
 
 	// Filtro de rango de valores
-	result = valor ? result.filter((item) => item[dato] >= mayor) : result;
-	result = valor ? result.filter((item) => item[dato] <= menor) : result;
+	result = isNumberValor(dato) ? result.filter((item) => item[dato] >= mayor) : result;
+	result = isNumberValor(dato) ? result.filter((item) => item[dato] <= menor) : result;
 
 	// Paginación
 	result = result.slice(offset, offset + limit);
