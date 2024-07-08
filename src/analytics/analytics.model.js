@@ -25,7 +25,7 @@ export const getCountPurchases = async () => {
 	return await db.purchases.count();
 };
 
-export const getcountNotifications = async () => {
+export const getCountNotifications = async () => {
 	return await db.notifications.count();
 };
 

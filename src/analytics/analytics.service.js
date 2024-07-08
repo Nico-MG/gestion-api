@@ -21,7 +21,7 @@ export const getAnalyticData = async () => {
 	const countRefunds = await getCountRefunds();
 	const countProviders = await getCountProviders();
 	const countPurchases = await getCountPurchases();
-	const countNotifications = await getcountNotifications();
+	const countNotifications = await getCountNotifications();
 
 	const sumTotalSales = (await getPriceSales()).reduce(
 		(sum, item) => sum + item.price,

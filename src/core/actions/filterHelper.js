@@ -13,7 +13,19 @@ const isNumberValor = (field) => {
 export default function filterHelper(
 	iMap,
 	data,
-	{ desde, hasta, dato, valor, limit, offset, orden, mayor, menor, reciente },
+	{
+		desde,
+		hasta,
+		dato,
+		valor,
+		limit,
+		offset,
+		orden,
+		mayor,
+		menor,
+		reciente,
+		intervalo,
+	},
 ) {
 	// Validación de parámetros
 	dato = dato ? iMap[dato] : Object.values(iMap)[0];
@@ -26,6 +38,7 @@ export default function filterHelper(
 	mayor = mayor ? Number.parseInt(mayor) : 0;
 	menor = menor ? Number.parseInt(menor) : 1000000;
 	reciente ??= "";
+	intervalo ??= "";
 
 	// Filtro de fecha
 	let result = data.date
@@ -49,17 +62,31 @@ export default function filterHelper(
 	result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
 
 	// Filtro de numero
-	if (!Number.isNaN(valor) && valor) {
+	if (isNumberValor(dato) && valor && intervalo === "") {
 		result = result.filter((item) => item[dato] === valor);
-	} else if (valor) {
+	} else if (valor && intervalo === "") {
 		result = result.filter((item) =>
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);
 	}
 
 	// Filtro de rango de valores
-	result = isNumberValor(dato) ? result.filter((item) => item[dato] >= mayor) : result;
-	result = isNumberValor(dato) ? result.filter((item) => item[dato] <= menor) : result;
+	result = isNumberValor(dato)
+		? result.filter((item) => item[dato] >= mayor)
+		: result;
+	result = isNumberValor(dato)
+		? result.filter((item) => item[dato] <= menor)
+		: result;
+
+	// Filtro de intervalo
+	result =
+		intervalo === "mayor" && isNumberValor(dato)
+			? result.filter((item) => item[dato] >= valor)
+			: result;
+	result =
+		intervalo === "menor" && isNumberValor(dato)
+			? result.filter((item) => item[dato] <= valor)
+			: result;
 
 	// Paginación
 	result = result.slice(offset, offset + limit);
