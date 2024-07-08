@@ -41,7 +41,7 @@ export default function filterHelper(
 	intervalo ??= "igual";
 
 	// Filtro de fecha
-	let result = data.date
+	let result = iMap.fecha
 		? data.filter((item) => item.date >= desde && item.date <= hasta)
 		: data.filter(
 				(item) =>
