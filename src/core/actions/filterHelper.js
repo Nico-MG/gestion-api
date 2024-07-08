@@ -38,7 +38,7 @@ export default function filterHelper(
 	mayor = mayor ? Number.parseInt(mayor) : 0;
 	menor = menor ? Number.parseInt(menor) : 1000000;
 	reciente ??= "";
-	intervalo ??= "";
+	intervalo ??= "igual";
 
 	// Filtro de fecha
 	let result = data.date
@@ -62,9 +62,9 @@ export default function filterHelper(
 	result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
 
 	// Filtro de numero
-	if (isNumberValor(dato) && intervalo === "") {
+	if (isNumberValor(dato) && intervalo === "igual") {
 		result = result.filter((item) => item[dato] === valor);
-	} else if ( valor && intervalo === "") {
+	} else if ( valor && intervalo === "igual") {
 		result = result.filter((item) =>
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);
