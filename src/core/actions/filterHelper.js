@@ -29,16 +29,16 @@ export default function filterHelper(
 ) {
 	// Validación de parámetros
 	dato = dato ? iMap[dato] : Object.values(iMap)[0];
-	orden ??= "";
+	orden = orden || "";
 	limit = Number.parseInt(limit) || 10;
 	offset = Number.parseInt(offset) || 0;
-	desde ??= "2000-01-01";
-	hasta ??= "2099-12-31";
+	desde = desde || "2000-01-01";
+	hasta = hasta || "2099-12-31";
 	valor = isNumberValor(dato) && valor ? Number.parseInt(valor) : valor || "";
 	mayor = mayor ? Number.parseInt(mayor) : 0;
 	menor = menor ? Number.parseInt(menor) : 1000000;
-	reciente ??= "";
-	intervalo ??= "igual";
+	reciente = reciente || "";
+	intervalo = intervalo || "igual";
 
 	// Filtro de fecha
 	let result = iMap.fecha
