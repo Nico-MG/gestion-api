@@ -81,11 +81,11 @@ export default function filterHelper(
 	// Filtro de intervalo
 	result =
 		intervalo === "mayor" && isNumberValor(dato)
-			? result.filter((item) => item[dato] >= valor)
+			? result.filter((item) => item[dato] > valor)
 			: result;
 	result =
 		intervalo === "menor" && isNumberValor(dato)
-			? result.filter((item) => item[dato] <= valor)
+			? result.filter((item) => item[dato] < valor)
 			: result;
 
 	// Paginación
