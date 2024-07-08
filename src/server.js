@@ -31,7 +31,7 @@ server.use(
 server.use(express.json());
 server.disable("x-powered-by");
 
-server.use("/products", validatorData, productsRoute);
+server.use("/products", validatorData, verifyToken, productsRoute);
 server.use("/users", validatorData, verifyToken, validatorRole, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
 server.use("/purchases", validatorData, verifyToken , purchasesRoute);
