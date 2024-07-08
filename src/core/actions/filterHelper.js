@@ -64,7 +64,7 @@ export default function filterHelper(
 	// Filtro de numero
 	if (isNumberValor(dato) && intervalo === "igual") {
 		result = result.filter((item) => item[dato] === valor);
-	} else if ( valor && intervalo === "igual") {
+	} else if (valor && !isNumberValor(dato)) {
 		result = result.filter((item) =>
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);
