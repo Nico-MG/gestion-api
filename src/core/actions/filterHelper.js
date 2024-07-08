@@ -34,7 +34,7 @@ export default function filterHelper(
 	offset = Number.parseInt(offset) || 0;
 	desde ??= "2000-01-01";
 	hasta ??= "2099-12-31";
-	valor = isNumberValor(dato) || !valor ? valor || "" : Number.parseInt(valor);
+	valor = isNumberValor(dato) && valor ? Number.parseInt(valor) : valor || "";
 	mayor = mayor ? Number.parseInt(mayor) : 0;
 	menor = menor ? Number.parseInt(menor) : 1000000;
 	reciente ??= "";
@@ -62,9 +62,9 @@ export default function filterHelper(
 	result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
 
 	// Filtro de numero
-	if (isNumberValor(dato) && valor && intervalo === "") {
+	if (isNumberValor(dato) && intervalo === "") {
 		result = result.filter((item) => item[dato] === valor);
-	} else if (valor && intervalo === "") {
+	} else if ( valor && intervalo === "") {
 		result = result.filter((item) =>
 			item[dato].toLowerCase().includes(valor.toLowerCase()),
 		);
