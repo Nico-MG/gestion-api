@@ -28,6 +28,15 @@ export const getProvidersCount = async () => {
 	});
 };
 
+export const getAllProviderTypes = async () => {
+	return await db.providers.findMany({
+		select: {
+			type: true,
+		},
+		distinct: ["type"],
+	});
+};
+
 export const createProvider = async (body) => {
 	return await db.providers.create({
 		data: body,

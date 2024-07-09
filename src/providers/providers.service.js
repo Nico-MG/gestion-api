@@ -10,6 +10,7 @@ import {
 	updateProvider,
 	deleteProvider,
 	getProvidersCount,
+	getAllProviderTypes,
 } from "./providers.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -22,6 +23,12 @@ export const getAllProvidersService = async (req) => {
 
 export const getProvidersCountService = async () => {
 	return await getProvidersCount();
+};
+
+export const getAllProviderTypesService = async () => {
+	const types = await getAllProviderTypes();
+	const typesValues = types.map((type) => type.type);
+	return typesValues;
 };
 
 export const createProviderService = async (req) => {
