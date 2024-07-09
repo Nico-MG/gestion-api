@@ -37,7 +37,7 @@ server.use("/users", validatorData, verifyToken, validatorRole, usersRoute);
 server.use("/providers", validatorData, verifyToken, providersRoute);
 server.use("/purchases", validatorData, verifyToken , purchasesRoute);
 server.use("/sales", validatorData, verifyToken, salesRoute);
-server.use("/refund", refundsRoute);
+server.use("/refund", validatorData, verifyToken, refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
 server.use("/notifications", validatorData, verifyToken, notificationsRoute);
