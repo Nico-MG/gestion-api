@@ -6,6 +6,7 @@ import {
 	updateUserService,
 	createUserService,
 	getUsersCountService,
+	getAllUsersRolesService,
 } from "./users.service.js";
 import { Router } from "express";
 
@@ -18,6 +19,7 @@ usersRoute.get("/", async (req, res) => {
 			message: `Usuarios encontrados: ${await getUsersCountService()}`,
 			data: result,
 			largo: await getUsersCountService(),
+			roles: await getAllUsersRolesService(),
 		});
 	} catch (error) {
 		console.error(error);

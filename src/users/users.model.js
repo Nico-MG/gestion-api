@@ -29,6 +29,15 @@ export const getUsersCount = async () => {
 	});
 };
 
+export const getAllUsersRoles = async () => {
+	return await db.users.findMany({
+		select: {
+			role: true,
+		},
+		distinct: ["role"],
+	});
+};
+
 export const createUser = async (body) => {
 	await db.users.create({
 		data: body,

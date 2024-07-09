@@ -6,6 +6,7 @@ import {
 	updateProviderService,
 	getAllProvidersService,
 	getProvidersCountService,
+	getAllProviderTypesService,
 } from "./providers.service.js";
 import { Router } from "express";
 
@@ -18,6 +19,7 @@ providersRoute.get("/", async (req, res) => {
 			message: `Proveedores encontrados: ${await getProvidersCountService()}`,
 			data: result,
 			largo: await getProvidersCountService(),
+			types: await getAllProviderTypesService(),
 		});
 	} catch (error) {
 		console.error(error);

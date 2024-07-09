@@ -11,6 +11,7 @@ import {
 	updateUser,
 	deleteUser,
 	getUsersCount,
+	getAllUsersRoles,
 } from "./users.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -23,6 +24,12 @@ export const getAllUsersService = async (req) => {
 
 export const getUsersCountService = async () => {
 	return await getUsersCount();
+};
+
+export const getAllUsersRolesService = async () => {
+	const roles = await getAllUsersRoles();
+	const rolesValues = roles.map((role) => role.role);
+	return rolesValues;
 };
 
 export const createUserService = async (req) => {
