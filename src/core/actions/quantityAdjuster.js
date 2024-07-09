@@ -40,7 +40,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	    });
 
 
-	    await createNotification({ product_id: idp, title: 'Aviso de inventario', description:`El producto ${idp} de nombre ${product.nombre} superó el mínimo establecido` })
+	    await createNotificationService({ product_id: idp, title: 'Aviso de inventario', description:`El producto ${idp} de nombre ${product.nombre} superó el mínimo establecido` })
 	    
 	}
 }
