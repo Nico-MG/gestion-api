@@ -43,6 +43,17 @@ export const getCodeRefund = async (code) => {
 	});
 };
 
+export const getRefundSaleCode = async (ids) => {
+	return await db.sales.findUnique({
+		select: {
+			code: true,
+		},
+		where: {
+			sale_id: ids
+		},
+	})
+}
+
 export const createRefund = async (body, details) => {
 	await db.refunds.create({
 		data: {

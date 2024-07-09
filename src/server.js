@@ -40,7 +40,7 @@ server.use("/sales", validatorData, verifyToken, salesRoute);
 server.use("/refunds", validatorData, verifyToken, refundsRoute);
 server.use("/auth", authRoute);
 server.use("/analytics", analyticsRoute);
-server.use("/notifications", validatorData, verifyToken, notificationsRoute);
+server.use("/notifications", validatorData, notificationsRoute);
 
 server.use("/test", validatorData, verifyToken, validatorRole, (req, res) => {
 	wss.clients.forEach((client) => {

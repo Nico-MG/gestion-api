@@ -13,12 +13,16 @@ import {
 	createRefund,
 	updateRefund,
 	getRefundsCount,
+	getRefundSaleCode,
 } from "./refunds.model.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllRefundsService = async (req) => {
 	let content = await getAllRefunds();
+	for (const refund of content) {
+		refund.cods = (await getRefundSaleCode(refund.sale_id)).code
+	}
 	content = filterHelper(iRefund, content, req.query);
 	content = content.map((refund) =>
 		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),

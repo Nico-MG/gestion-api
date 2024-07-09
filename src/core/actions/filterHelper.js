@@ -83,7 +83,7 @@ export default function filterHelper(
           break;
       }
     }
-  } else {
+  } else if (valor !== "") {
     // Filtro de texto
     result = result.filter((item) =>
       item[dato].toLowerCase().includes(valor.toLowerCase())
