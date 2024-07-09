@@ -64,7 +64,7 @@ const getLoginUser = async (req, res) => {
 		res.setHeader("Set-Cookie", "NULL");
 		return {
 			status: HttpError.statusCode ? HttpError.statusCode : 500,
-			message: HttpError.message,
+			message: "Error interno del servidor",
 			credentials: "",
 		};
 	}
