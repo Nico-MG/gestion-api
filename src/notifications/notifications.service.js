@@ -10,8 +10,8 @@ import { iNotifications } from "../core/database/tableStructures.js";
 
 export const getAllNotificationsService = async () => {
         const data = await getAllNotifications();
-        const adaptedToFront = adapterToFront(iNotifications,data)
-        return { adaptedToFront, data };
+        const adaptedToFront = data.map(notification => adapterToFront(iNotifications,notification))
+        return adaptedToFront;
 };
 
 
