@@ -25,6 +25,9 @@ export default function filterHelper(
     menor,
     reciente,
     intervalo,
+    rol,
+    tipo,
+    categoria,
   }
 ) {
   // Validación de parámetros
@@ -39,6 +42,9 @@ export default function filterHelper(
   menor = menor ? Number.parseInt(menor) : 1000000;
   reciente = reciente || "";
   intervalo = intervalo || "igual";
+  rol = rol || "";
+  tipo = tipo || "";
+  categoria = categoria || "";
 
   // Filtro de fecha
   let result = iMap.fecha
@@ -60,7 +66,7 @@ export default function filterHelper(
   result = orden === "desc" ? result.sort((a, b) => b[dato] - a[dato]) : result;
   result = orden === "asc" ? result.sort((a, b) => a[dato] - b[dato]) : result;
 
-	// Filtro de numero
+  // Filtro de numero
   if (isNumberValor(dato)) {
     if (valor !== "") {
       switch (intervalo) {
@@ -78,11 +84,32 @@ export default function filterHelper(
       }
     }
   } else {
-		// Filtro de texto
+    // Filtro de texto
     result = result.filter((item) =>
       item[dato].toLowerCase().includes(valor.toLowerCase())
     );
   }
+
+  result =
+    rol !== "" && rol !== "todos"
+      ? result.filter((item) =>
+          item["role"].toLowerCase().includes(rol.toLowerCase())
+        )
+      : result;
+
+  result =
+    tipo !== "" && tipo !== "todos"
+      ? result.filter((item) =>
+          item["type"].toLowerCase().includes(tipo.toLowerCase())
+        )
+      : result;
+
+  result =
+    categoria !== "" && categoria !== "todos"
+      ? result.filter((item) =>
+          item["type"].toLowerCase().includes(categoria.toLowerCase())
+        )
+      : result;
 
   // Paginación
   result = result.slice(offset, offset + limit);
