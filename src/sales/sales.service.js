@@ -82,10 +82,10 @@ export const createSaleService = async (req) => {
 		req.body,
 	);
 
-	const detallesValidos = adaptedDetails.map(async (detail) => {
+	adaptedDetails.map(async (detail) => {
 		await quantityAdjuster("RES", "ADD", detail, {});
 	});
-	await createSale(adaptedBody, detallesValidos);
+	await createSale(adaptedBody, adaptedDetails);
 };
 
 export const updateSaleService = async (req) => {
@@ -108,7 +108,7 @@ export const updateSaleService = async (req) => {
 		req.body,
 	);
 
-	const detallesValidos = adaptedDetails.map(async (detail) => {
+	adaptedDetails.map(async (detail) => {
 		await quantityAdjuster(
 			"RES",
 			"UPD",
@@ -118,7 +118,7 @@ export const updateSaleService = async (req) => {
 			)[0],
 		);
 	});
-	await updateSale(id, adaptedBody, detallesValidos);
+	await updateSale(id, adaptedBody, adaptedDetails);
 };
 
 export const deleteSaleService = async (req) => {

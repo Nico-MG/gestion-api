@@ -87,10 +87,10 @@ export const createPurchaseService = async (req) => {
 	);
 
 	adaptedDetails.map(async (detail) => await priceAdjuster("ADD", detail, {}));
-	const detallesValidos = adaptedDetails.map(
+	adaptedDetails.map(
 		async (detail) => await quantityAdjuster("SUM", "ADD", detail, {}),
 	);
-	await createPurchase(adaptedBody, detallesValidos);
+	await createPurchase(adaptedBody, adaptedDetails);
 };
 
 export const updatePurchaseService = async (req) => {
@@ -120,7 +120,7 @@ export const updatePurchaseService = async (req) => {
 				)[0],
 			),
 	);
-	const detallesValidos = adaptedDetails.map(
+	adaptedDetails.map(
 		async (detail) =>
 			await quantityAdjuster(
 				"SUM",
@@ -131,7 +131,7 @@ export const updatePurchaseService = async (req) => {
 				)[0],
 			),
 	);
-	await updatePurchase(id, adaptedBody, detallesValidos);
+	await updatePurchase(id, adaptedBody, adaptedDetails);
 };
 
 export const deletePurchaseService = async (req) => {

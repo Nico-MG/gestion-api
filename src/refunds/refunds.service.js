@@ -95,10 +95,10 @@ export const createRefundService = async (req) => {
 		req.body,
 	);
 
-	const detallesValidos = adaptedDetails.map(async (detail) => {
+	adaptedDetails.map(async (detail) => {
 		await quantityAdjuster("SUM", "ADD", detail, {});
 	});
-	await createRefund(adaptedBody, detallesValidos);
+	await createRefund(adaptedBody, adaptedDetails);
 };
 
 export const updateRefundService = async (req) => {
@@ -117,8 +117,8 @@ export const updateRefundService = async (req) => {
 		iRefundDetails,
 		req.body,
 	);
-
-	const detallesValidos = adaptedDetails.map(async (detail) => {
+	
+	adaptedDetails.map(async (detail) => {
 		await quantityAdjuster(
 			"SUM",
 			"UPD",
@@ -128,7 +128,7 @@ export const updateRefundService = async (req) => {
 			)[0],
 		);
 	});
-	await updateRefund(id, adaptedBody, detallesValidos);
+	await updateRefund(id, adaptedBody, adaptedDetails);
 };
 
 export const deleteRefundService = async (req) => {
@@ -137,15 +137,7 @@ export const deleteRefundService = async (req) => {
 	if (!refund) {
 		throw new NotFound("Devoción");
 	}
-	for (const detail of refund.details) {
-		const product = await getProductService({
-			params: { id: detail.product_id },
-		});
-		if (product.cit - detail.quantity < 0) {
-			throw new MinimumQuantity(product.cod, product.nombre);
-		}
-	}
-
+	
 	refund.details.map(async (detail) => {
 		await quantityAdjuster("SUM", "DEL", detail, {});
 	});

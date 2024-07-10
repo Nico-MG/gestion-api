@@ -10,26 +10,31 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: nuevo.product_id },
 	});
 
-	if (action === "UPD" && tipo === "SUM") {
+	if (
+		action === "UPD" &&
+		tipo === "SUM" &&
+		product.cit - (nuevo.quantity - anterior.quantity) >= 0
+	) {
 		product.cit += nuevo.quantity - anterior.quantity;
 	}
-	if (action === "UPD" && tipo === "RES") {
+	if (
+		action === "UPD" &&
+		tipo === "RES" &&
+		product.cit - (nuevo.quantity - anterior.quantity) >= 0
+	) {
 		product.cit -= nuevo.quantity - anterior.quantity;
 	}
 	if (action === "ADD" && tipo === "SUM") {
 		product.cit += nuevo.quantity;
 	}
-	if (action === "ADD" && tipo === "RES") {
+	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity >= 0) {
 		product.cit -= nuevo.quantity;
 	}
-	if (action === "DEL" && tipo === "SUM") {
+	if (action === "DEL" && tipo === "SUM" && product.cit - nuevo.quantity >= 0) {
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "RES") {
 		product.cit += nuevo.quantity;
-	}
-	if (product.cit < 0) {
-		return;
 	}
 	const idp = product.idp;
 	product.idp = undefined;
@@ -50,7 +55,4 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: idp },
 		body: product,
 	});
-
-	return nuevo;
-	
 }
