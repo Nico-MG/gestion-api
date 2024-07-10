@@ -65,6 +65,7 @@ export const iRefund = {
 	idr: "refund_id",
 	ids: "sale_id",
 	codr: "code",
+	cod: "code_s",
 	fecha: "date",
 	desc: "description",
 	nota: "note_refund",
@@ -74,6 +75,8 @@ export const iRefund = {
 export const iRefundDetails = {
 	idp: "product_id",
 	citr: "quantity",
+	cit: "sale_quantity",
+	cod: "code_p",
 	productos: "products",
 };
 

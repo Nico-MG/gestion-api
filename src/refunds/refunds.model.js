@@ -11,16 +11,17 @@ export const getAllRefunds = async () => {
 						},
 					},
 				},
-			},
-			sales: {
-				include: {
-					sale_details: {
-						select: { quantity: true, product_id: true, products: {
-							select: { code: true },
-						} },
-					},
+				omit: {
+					refund_id: true,
+					createdAt: true,
+					updatedAt: true,
 				},
 			},
+			sales: {
+				select: {
+					code: true,
+				}
+			}
 		},
 		omit: {
 			createdAt: true,

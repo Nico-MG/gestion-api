@@ -1,10 +1,11 @@
 export default function formatRefund(data) {
-	data.cods = data.ventas?.code;
-	data.detalles = data.detalles.map(({ productos, ...detalle }) => ({
-		...detalle,
-		cod: productos?.code,
-		cits: data.ventas?.sale_details?.filter((elm) => elm.product_id === productos?.product_id)?.quantity,
-	}));
+  data.refund_details = data.refund_details.map(({ products, ...refund_details }) => ({
+    ...refund_details,
+    code_p: products?.code,
+  }));
 
-	return data;
+  const { sales, ...rest } = data;
+  data = { code_s: sales?.code, ...rest };
+
+  return data;
 }
