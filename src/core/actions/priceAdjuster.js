@@ -7,7 +7,7 @@ export default async function priceAdjuster(tipo, nuevo, anterior) {
 	const product = await getProductService({
 		params: { id: nuevo.product_id },
 	});
-	console.log(product, nuevo);
+	
 	if (tipo === "ADD" && nuevo.quantity + product.cit > 0) {
 		const promedio =
 			(product.cit * product.precio + nuevo.quantity * nuevo.unit_price) /

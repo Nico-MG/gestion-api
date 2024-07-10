@@ -12,7 +12,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	});
 
 	if ((product.cit - nuevo.quantity) < 0 || (product.cit  - nuevo.quantity + anterior.quantity) < 0) {
-		throw new MinimumQuantity(product.idp, product.nombre);
+		throw new MinimumQuantity(product.cod, product.nombre);
 	}
 
 	if (action === "UPD" && tipo === "SUM") {

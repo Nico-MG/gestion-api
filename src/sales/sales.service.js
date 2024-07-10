@@ -29,7 +29,6 @@ import quantityAdjuster from "../core/actions/quantityAdjuster.js";
 
 export const getAllSalesService = async (req) => {
   let content = await getAllSales();
-  console.log(content);
   const {result, largo} = filterHelper(iSales, content, req.query);
   content = result.map((sale) =>
     adapterToFrontWithDetails(iSales, iSalesDetails, sale)
