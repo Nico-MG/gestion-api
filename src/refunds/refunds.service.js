@@ -13,21 +13,19 @@ import {
 	createRefund,
 	updateRefund,
 	getRefundsCount,
-	getRefundSaleCode,
 } from "./refunds.model.js";
-import formattedDetails from "../core/actions/formattedDetails.js";
+import formatRefund from "../core/actions/formatRefund.js";
 import filterHelper from "../core/actions/filterHelper.js";
+import quantityAdjuster from "../core/actions/quantityAdjuster.js";
 
 export const getAllRefundsService = async (req) => {
 	let content = await getAllRefunds();
-	for (const refund of content) {
-		refund.cods = (await getRefundSaleCode(refund.sale_id)).code
-	}
 	content = filterHelper(iRefund, content, req.query);
 	content = content.map((refund) =>
 		adapterToFrontWithDetails(iRefund, iRefundDetails, refund),
 	);
-	content = content.map((refund) => formattedDetails(refund));
+	content = content.map((refund) => formatRefund(refund));
+	console.log(`Este es el contenido ${content}`);
 	return content;
 };
 

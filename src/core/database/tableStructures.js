@@ -64,15 +64,16 @@ export const iSalesDetails = {
 export const iRefund = {
 	idr: "refund_id",
 	ids: "sale_id",
-	cod: "code",
+	codr: "code",
 	fecha: "date",
 	desc: "description",
 	nota: "note_refund",
+	ventas: "sales",
 };
 
 export const iRefundDetails = {
 	idp: "product_id",
-	cit: "quantity",
+	citr: "quantity",
 	productos: "products",
 };
 

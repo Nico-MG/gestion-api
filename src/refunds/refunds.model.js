@@ -12,6 +12,15 @@ export const getAllRefunds = async () => {
 					},
 				},
 			},
+			sales: {
+				include: {
+					sale_details: {
+						select: { quantity: true, product_id: true, products: {
+							select: { code: true },
+						} },
+					},
+				},
+			},
 		},
 		omit: {
 			createdAt: true,
@@ -31,6 +40,20 @@ export const getRefund = async (id) => {
 	});
 };
 
+export const getRefundSalesProductCit = async (ids, idp) => {
+	return await db.saleDetails.findUnique({
+		where: {
+			sale_id_product_id: {
+				sale_id: ids,
+				product_id: idp,
+			},
+		},
+		select: {
+			quantity: true,
+		},
+	});
+};
+
 export const getRefundsCount = async () => {
 	return await db.refunds.count();
 };
@@ -42,17 +65,6 @@ export const getCodeRefund = async (code) => {
 		},
 	});
 };
-
-export const getRefundSaleCode = async (ids) => {
-	return await db.sales.findUnique({
-		select: {
-			code: true,
-		},
-		where: {
-			sale_id: ids
-		},
-	})
-}
 
 export const createRefund = async (body, details) => {
 	await db.refunds.create({
