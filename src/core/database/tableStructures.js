@@ -6,6 +6,7 @@ export const iProduct = {
 	cit: "quantity",
 	mCit: "min_quantity",
 	precio: "price",
+	creado: "createdAt",
 };
 
 export const iUser = {
@@ -16,6 +17,7 @@ export const iUser = {
 	apellido: "lastname",
 	rol: "role",
 	estado: "status",
+	creado: "createdAt",
 };
 
 export const iPurchase = {
@@ -25,6 +27,7 @@ export const iPurchase = {
 	rutu: "user_rut",
 	fecha: "date",
 	total: "total_price",
+	creado: "createdAt",
 };
 
 export const iPurchaseDetails = {
@@ -42,6 +45,7 @@ export const iProvider = {
 	lugar: "address",
 	numero: "phone",
 	tipo: "type",
+	creado: "createdAt",
 };
 
 export const iSales = {
@@ -88,4 +92,5 @@ export const iNotifications = {
         desc: "description",
 		estado: "status",
         productos: "products",
+		creado: "createdAt",
 };
