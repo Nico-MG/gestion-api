@@ -4,7 +4,6 @@ import {
 } from "../../products/products.service.js";
 import { wss } from "../../server.js";
 import { createNotificationService } from "../../notifications/notifications.service.js";
-import MinimumQuantity from "../errors/minimumQuantity.js";
 
 export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
@@ -32,10 +31,6 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const idp = product.idp;
 	product.idp = undefined;
 	product.undefined = undefined;
-	await updateProductService({
-		params: { id: idp },
-		body: product,
-	});
 	if (product.cit <= product.mCit) {
 		// biome-ignore lint/complexity/noForEach: <explanation>
 		wss.clients.forEach((client) => {
@@ -48,4 +43,9 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 			description: `El producto ${product.cod} de nombre ${product.nombre} superó el mínimo establecido`,
 		});
 	}
+	await updateProductService({
+		params: { id: idp },
+		body: product,
+	});
+	
 }
