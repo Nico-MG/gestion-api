@@ -92,7 +92,7 @@ export const updateSaleService = async (req) => {
 	if (!sale) {
 		throw new NotFound("Venta");
 	}
-	if (saleCode.length > 1) {
+	if (saleCode.length > 0 && saleCode[0].sale_id !== id) {
 		throw new CodeRepeat("venta", req.body.cod);
 	}
 	if (!moduleRut(req.body.rutc)) {
