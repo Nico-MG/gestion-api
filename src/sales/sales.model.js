@@ -24,7 +24,6 @@ export const getAllSales = async () => {
       },
     },
     omit: {
-      createdAt: true,
       updatedAt: true,
     },
   });
