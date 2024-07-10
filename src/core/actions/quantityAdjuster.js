@@ -28,6 +28,9 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	if (action === "DEL" && tipo === "RES") {
 		product.cit += nuevo.quantity;
 	}
+	if (product.cit < 0) {
+		return;
+	}
 	const idp = product.idp;
 	product.idp = undefined;
 	product.undefined = undefined;
@@ -47,5 +50,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: idp },
 		body: product,
 	});
+
+	return nuevo;
 	
 }

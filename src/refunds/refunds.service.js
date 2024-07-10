@@ -95,18 +95,10 @@ export const createRefundService = async (req) => {
 		req.body,
 	);
 
-	for (const detail of adaptedDetails) {
-		const product = await getProductService({
-			params: { id: detail.product_id },
-		});
-		if (product.cit - detail.quantity < 0) {
-			throw new MinimumQuantity(product.cod, product.nombre);
-		}
-	}
-	await createRefund(adaptedBody, adaptedDetails);
-	adaptedDetails.map(async (detail) => {
+	const detallesValidos = adaptedDetails.map(async (detail) => {
 		await quantityAdjuster("SUM", "ADD", detail, {});
 	});
+	await createRefund(adaptedBody, detallesValidos);
 };
 
 export const updateRefundService = async (req) => {
@@ -125,23 +117,8 @@ export const updateRefundService = async (req) => {
 		iRefundDetails,
 		req.body,
 	);
-	for (const detail of adaptedDetails) {
-		const product = await getProductService({
-			params: { id: detail.product_id },
-		});
-		if (
-			product.cit -
-				(detail.quantity +
-					refund.refund_details.filter(
-						(elm) => elm.product_id === detail.product_id,
-					)[0].quantity) <
-			0
-		) {
-			throw new MinimumQuantity(product.cod, product.nombre);
-		}
-	}
-	await updateRefund(id, adaptedBody, adaptedDetails);
-	adaptedDetails.map(async (detail) => {
+
+	const detallesValidos = adaptedDetails.map(async (detail) => {
 		await quantityAdjuster(
 			"SUM",
 			"UPD",
@@ -151,6 +128,7 @@ export const updateRefundService = async (req) => {
 			)[0],
 		);
 	});
+	await updateRefund(id, adaptedBody, detallesValidos);
 };
 
 export const deleteRefundService = async (req) => {
@@ -159,17 +137,17 @@ export const deleteRefundService = async (req) => {
 	if (!refund) {
 		throw new NotFound("Devoción");
 	}
-  for (const detail of refund.details) {
-    const product = await getProductService({
-      params: { id: detail.product_id },
-    });
-    if (product.cit - detail.quantity < 0) {
-      throw new MinimumQuantity(product.cod, product.nombre);
-    }
-  }
+	for (const detail of refund.details) {
+		const product = await getProductService({
+			params: { id: detail.product_id },
+		});
+		if (product.cit - detail.quantity < 0) {
+			throw new MinimumQuantity(product.cod, product.nombre);
+		}
+	}
 
-	await deleteRefund(id);
 	refund.details.map(async (detail) => {
 		await quantityAdjuster("SUM", "DEL", detail, {});
 	});
+	await deleteRefund(id);
 };
