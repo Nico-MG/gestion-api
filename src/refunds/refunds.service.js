@@ -53,11 +53,19 @@ export const getRefundService = async (req) => {
     throw new NotFound("Devolución");
   }
 
-  const adaptedRefund = adapterToFrontWithDetails(
-    iRefund,
-    iRefundDetails,
-    refund
+  refund.refund_details = await Promise.all(
+    refund.refund_details.map(async (detail) => {
+      const obj = await getRefundSalesProductCit(
+        refund.sale_id,
+        detail.product_id
+      );
+      const sale_quantity = obj?.quantity || 0;
+      return { ...detail, sale_quantity };
+    })
   );
+
+  const adaptedRefund = adapterToFrontWithDetails(iRefund, iRefundDetails, formatRefund(refund)) 
+
   return adaptedRefund;
 };
 
