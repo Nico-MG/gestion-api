@@ -31,12 +31,12 @@ import MinimumQuantity from "../core/errors/minimumQuantity.js";
 
 export const getAllPurchasesService = async (req) => {
 	let content = await getAllPurchases();
-	const {result, largo} = filterHelper(iPurchase, content, req.query);
+	const { result, largo } = filterHelper(iPurchase, content, req.query);
 	content = result.map((purchase) =>
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 	content = content.map((purchase) => formattedDetails(purchase));
-	return {content, largo};
+	return { content, largo };
 };
 
 export const getPurchaseService = async (req) => {
@@ -90,7 +90,7 @@ export const createPurchaseService = async (req) => {
 		const product = await getProductService({
 			params: { id: detail.product_id },
 		});
-		if ((product.cit - detail.quantity) < 0) {
+		if (product.cit - detail.quantity < 0) {
 			throw new MinimumQuantity(product.cod, product.nombre);
 		}
 	}
@@ -123,7 +123,14 @@ export const updatePurchaseService = async (req) => {
 		const product = await getProductService({
 			params: { id: detail.product_id },
 		});
-		if ((product.cit - (detail.quantity + purchase.purchase_details.filter((elm) => elm.product_id === detail.product_id)[0].quantity)) < 0) {
+		if (
+			product.cit -
+				(detail.quantity +
+					purchase.purchase_details.filter(
+						(elm) => elm.product_id === detail.product_id,
+					)[0].quantity) <
+			0
+		) {
 			throw new MinimumQuantity(product.cod, product.nombre);
 		}
 	}
@@ -163,7 +170,7 @@ export const deletePurchaseService = async (req) => {
 		const product = await getProductService({
 			params: { id: detail.product_id },
 		});
-		if ((product.cit - detail.quantity) < 0) {
+		if (product.cit - detail.quantity < 0) {
 			throw new MinimumQuantity(product.cod, product.nombre);
 		}
 	}

@@ -17,6 +17,7 @@ import {
 	getRefundSalesProductCit,
 	getAllRefundsCodes,
 } from "./refunds.model.js";
+import { getProductService } from "../products/products.service.js";
 import formatRefund from "../core/actions/formatRefund.js";
 import filterHelper from "../core/actions/filterHelper.js";
 import quantityAdjuster from "../core/actions/quantityAdjuster.js";

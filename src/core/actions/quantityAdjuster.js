@@ -23,7 +23,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	if (action === "ADD" && tipo === "RES") {
 		product.cit -= nuevo.quantity;
 	}
-	if (action === "DEL" && tipo === "SUM") {  
+	if (action === "DEL" && tipo === "SUM") {
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "RES") {
@@ -37,12 +37,15 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		body: product,
 	});
 	if (product.cit <= product.mCit) {
-    	    wss.clients.forEach((client) => {
-		client.send(`El producto ${product.nombre} superó el mínimo establecido`);
-	    });
+		// biome-ignore lint/complexity/noForEach: <explanation>
+		wss.clients.forEach((client) => {
+			client.send(`El producto ${product.nombre} superó el mínimo establecido`);
+		});
 
-
-	    await createNotificationService({ product_id: idp, title: 'Aviso de inventario', description:`El producto ${idp} de nombre ${product.nombre} superó el mínimo establecido` })
-	    
+		await createNotificationService({
+			product_id: idp,
+			title: "Aviso de inventario",
+			description: `El producto ${product.cod} de nombre ${product.nombre} superó el mínimo establecido`,
+		});
 	}
 }

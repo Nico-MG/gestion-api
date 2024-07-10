@@ -24,6 +24,7 @@ import {
 	getAllSalesCodes,
 	getProducts,
 } from "./sales.model.js";
+import { getProductService } from "../products/products.service.js";
 import formattedDetails from "../core/actions/formattedSaleDetails.js";
 import filterHelper from "../core/actions/filterHelper.js";
 import quantityAdjuster from "../core/actions/quantityAdjuster.js";
