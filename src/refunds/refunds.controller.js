@@ -1,5 +1,6 @@
 import NotFound from "../core/errors/notFound.js";
 import CodeRepeat from "../core/errors/codeRepeat.js";
+import MinimumQuantity from "../core/errors/minimumQuantity.js";
 import {
 	getAllRefundsService,
 	getRefundService,
@@ -53,6 +54,9 @@ refundsRoute.post("/create", async (req, res) => {
 		if (error instanceof CodeRepeat) {
 			return res.status(400).json({ message: error.message });
 		}
+		if (error instanceof MinimumQuantity) {
+			return res.status(400).json({ message: error.message });
+		}
 		return res.status(500).json({ message: "Error interno del servidor" });
 	}
 });
@@ -67,6 +71,9 @@ refundsRoute.put("/:id/edit", async (req, res) => {
 			return res.status(404).json({ message: error.message });
 		}
 		if (error instanceof CodeRepeat) {
+			return res.status(400).json({ message: error.message });
+		}
+		if (error instanceof MinimumQuantity) {
 			return res.status(400).json({ message: error.message });
 		}
 		return res.status(500).json({ message: "Error interno del servidor" });
@@ -84,6 +91,9 @@ refundsRoute.delete("/:id/delete", async (req, res) => {
 
 		if (error instanceof NotFound) {
 			return res.status(404).json({ message: error.message });
+		}
+		if (error instanceof MinimumQuantity) {
+			return res.status(400).json({ message: error.message });
 		}
 
 		return res.status(500).json({ message: "Error interno del servidor" });

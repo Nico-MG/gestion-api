@@ -4,16 +4,22 @@ import {
 } from "../../products/products.service.js";
 import { wss } from "../../server.js";
 import { createNotificationService } from "../../notifications/notifications.service.js";
+import MinimumQuantity from "../errors/minimumQuantity.js";
 
 export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
 		params: { id: nuevo.product_id },
 	});
+
+	if ((product.cit - nuevo.quantity) < 0 || (product.cit  - nuevo.quantity + anterior.quantity) < 0) {
+		throw new MinimumQuantity(product.idp, product.nombre);
+	}
+
 	if (action === "UPD" && tipo === "SUM") {
 		product.cit += nuevo.quantity - anterior.quantity;
 	}
 	if (action === "UPD" && tipo === "RES") {
-		product.cit -= nuevo.quantity + anterior.quantity;
+		product.cit -= nuevo.quantity - anterior.quantity;
 	}
 	if (action === "ADD" && tipo === "SUM") {
 		product.cit += nuevo.quantity;
@@ -36,7 +42,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	});
 	if (product.cit <= product.mCit) {
     	    wss.clients.forEach((client) => {
-		client.send(`El producto ${product.name} superó el mínimo establecido`);
+		client.send(`El producto ${product.nombre} superó el mínimo establecido`);
 	    });
 
 
