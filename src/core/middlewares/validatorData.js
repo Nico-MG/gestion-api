@@ -40,7 +40,7 @@ const validatorData = (req, res, next) => {
 		}
 
 		if (regular_expression.test(data[key])) {
-			return res.status(400).json({ message: "Objeto inválido" });
+			return res.status(400).json({ message: `Objeto inválido: ${data[key]}` });
 		}
 	}
 
