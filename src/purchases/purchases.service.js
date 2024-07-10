@@ -22,6 +22,7 @@ import {
 	getProductsAndProviders,
 	getAllPurchasesCodes,
 } from "./purchases.model.js";
+import { getProductService } from "../products/products.service.js";
 import filterHelper from "../core/actions/filterHelper.js";
 import formattedDetails from "../core/actions/formattedDetails.js";
 import quantityAdjuster from "../core/actions/quantityAdjuster.js";
@@ -84,6 +85,15 @@ export const createPurchaseService = async (req) => {
 		req.body,
 	);
 
+	for (const detail of adaptedDetails) {
+		const product = await getProductService({
+			params: { id: detail.product_id },
+		});
+		if ((product.cit - detail.quantity) < 0) {
+			throw new MinimumQuantity(product.cod, product.nombre);
+		}
+	}
+
 	await createPurchase(adaptedBody, adaptedDetails);
 	adaptedDetails.map(async (detail) => await priceAdjuster("ADD", detail, {}));
 	adaptedDetails.map(
@@ -107,6 +117,15 @@ export const updatePurchaseService = async (req) => {
 		iPurchaseDetails,
 		req.body,
 	);
+
+	for (const detail of adaptedDetails) {
+		const product = await getProductService({
+			params: { id: detail.product_id },
+		});
+		if ((product.cit - (detail.quantity + purchase.purchase_details.filter((elm) => elm.product_id === detail.product_id)[0].quantity)) < 0) {
+			throw new MinimumQuantity(product.cod, product.nombre);
+		}
+	}
 
 	await updatePurchase(id, adaptedBody, adaptedDetails);
 	adaptedDetails.map(
@@ -137,6 +156,15 @@ export const deletePurchaseService = async (req) => {
 	const purchase = await getPurchase(id);
 	if (!purchase) {
 		throw new NotFound("Compra");
+	}
+
+	for (const detail of purchase.purchase_details) {
+		const product = await getProductService({
+			params: { id: detail.product_id },
+		});
+		if ((product.cit - detail.quantity) < 0) {
+			throw new MinimumQuantity(product.cod, product.nombre);
+		}
 	}
 
 	await deletePurchase(id);
