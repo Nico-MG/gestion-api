@@ -24,7 +24,6 @@ export const getAllRefunds = async () => {
 			}
 		},
 		omit: {
-			createdAt: true,
 			updatedAt: true,
 		},
 	});

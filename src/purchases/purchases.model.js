@@ -19,7 +19,6 @@ export const getAllPurchases = async () => {
 			},
 		},
 		omit: {
-			createdAt: true,
 			updatedAt: true,
 		},
 	});
