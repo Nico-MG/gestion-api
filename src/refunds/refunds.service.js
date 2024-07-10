@@ -38,12 +38,12 @@ export const getAllRefundsService = async (req) => {
     })
   );
   content = content.map((refund) => formatRefund(refund));
-  content = filterHelper(iRefund, content, req.query);
-  content = content.map((refund) =>
+  const {result, largo} = filterHelper(iRefund, content, req.query);
+  content = result.map((refund) =>
     adapterToFrontWithDetails(iRefund, iRefundDetails, refund)
   );
 
-  return content;
+  return {content, largo};
 };
 
 export const getRefundService = async (req) => {

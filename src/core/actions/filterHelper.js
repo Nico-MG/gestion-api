@@ -112,6 +112,7 @@ export default function filterHelper(
       : result;
 
   // Paginación
+  const largo = result.length;
   result = result.slice(offset, offset + limit);
-  return result;
+  return {result, largo};
 }

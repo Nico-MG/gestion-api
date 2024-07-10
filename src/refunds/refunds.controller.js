@@ -18,9 +18,9 @@ refundsRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllRefundsService(req);
 		return res.status(200).json({
-			message: `Devoluciones encontradas: ${await getRefundsCountService()}`,
-			data: result,
-			largo: await getRefundsCountService(),
+			message: `Devoluciones encontradas: ${result.largo}`,
+			data: result.content,
+			largo: result.largo,
 			codes: await getAllRefundsCodesService(),
 		});
 	} catch (error) {

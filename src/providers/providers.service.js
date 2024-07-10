@@ -16,9 +16,9 @@ import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllProvidersService = async (req) => {
 	let content = await getAllProviders();
-	content = filterHelper(iProvider, content, req.query);
-	content = content.map((provider) => adapterToFront(iProvider, provider));
-	return content;
+	const {result, largo} = filterHelper(iProvider, content, req.query);
+	content = result.map((provider) => adapterToFront(iProvider, provider));
+	return {content, largo};
 };
 
 export const getProvidersCountService = async () => {

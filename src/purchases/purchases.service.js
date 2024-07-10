@@ -29,12 +29,12 @@ import priceAdjuster from "../core/actions/priceAdjuster.js";
 
 export const getAllPurchasesService = async (req) => {
 	let content = await getAllPurchases();
-	content = filterHelper(iPurchase, content, req.query);
-	content = content.map((purchase) =>
+	const {result, largo} = filterHelper(iPurchase, content, req.query);
+	content = result.map((purchase) =>
 		adapterToFrontWithDetails(iPurchase, iPurchaseDetails, purchase),
 	);
 	content = content.map((purchase) => formattedDetails(purchase));
-	return content;
+	return {content, largo};
 };
 
 export const getPurchaseService = async (req) => {

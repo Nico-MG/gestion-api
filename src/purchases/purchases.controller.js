@@ -19,9 +19,9 @@ purchasesRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllPurchasesService(req);
 		return res.status(200).json({
-			message: `Compras encontradas: ${await getPurchasesCountService()}`,
-			data: result,
-			largo: await getPurchasesCountService(),
+			message: `Compras encontradas: ${result.largo}`,
+			data: result.content,
+			largo: result.largo,
 			products: (await getProductsAndProvidersService()).products,
 			providers: (await getProductsAndProvidersService()).providers,
 			codes: await getAllPurchasesCodesService(),

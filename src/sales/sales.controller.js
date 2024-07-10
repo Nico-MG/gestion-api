@@ -20,11 +20,11 @@ salesRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllSalesService(req);
 		return res.status(200).json({
-			message: `Ventas encontradas: ${await getSalesCountService()}`,
-			data: result,
+			message: `Ventas encontradas: ${result.largo}`,
+			data: result.content,
 			products: await getProductsService(),
 			codes: await getAllSalesCodesService(),
-			largo: await getSalesCountService(),
+			largo: result.largo,
 		});
 	} catch (error) {
 		console.error(error);

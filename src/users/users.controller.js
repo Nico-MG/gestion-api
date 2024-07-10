@@ -16,9 +16,9 @@ usersRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllUsersService(req);
 		return res.status(200).json({
-			message: `Usuarios encontrados: ${await getUsersCountService()}`,
-			data: result,
-			largo: await getUsersCountService(),
+			message: `Usuarios encontrados: ${result.largo}`,
+			data: result.content,
+			largo: result.largo,
 			roles: await getAllUsersRolesService(),
 		});
 	} catch (error) {

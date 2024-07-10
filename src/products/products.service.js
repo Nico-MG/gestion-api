@@ -17,9 +17,9 @@ import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllProductsService = async (req) => {
 	let content = await getAllProducts();
-	content = filterHelper(iProduct, content, req.query);
-	content = content.map((product) => adapterToFront(iProduct, product));
-	return content;
+	const {result, largo} = filterHelper(iProduct, content, req.query);
+	content = result.map((product) => adapterToFront(iProduct, product));
+	return {content, largo};
 };
 
 export const getProductsCountService = async () => {

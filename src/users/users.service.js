@@ -17,9 +17,9 @@ import filterHelper from "../core/actions/filterHelper.js";
 
 export const getAllUsersService = async (req) => {
 	let content = await getAllUsers();
-	content = filterHelper(iUser, content, req.query);
-	content = content.map((user) => adapterToFront(iUser, user));
-	return content;
+	const {result, largo} = filterHelper(iUser, content, req.query);
+	content = result.map((user) => adapterToFront(iUser, user));
+	return {content, largo};
 };
 
 export const getUsersCountService = async () => {

@@ -16,9 +16,9 @@ providersRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllProvidersService(req);
 		return res.status(200).json({
-			message: `Proveedores encontrados: ${await getProvidersCountService()}`,
-			data: result,
-			largo: await getProvidersCountService(),
+			message: `Proveedores encontrados: ${result.largo}`,
+			data: result.content,
+			largo: result.largo,
 			types: await getAllProviderTypesService(),
 		});
 	} catch (error) {

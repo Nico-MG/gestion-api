@@ -17,9 +17,9 @@ productsRoute.get("/", async (req, res) => {
 	try {
 		const result = await getAllProductsService(req);
 		return res.status(200).json({
-			message: `Productos encontrados: ${await getProductsCountService()}`,
-			data: result,
-			largo: await getProductsCountService(),
+			message: `Productos encontrados: ${result.largo}`,
+			data: result.content,
+			largo: result.largo,
 			categorias: await getAllTypesService(),
 			codes: await getAllProductCodesService(),
 		});
