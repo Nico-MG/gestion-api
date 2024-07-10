@@ -65,19 +65,19 @@ export const iRefund = {
 	idr: "refund_id",
 	ids: "sale_id",
 	codr: "code",
-	cod: "code_s",
+	cod: "code_s", // extra
 	fecha: "date",
 	desc: "description",
 	nota: "note_refund",
-	ventas: "sales",
+	ventas: "sales", // extra
 };
 
 export const iRefundDetails = {
 	idp: "product_id",
 	citr: "quantity",
-	cit: "sale_quantity",
-	cod: "code_p",
-	productos: "products",
+	cit: "sale_quantity", // extra
+	cod: "code_p", // extra
+	productos: "products", // extra
 };
 
 export const iNotifications = {

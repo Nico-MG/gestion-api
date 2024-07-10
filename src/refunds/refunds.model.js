@@ -67,6 +67,15 @@ export const getCodeRefund = async (code) => {
 	});
 };
 
+export const getAllRefundsCodes = async () => {
+	return await db.refunds.findMany({
+		select: {
+			code: true,
+		},
+		distinct: ["code"],
+	});
+}
+
 export const createRefund = async (body, details) => {
 	await db.refunds.create({
 		data: {

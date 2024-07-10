@@ -14,6 +14,7 @@ import {
   updateRefund,
   getRefundsCount,
   getRefundSalesProductCit,
+  getAllRefundsCodes,
 } from "./refunds.model.js";
 import formatRefund from "../core/actions/formatRefund.js";
 import filterHelper from "../core/actions/filterHelper.js";
@@ -64,10 +65,15 @@ export const getRefundsCountService = async () => {
   return await getRefundsCount();
 };
 
+export const getAllRefundsCodesService = async () => {
+  const codes = await getAllRefundsCodes();
+  return codes.map((code) => code.code);
+};
+
 export const createRefundService = async (req) => {
-  const refund = await getCodeRefund(req.body.cod);
-  if (refund === 1) {
-    throw new CodeRepeat("devolución", req.body.cod);
+  const refund = await getCodeRefund(req.body.codr);
+  if (refund.length > 0) {
+    throw new CodeRepeat("devolución", req.body.codr);
   }
   const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
     iRefund,
@@ -83,12 +89,12 @@ export const createRefundService = async (req) => {
 export const updateRefundService = async (req) => {
   const id = Number.parseInt(req.params.id);
   const refund = await getRefund(id);
-  const refundCode = await getCodeRefund(req.body.cod);
+  const refundCode = await getCodeRefund(req.body.codr);
   if (!refund) {
     throw new NotFound("Devolución");
   }
-  if (refundCode.length > 1) {
-    throw new CodeRepeat("devolución", req.body.cod);
+  if (refundCode.length > 0 && refundCode[0].refund_id !== id) {
+    throw new CodeRepeat("devolución", req.body.codr);
   }
 
   const { adaptedBody, adaptedDetails } = adapterToDBWithDetails(
