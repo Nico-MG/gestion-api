@@ -56,6 +56,7 @@ export const iSales = {
 	fecha: "date",
 	total: "total_price",
 	devoluciones: "refunds", // extra
+	creado: "createdAt",
 };
 
 export const iSalesDetails = {
@@ -75,6 +76,7 @@ export const iRefund = {
 	desc: "description",
 	nota: "note_refund",
 	ventas: "sales", // extra
+	creado: "createdAt",
 };
 
 export const iRefundDetails = {
