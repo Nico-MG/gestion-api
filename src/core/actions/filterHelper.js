@@ -48,7 +48,8 @@ export default function filterHelper(
 
   // Filtro de fecha
   let result = iMap.fecha
-    ?? data.filter((item) => item.date >= desde && item.date <= hasta)
+    ? data.filter((item) => item.date >= desde && item.date <= hasta)
+    : data;
 
   // Ordenar por fecha
   result =
