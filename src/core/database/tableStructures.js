@@ -51,6 +51,7 @@ export const iSales = {
 	rutu: "user_rut",
 	fecha: "date",
 	total: "total_price",
+	devoluciones: "refunds", // extra
 };
 
 export const iSalesDetails = {
