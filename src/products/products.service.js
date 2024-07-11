@@ -88,6 +88,7 @@ export const deleteProductService = async (req) => {
 
 export const getAll = async (req) => {
     let content = await getTrueProducts();
+    content = content.map((product) => adapterToFront(iProduct, product));
     return {status : 200 , message : content};
 
 };
