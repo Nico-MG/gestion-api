@@ -1,9 +1,12 @@
 import db from "../core/database/connection.js";
 
 export const getCatProducts = async () => {
-	return await db.products.findMany({
-		select: {
-			quantity: true,
+    return await db.products.findMany({
+	where : {
+	    status : true,
+	},
+	select: {
+	    quantity: true,		    		    
 		},
 	});
 };
