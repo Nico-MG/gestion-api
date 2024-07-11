@@ -11,10 +11,10 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	});
 
 	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity < 0) {
-		return false;
+		return "no valido";
 	}
 	if (action === "UPD" && tipo === "RES" && product.cit - (nuevo.quantity - anterior.quantity) < 0) {
-		return false;
+		return "no valido";
 	}
 
 	if (action === "UPD" && tipo === "SUM") {
@@ -57,5 +57,5 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: idp },
 		body: product,
 	});
-	return true;
+	return "valido";
 }
