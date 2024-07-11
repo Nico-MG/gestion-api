@@ -73,3 +73,15 @@ export const deleteProduct = async (id) => {
 		},
 	});
 };
+
+
+
+
+export const getTrueProducts = async () => {
+    return await db.products.findMany({
+	where : {
+	    status : true,
+	}
+    })
+
+}

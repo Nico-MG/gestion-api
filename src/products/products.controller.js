@@ -7,11 +7,25 @@ import {
 	deleteProductService,
 	getProductsCountService,
 	getAllTypesService,
-	getAllProductCodesService,
+        getAllProductCodesService,
+        getAll,
 } from "./products.service.js";
 import { Router } from "express";
 
 const productsRoute = Router();
+
+
+
+productsRoute.get("/getAll", async (req, res) => {
+	try {
+            const result = await getAll(req);
+	    return res.status(200).json({message : result.message});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Error interno del servidor" });
+	}
+});
+
 
 productsRoute.get("/", async (req, res) => {
 	try {

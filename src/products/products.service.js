@@ -11,7 +11,8 @@ import {
 	getCodeProduct,
 	getProductsCount,
 	getAllTypes,
-	getAllProductCodes,
+        getAllProductCodes,
+        getTrueProducts,
 } from "./products.model.js";
 import filterHelper from "../core/actions/filterHelper.js";
 
@@ -82,4 +83,11 @@ export const deleteProductService = async (req) => {
 	}
 
 	await deleteProduct(id);
+};
+
+
+export const getAll = async (req) => {
+    let content = await getTrueProducts();
+    return {status : 200 , message : content};
+
 };
