@@ -85,7 +85,7 @@ export const createSaleService = async (req) => {
 	const listaValidos = await Promise.all(adaptedDetails.map(async (detail) => {
 		await quantityAdjuster("RES", "ADD", detail, {});
 	}));
-	if (listaValidos.some((elm) => elm === false)) {
+	if (listaValidos.find((elm) => elm === false)) {
 		throw new MinimumQuantity();
 	}
 	await createSale(adaptedBody, adaptedDetails);
@@ -121,7 +121,7 @@ export const updateSaleService = async (req) => {
 			)[0],
 		);
 	}));
-	if (listaValidos.some((elm) => elm === false)) {
+	if (listaValidos.find((elm) => elm === false)) {
 		throw new MinimumQuantity();
 	}
 	await updateSale(id, adaptedBody, adaptedDetails);
