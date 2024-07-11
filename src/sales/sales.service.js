@@ -123,12 +123,13 @@ export const updateSaleService = async (req) => {
 
 export const deleteSaleService = async (req) => {
 	const id = Number.parseInt(req.params.id);
+	console.log(req.params.id);
 	const sale = await getSale(id);
 	if (!sale) {
 		throw new NotFound("Venta");
 	}
 
-	sale.details.map(async (detail) => {
+	sale.sale_details.map(async (detail) => {
 		await quantityAdjuster("RES", "DEL", detail, {});
 	});
 	await deleteSale(id);
