@@ -12,6 +12,7 @@ import {
 	getAllSalesCodesService,
 	getProductsService,
 } from "./sales.service.js";
+import { getAllRefundsCodesService } from "../refunds/refunds.service.js";
 import { Router } from "express";
 
 const salesRoute = Router();
@@ -24,6 +25,7 @@ salesRoute.get("/", async (req, res) => {
 			data: result.content,
 			products: await getProductsService(),
 			codes: await getAllSalesCodesService(),
+			refundCodes: await getAllRefundsCodesService(),
 			largo: result.largo,
 		});
 	} catch (error) {

@@ -64,6 +64,9 @@ export const getSalesCount = async () => {
 export const getProducts = async () => {
   return {
     products: await db.products.findMany({
+      where: {
+        status: true,
+      },
       select: {
         product_id: true,
         code: true,
