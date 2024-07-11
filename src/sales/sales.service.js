@@ -82,19 +82,10 @@ export const createSaleService = async (req) => {
 		req.body,
 	);
 
-	for (const detail of adaptedDetails) {
-		const product = await getProductService({
-			params: { id: detail.product_id },
-		});
-		if (product.cit - detail.quantity < 0) {
-			throw new MinimumQuantity(product.cod, product.nombre);
-		}
-	}
-
-	await createSale(adaptedBody, adaptedDetails);
 	adaptedDetails.map(async (detail) => {
 		await quantityAdjuster("RES", "ADD", detail, {});
 	});
+	await createSale(adaptedBody, adaptedDetails);
 };
 
 export const updateSaleService = async (req) => {
@@ -117,22 +108,6 @@ export const updateSaleService = async (req) => {
 		req.body,
 	);
 
-	for (const detail of adaptedDetails) {
-		const product = await getProductService({
-			params: { id: detail.product_id },
-		});
-		if (
-			product.cit -
-				(detail.quantity +
-					sale.sale_details.filter(
-						(elm) => elm.product_id === detail.product_id,
-					)[0].quantity) <
-			0
-		) {
-			throw new MinimumQuantity(product.cod, product.nombre);
-		}
-	}
-	await updateSale(id, adaptedBody, adaptedDetails);
 	adaptedDetails.map(async (detail) => {
 		await quantityAdjuster(
 			"RES",
@@ -143,6 +118,7 @@ export const updateSaleService = async (req) => {
 			)[0],
 		);
 	});
+	await updateSale(id, adaptedBody, adaptedDetails);
 };
 
 export const deleteSaleService = async (req) => {
@@ -152,17 +128,8 @@ export const deleteSaleService = async (req) => {
 		throw new NotFound("Venta");
 	}
 
-	for (const detail of sale.details) {
-		const product = await getProductService({
-			params: { id: detail.product_id },
-		});
-		if (product.cit - detail.quantity < 0) {
-			throw new MinimumQuantity(product.cod, product.nombre);
-		}
-	}
-
-	await deleteSale(id);
 	sale.details.map(async (detail) => {
 		await quantityAdjuster("RES", "DEL", detail, {});
 	});
+	await deleteSale(id);
 };
