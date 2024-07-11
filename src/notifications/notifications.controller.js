@@ -36,7 +36,7 @@ notificationsRoute.delete("/:id/delete", async (req,res) => {
     const { id } = req.params;
 	try {
 	        const result = await deleteNotificationService(id);
-		return res.json(result);
+	    return res.status(result.status).json(result);
 	} catch (error) {
 		return res.status(500).json({ error: error.message });
 	}
