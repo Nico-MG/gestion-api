@@ -17,7 +17,7 @@ export const getAnalyticData = async () => {
 	);
 
 	// counts
-	const countSales = await getCountSales();
+        const countSales = await getCountSales();
 	const countRefunds = await getCountRefunds();
 	const countProviders = await getCountProviders();
 	const countPurchases = await getCountPurchases();
@@ -28,7 +28,7 @@ export const getAnalyticData = async () => {
 		0,
 	);
 
-	const datePriceSales = await getPriceAndDateSales();
+    const datePriceSales = await getPriceAndDateSales();
 	const allProducts = await getAllProducts();
 
 	return {

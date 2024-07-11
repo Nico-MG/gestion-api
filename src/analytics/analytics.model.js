@@ -67,5 +67,10 @@ export const getPriceAndDateSales = async () => {
 };
 
 export const getAllProducts = async () => {
-	return await db.products.findMany();
+    return await db.products.findMany({
+	where : {
+	    status : true,
+	}
+
+    });
 };
