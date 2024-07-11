@@ -5,6 +5,7 @@ import {
 import { wss } from "../../server.js";
 import { createNotificationService } from "../../notifications/notifications.service.js";
 
+
 export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
 		params: { id: nuevo.product_id },
@@ -26,7 +27,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity >= 0) {
 		product.cit -= nuevo.quantity;
 	}
-	if (action === "DEL" && tipo === "SUM" && product.cit - nuevo.quantity >= 0) {
+	if (action === "DEL" && tipo === "SUM") {
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "RES") {
