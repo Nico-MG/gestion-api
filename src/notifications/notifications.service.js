@@ -29,7 +29,7 @@ export const deleteNotificationService = async (id) => {
     }
 
 
-    if(notification.products.quantity < notification.products.min_quantity){
+    if(notification.products.quantity < notification.products.min_quantity && notification.products.status === true){
 	return { status : 403 , message : 'El aviso de inventario no ha sido atendido'}
     }
             
