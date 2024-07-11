@@ -10,11 +10,7 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: nuevo.product_id },
 	});
 
-	if (
-		action === "UPD" &&
-		tipo === "SUM" &&
-		product.cit - (nuevo.quantity - anterior.quantity) >= 0
-	) {
+	if (action === "UPD" && tipo === "SUM") {
 		product.cit += nuevo.quantity - anterior.quantity;
 	}
 	if (
