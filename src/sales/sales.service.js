@@ -82,9 +82,12 @@ export const createSaleService = async (req) => {
 		req.body,
 	);
 
-	adaptedDetails.map(async (detail) => {
+	const listaValidos = await Promise.all(adaptedDetails.map(async (detail) => {
 		await quantityAdjuster("RES", "ADD", detail, {});
-	});
+	}));
+	if (listaValidos.some((elm) => elm === false)) {
+		throw new MinimumQuantity();
+	}
 	await createSale(adaptedBody, adaptedDetails);
 };
 
@@ -108,7 +111,7 @@ export const updateSaleService = async (req) => {
 		req.body,
 	);
 
-	adaptedDetails.map(async (detail) => {
+	const listaValidos = await Promise.all(adaptedDetails.map(async (detail) => {
 		await quantityAdjuster(
 			"RES",
 			"UPD",
@@ -117,7 +120,10 @@ export const updateSaleService = async (req) => {
 				(elm) => elm.product_id === detail.product_id,
 			)[0],
 		);
-	});
+	}));
+	if (listaValidos.some((elm) => elm === false)) {
+		throw new MinimumQuantity();
+	}
 	await updateSale(id, adaptedBody, adaptedDetails);
 };
 

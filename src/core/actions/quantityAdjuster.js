@@ -10,23 +10,29 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: nuevo.product_id },
 	});
 
+	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity < 0) {
+		return false;
+	}
+	if (action === "UPD" && tipo === "RES" && product.cit - (nuevo.quantity - anterior.quantity) < 0) {
+		return false;
+	}
+
 	if (action === "UPD" && tipo === "SUM") {
 		product.cit += nuevo.quantity - anterior.quantity;
 	}
 	if (
 		action === "UPD" &&
-		tipo === "RES" &&
-		product.cit - (nuevo.quantity - anterior.quantity) >= 0
+		tipo === "RES"
 	) {
 		product.cit -= nuevo.quantity - anterior.quantity;
 	}
 	if (action === "ADD" && tipo === "SUM") {
 		product.cit += nuevo.quantity;
 	}
-	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity >= 0) {
+	if (action === "ADD" && tipo === "RES") {
 		product.cit -= nuevo.quantity;
 	}
-	if (action === "DEL" && tipo === "SUM" && product.cit - nuevo.quantity >= 0) {
+	if (action === "DEL" && tipo === "SUM") {
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "RES") {
@@ -51,4 +57,5 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 		params: { id: idp },
 		body: product,
 	});
+	return true;
 }
