@@ -4,11 +4,20 @@ import {
 } from "../../products/products.service.js";
 import { wss } from "../../server.js";
 import { createNotificationService } from "../../notifications/notifications.service.js";
+import MinimumQuantity from "../errors/minimumQuantity.js";  
 
 export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	const product = await getProductService({
 		params: { id: nuevo.product_id },
 	});
+
+        if(action === "UPD" && tipo === "RES" && product.cit - (nuevo.quantity - anterior.quantity) < 0){
+	    throw new MinimumQuantity();
+	}
+
+        if(action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity < 0){
+	    throw new MinimumQuantity();
+	}
 
 	if (action === "UPD" && tipo === "SUM") {
 		product.cit += nuevo.quantity - anterior.quantity;
@@ -16,14 +25,14 @@ export default async function quantityAdjuster(tipo, action, nuevo, anterior) {
 	if (
 		action === "UPD" &&
 		tipo === "RES" &&
-		product.cit - (nuevo.quantity - anterior.quantity) < 0
+		product.cit - (nuevo.quantity - anterior.quantity) >= 0
 	) {
 		product.cit -= nuevo.quantity - anterior.quantity;
 	}
 	if (action === "ADD" && tipo === "SUM") {
 		product.cit += nuevo.quantity;
 	}
-	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity < 0) {
+	if (action === "ADD" && tipo === "RES" && product.cit - nuevo.quantity >= 0) {
 		product.cit -= nuevo.quantity;
 	}
 	if (action === "DEL" && tipo === "SUM") {
